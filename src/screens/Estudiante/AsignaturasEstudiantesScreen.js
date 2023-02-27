@@ -24,10 +24,10 @@ const AsignaturasEstudiantesScreen = () => {
   },[navigation])
 
   React.useEffect(() => {
-    const collectionRef = collection(database, 'registroUsuarios/pcpZE0juMSR0qDp8VSdY5wzjlQM2/asignatura');
+    const collectionRef = collection(database, 'gestionUsuarios/hVUUrfRfKzNkCoBI0CBAHbaJAJJ2/asignaturas');
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot dejo los datos de asignaturas');
+        console.log('querySnapshot dejo los datos de asignaturas del estudiante');
         setNuevaListaAE(
             querySnapshot.docs.map(doc => ({
               id: doc.id,
@@ -49,9 +49,7 @@ const AsignaturasEstudiantesScreen = () => {
             MIS ASIGNATURAS
           </Text>
           <ScrollView style={styles.scrollAsig}>
-
           {tutoriaEstudiante.map(tutoriaEstudiante => <ListaAsignaturasEstudiantes key={tutoriaEstudiante.id} {...tutoriaEstudiante}/>)}
-
           </ScrollView>
         </View>
     </SafeAreaView>
@@ -117,19 +115,7 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 10,
 },
-title: {
-    fontSize: 18,
-},
-code: {
-    fontSize: 18,
-    fontWeight: 'bold',
-},
-type: {
-    fontSize: 18,
-},
-
+  title: {
+      fontSize: 18,
+  },
 });
-
-/*
-{asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
-*/
