@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/';
-import { collection, onSnapshot, orderBy, query, where, and, forEach, doc, docs } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import Asignaturas from '../../components/Asignaturas';
 import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
@@ -24,25 +24,22 @@ const AsignaturasDocenteScreen = () => {
   },[navigation])
 
   React.useEffect(() => {
-    // CONSULTA ASIGNATURAS `gestionTutorias/${"asignaturas"}` where("asignaturas", "array-contains", "nombre")
-    const collectionRef = collection(database, 'registroUsuarios/z4Sy7cBsRpaWWDpm8oI8m274Mq53/asignatura');
+    // CONSULTA ASIGNATURAS `gestionUsuarios/${userUid}`
+    const collectionRef = collection(database, `gestionUsuarios/nnLosuPGVMRnFcthuMH9p40mkr43/asignaturas`);
     const q = query(collectionRef, orderBy('nombre', 'desc'));
     const setDocAsignaturas = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot dejo los datos de asignaturas');
         setNuevaAsignatura(
             querySnapshot.docs.map(doc => ({
               id: doc.id,
               codigo: doc.data().codigo,
               nombre: doc.data().nombre,
               tipo: doc.data().tipo,
-              createdAt: doc.data().createdAt,
-              
+              createdAt: doc.data().createdAt,  
             }))   
           );
         }
         ); 
     return setDocAsignaturas;
-  
     },[])
 
   return (
@@ -55,7 +52,6 @@ const AsignaturasDocenteScreen = () => {
             {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
           </ScrollView>
         </View>
-      
     </SafeAreaView>
   );
 };
@@ -110,8 +106,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flexDirection: "row",
   },
-
-
  productContainer: {
         width: "85%",
         padding: 10,
@@ -156,26 +150,4 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         alignItems: 'center',
     },
-
-
-
 });
-/*
-  const collectionRef = collection(database, 'registroUsuarios/z4Sy7cBsRpaWWDpm8oI8m274Mq53/asignatura');
-    const q = query(collectionRef, orderBy('nombre', 'desc'));
-    const setDocAsignaturas = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot dejo los datos de asignaturas');
-        setNuevaAsignatura(
-            querySnapshot.docs.map(doc => ({
-              id: doc.id,
-              codigo: doc.data().codigo,
-              nombre: doc.data().nombre,
-              tipo: doc.data().tipo,
-              createdAt: doc.data().createdAt,
-              
-            }))   
-          );
-        }
-        ); 
-    return setDocAsignaturas;
-*/ 
