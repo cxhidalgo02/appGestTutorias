@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { firebaseConfig } from '../../../firebase-config';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import Usuarios from '../../components/Usuarios';
@@ -13,7 +12,7 @@ const DarAltaEstudiantesScreen = () => {
   const navigation = useNavigation();
 
   React.useEffect(() => {
-    const collectionRef = collection(database, 'registroUsuarios');
+    const collectionRef = collection(database, 'gestionUsuarios');
     const q = query(collectionRef, where("tipo", "==", "Estudiante"));
     const unsubscribe = onSnapshot(q, querySnapshot => {
         console.log('querySnapshot dejo los datos de usuarios');
@@ -111,13 +110,5 @@ const styles = StyleSheet.create({
 },
 title: {
     fontSize: 18,
-},
-code: {
-    fontSize: 18,
-    fontWeight: 'bold',
-},
-type: {
-    fontSize: 18,
-},
-
+}
 });
