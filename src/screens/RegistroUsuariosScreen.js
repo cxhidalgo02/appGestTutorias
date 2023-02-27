@@ -7,8 +7,6 @@ import { initializeApp} from "firebase/app";
 import { firebaseConfig } from '../../firebase-config';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 
-const image = {uri: 'https://i.pinimg.com/474x/fe/2c/51/fe2c517e0d5c52eed372af2139345206.jpg'};
-
 const RegistroUsuariosScreen = (user) => {
 
   const navigation = useNavigation();
@@ -26,13 +24,11 @@ const RegistroUsuariosScreen = (user) => {
  
   //CREAR USUARIO  -----------------------------------------------------------------------------------------
     const onSend = async () => {
-      console.log('Datos de registro: ', cedula, nombres, apellidos, correo, clave, tipo, createdAt )
       const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave
         ).then((userCredential) => {
-          console.log('Cuenta creada...')
+          //console.log('Cuenta creada...')
           const user = userCredential.user;
           //console.log("UserCredential: ",user.uid);
-
           const docRef = doc(firestore, `registroUsuarios/${user.uid}`);
           setDoc(docRef, {
             cedula: cedula, 
@@ -50,7 +46,6 @@ const RegistroUsuariosScreen = (user) => {
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      
       <View style={styles.container} >
           <ScrollView style = {styles.scrollForm}>
           <Text style={styles.textTitle}>
@@ -72,7 +67,6 @@ const RegistroUsuariosScreen = (user) => {
               style = {styles.textInput}
               onChangeText={(text) => setApellidos(text)}
             />
-
             <TextInput 
               style = {styles.textInput}
               placeholder="Correo"
@@ -97,9 +91,8 @@ const RegistroUsuariosScreen = (user) => {
                 }}>
                 <Select.Item label="Docente" value="Docente" />
                 <Select.Item label="Estudiante" value="Estudiante" />
-            </Select>
+              </Select>
             </NativeBaseProvider>
-            
             <TouchableOpacity
               style={styles.button}
               onPress={onSend}>
@@ -107,11 +100,9 @@ const RegistroUsuariosScreen = (user) => {
             </TouchableOpacity>
           </ScrollView>
       </View>
-
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   image: {
