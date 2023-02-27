@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, Scro
 import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import { collection, addDoc } from 'firebase/firestore';
 
-const RegistroAsignaturasDocenteScreen = () => { 
+const RegistroAsignaturasDocenteScreen = ({ path="/gestionUsuarios/nnLosuPGVMRnFcthuMH9p40mkr43/asignaturas" }) => { 
   
   const navigation = useNavigation();
   const [nombre, setNombreAsignatura] = React.useState('')
@@ -16,24 +16,26 @@ const RegistroAsignaturasDocenteScreen = () => {
   const onSend = async () => {
     //console.log('Datos de registro: ', nombreAsignatura, codigoAsignatura, tipo, createdAt )
     const setDoc = {
+      id: codigo,
       nombre: nombre,
       codigo: codigo,
       tipo: tipo,
       createdAt: createdAt
     };
-    //console.log("DATOS DE setDoc -- ", setDoc);
-    await addDoc(collection(database, 'asignaturaTutorias'), setDoc);
+    //console.log("- Path: ", path);
+    //console.log(" - id Codigo: ", docu.codigo);
+    const docRef = doc(database, path, docu.codigo);
+    await setDoc(docRef, (docu) );
     navigation.goBack();
   }
   
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-          
           <ScrollView style = {styles.scrollForm}> 
-          <Text style={styles.textTitle}>
-            FORMULARIO
-          </Text>
+            <Text style={styles.textTitle}>
+              FORMULARIO
+            </Text>
             <TextInput style = {styles.textInput}
               onChangeText={(text) => setNombreAsignatura(text)}
               placeholder="Nombre de la asignatura"
@@ -67,7 +69,6 @@ const RegistroAsignaturasDocenteScreen = () => {
             </TouchableOpacity>
           </ScrollView>
         </View>
-      
     </SafeAreaView>
   );
 };
