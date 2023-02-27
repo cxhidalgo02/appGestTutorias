@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { database } from '../../../config/';
+import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import Asignaturas from '../../components/Asignaturas';
 import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
