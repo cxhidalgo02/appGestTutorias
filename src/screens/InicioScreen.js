@@ -4,12 +4,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, 
-          TextInput, ScrollView, ImageBackground, Alert, LogBox} from 'react-native';
+          TextInput, ScrollView, Alert, LogBox} from 'react-native';
 import { Select, CheckIcon, NativeBaseProvider  } from 'native-base';
 
 LogBox.ignoreAllLogs();
 
-const InicioScreen = ({ route, navigation})=> {
+const InicioScreen = ({ navigation })=> {
 
   const [correo, setCorreo] = React.useState('');
   const [clave, setClave] = React.useState('');
@@ -27,9 +27,7 @@ const InicioScreen = ({ route, navigation})=> {
     .then( (userCredential) => {      
       const user = userCredential.user;
       const userUid = user.uid;
-      console.log("userUid : ", userUid );
-
-     const collectionRef = collection(firestore, "registroUsuarios");
+      const collectionRef = collection(firestore, "gestionUsuarios");
       const q = query(collectionRef, where("id", "==", userUid));
       const setUsuario = onSnapshot(q, querySnapshot => {
         setUsuario(querySnapshot.docs.map(doc => ({
@@ -83,7 +81,6 @@ const InicioScreen = ({ route, navigation})=> {
               autoCapitalize='none'
               type={shown ? 'text' : 'password'}
               onChangeText={(text) => setClave(text)}/> 
-
             <NativeBaseProvider>
               <Select 
                   id="tipoUsuario"
