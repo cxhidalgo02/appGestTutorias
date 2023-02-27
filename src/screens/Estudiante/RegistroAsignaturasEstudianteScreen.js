@@ -1,46 +1,42 @@
 import * as React from 'react';
-import { collection, addDoc } from 'firebase/firestore';
+import { setDoc, doc } from 'firebase/firestore';
 import { database } from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 
-const RegistroAsignaturasEstudianteScreen = () => { 
+const RegistroAsignaturasEstudianteScreen = ({ path="gestionUsuarios/hVUUrfRfKzNkCoBI0CBAHbaJAJJ2/asignaturas" }) => { 
   
   const navigations = useNavigation();
-  const [tipo, setTipo] = React.useState("")
-  const [nuevaAsignatura, setnuevaAsignatura] = React.useState({
-    nombre: '', 
-    codigo: '',
-    tipo: '',
-    createdAt: new Date(),
-  })
-  const onSend = async() => {
-    await addDoc(collection(database, 'asignaturaTutorias'), nuevaAsignatura);
+  const [codigo, setCodigoAsignatura] = React.useState('')
+  const onSend = async () => {
+    const docu = {
+      codigo: codigo,
+      validada: 'false',
+      createdAt: new Date(),
+    };
+    const docRef = doc(database, path, docu.codigo);
+    await setDoc(docRef, (docu) );
     navigations.goBack();
-  } 
+  }
   
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-        
           <Text style={styles.textTitle}>
             FORMULARIO
           </Text>
           <Text style={styles.textContent}>
               Ingrese el código de la asignatura para solicitar acceso.
           </Text>
-
           <ScrollView style = {styles.scrollForm}> 
             <TextInput style = {styles.textInput}
-              onChangeText={(text) => setnuevaAsignatura({...nuevaAsignatura, nombre:text})}
+              onChangeText={(text) => setCodigoAsignatura(text)}
               placeholder="Ingrese el codigo"
             />
-          
             <TouchableOpacity style={styles.button} onPress={onSend} >
               <Text style={styles.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
-        
       </View>
     </SafeAreaView>
   );
