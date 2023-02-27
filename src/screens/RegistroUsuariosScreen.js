@@ -22,7 +22,7 @@ const RegistroUsuariosScreen = (user) => {
   const [tipo, setTipo] = React.useState("")
   const [createdAt, setCreatedAt] = React.useState(new Date())
  
-  //CREAR USUARIO  -----------------------------------------------------------------------------------------
+  //CREAR USUARIO  ---------------------------------------------------------------------------------------------
     const onSend = async () => {
       const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave
         ).then((userCredential) => {
