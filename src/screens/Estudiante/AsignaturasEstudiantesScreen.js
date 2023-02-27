@@ -106,8 +106,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flexDirection: "row",
   },
-
-
   productContainer: {
     width: "80%",
     padding: 10,
