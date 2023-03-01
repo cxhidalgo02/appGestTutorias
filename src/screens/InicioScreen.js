@@ -6,6 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, 
           TextInput, ScrollView, Alert, LogBox} from 'react-native';
 import { Select, CheckIcon, NativeBaseProvider  } from 'native-base';
+import { createContext } from 'react';
 
 LogBox.ignoreAllLogs();
 
@@ -22,13 +23,13 @@ const InicioScreen = ({ navigation })=> {
   const switchShown = () => setShown(!shown);
 
  const handleSingIn = () =>{   
-    console.log("Datos ingresados formulario: ", correo, clave, tipo);
+    //console.log("Datos ingresados formulario: ", correo, clave, tipo);
     signInWithEmailAndPassword(auth, correo, clave)
     .then( (userCredential) => {      
       const user = userCredential.user;
       const userUid = user.uid;
       const collectionRef = collection(firestore, "gestionUsuarios");
-      const q = query(collectionRef, where("id", "==", userUid));
+      const q = query(collectionRef, where("id", "==", userUid));      
       const setUsuario = onSnapshot(q, querySnapshot => {
         setUsuario(querySnapshot.docs.map(doc => ({
           correo: doc.data().correo,
@@ -37,15 +38,19 @@ const InicioScreen = ({ navigation })=> {
           createdAt: doc.data().createdAt,
           }))
         );
-        console.log("Datos usuario: ", correo, clave, tipo, createdAt);
+        //console.log("Datos usuario: ", correo, clave, tipo, createdAt);
         switch(tipo){
           case "Docente":
-             navigation.navigate('asignaturasDocenteScreen');
-          console.log('Se ha iniciado sesion como Docente....')
+            const pathUser = `gestionUsuarios/${userUid}`;
+            console.log("Inicio Screen pathUser >>> " , pathUser);
+            
+
+            navigation.navigate('asignaturasDocenteScreen');
+            console.log('Se ha iniciado sesion como Docente....')
              break;
           case "Estudiante":
-             navigation.navigate('asignaturasEstudiantesScreen');
-          console.log('Se ha iniciado sesion como Estudiante....')
+            navigation.navigate('asignaturasEstudiantesScreen');
+            console.log('Se ha iniciado sesion como Estudiante....')
              break;
         }
        }
@@ -61,7 +66,7 @@ const InicioScreen = ({ navigation })=> {
   }
  
   return ( 
-    <SafeAreaView style={{ flex: 1 }} >
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
         <ScrollView style = {styles.scrollForm}>
         <Text style={styles.textTitle}>
@@ -81,6 +86,7 @@ const InicioScreen = ({ navigation })=> {
               autoCapitalize='none'
               type={shown ? 'text' : 'password'}
               onChangeText={(text) => setClave(text)}/> 
+
             <NativeBaseProvider>
               <Select 
                   id="tipoUsuario"
@@ -167,78 +173,3 @@ const styles = StyleSheet.create({
     color: '#293774',
   },
 });
-
-
-/* 
-  const handleSingIn = () =>{ 
-    signInWithEmailAndPassword(auth, correo, clave)
-    .then( (userCredential) => {
-      console.log('Se ha iniciado sesion...')
-      const user = userCredential.user;
-      console.log(user);
-      navigation.navigate('asignaturasDocenteScreen')
-    })
-    .catch( error => {
-      console.log(error)
-      Alert.alert(error.message)
-      navigation.navigate('InicioScreen')
-    });
-  }
-
-
-  const collectionRef = collection(database, 'registroUsuarios');
-      const q = query(collectionRef, where("id", "==", userSetUID));
-      const setUsuario = onSnapshot(q, querySnapshot => {
-        setNuevoUsuario(querySnapshot.docs.map(doc => ({
-          correo: doc.data().correo,
-          clave: doc.data().clave,
-          tipo: doc.data().tipo,
-          createdAt: doc.data().createdAt,
-          }))
-        );
-        console.log("Datos usuario: ", correo, clave, tipo, createdAt);
-        //console.log("setNuevoUsuario: ", setNuevoUsuario);
-        if( tipo == "Docente"){
-           navigation.navigate('asignaturasDocenteScreen')
-          console.log('Se ha iniciado sesion como Docente....')
-        } 
-        if( tipo == "Estudiante"){
-          navigation.navigate('asignaturasEstudiantesScreen')
-          console.log('Se ha iniciado sesion como Estudiante....')
-        }
-       }
-      );
-
-      
-  const handleSingIn3 = () =>{ 
-    console.log("Datos ingresados formulario: ", correo, clave, tipo);
-    signInWithEmailAndPassword(auth, correo, clave)
-    .then( (userCredential) => {
-      //console.log('Se ha iniciado sesion...')
-      const user = userCredential.user;
-      const userUid = user.uid;
-      console.log("userUid : ", userUid );
-      switch(tipo){
-        case "Docente":
-           navigation.navigate('asignaturasDocenteScreen');
-        //console.log('Se ha iniciado sesion como Docente....')
-           break;
-        case "Estudiante":
-           navigation.navigate('asignaturasEstudiantesScreen');
-        //console.log('Se ha iniciado sesion como Estudiante....')
-           break;
-      }
-    })
-    .catch( error => {
-      console.log(" * ERROR * ",error)
-      Alert.alert(error.message)
-      Alert.alert('Error al iniciar sesión', 'Ingrese nuevamente su usuario y constraseña', [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ]);
-    });
-  }
-
-  <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-  </ImageBackground>
-
-*/

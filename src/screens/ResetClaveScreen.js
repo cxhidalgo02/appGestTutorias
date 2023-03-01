@@ -4,8 +4,6 @@ import { initializeApp} from "firebase/app";
 import { getAuth, verifyPasswordResetCode, confirmPasswordReset} from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, Alert,} from 'react-native';
 
-const image = {uri: 'https://i.pinimg.com/474x/fe/2c/51/fe2c517e0d5c52eed372af2139345206.jpg'};
-
 const resetClave = ({ route, navigation })=> {
 
   const [correo, setCorreo] = React.useState('')
