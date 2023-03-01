@@ -22,6 +22,7 @@ const RegistroAsignaturasEstudianteScreen = ({ path="gestionUsuarios/hVUUrfRfKzN
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
+        <View style={styles.subcontainer}> 
           <Text style={styles.textTitle}>
             FORMULARIO
           </Text>
@@ -37,6 +38,7 @@ const RegistroAsignaturasEstudianteScreen = ({ path="gestionUsuarios/hVUUrfRfKzN
               <Text style={styles.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -45,18 +47,23 @@ export default RegistroAsignaturasEstudianteScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    padding: 16,
-    alignItems: 'center', 
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16, 
+  },
+  subcontainer: {
+    width: '80%',
+    marginTop: -20,
   },
   scrollForm: {
     textAlign: "center",
   },
   textTitle: {
-    fontSize: 24, 
+    fontSize: 22, 
     textAlign: 'center', 
-    padding: 20,
+    marginTop: 15,
+    marginBottom: 15, 
     color: '#293774',
   },
   textContent: {
