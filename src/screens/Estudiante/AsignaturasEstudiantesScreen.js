@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import ListaAsignaturasEstudiantes from '../../components/ListaAsignaturasEstudiantes';
 import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
+import localStorage from 'react-native-expo-localstorage';
+import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 
 const AsignaturasEstudiantesScreen = () => {
   
-  const [tutoriaEstudiante, setNuevaListaAE] = React.useState([]);
+  const [asignaturasEstudiante, setNuevaListaAE] = React.useState([]);
   const navigation = useNavigation();
 
   React.useLayoutEffect(() => {
@@ -18,29 +20,42 @@ const AsignaturasEstudiantesScreen = () => {
       <Pressable title='registroAsignaturasEstudianteScreen'
           onPress={() => navigation.navigate('registroAsignaturasEstudianteScreen')}
           style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <MaterialIcons name="add-circle" size={30} color="#293774" style={{ marginRight: 5 }}/>
+          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
         </Pressable>
   })
   },[navigation])
 
-  React.useEffect(() => {
-    const collectionRef = collection(database, 'gestionUsuarios/hVUUrfRfKzNkCoBI0CBAHbaJAJJ2/asignaturas');
-    const q = query(collectionRef, orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot dejo los datos de asignaturas del estudiante');
+  const pathIdEst = localStorage.getItem(`keyUser`, pathIdEst);
+  const consultaAsig = () =>{
+    const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/`);
+    const q = query(collectionRef, where('validada', '==','true'));
+    const setDocAsignaturas = onSnapshot(q, querySnapshot => {
         setNuevaListaAE(
             querySnapshot.docs.map(doc => ({
               id: doc.id,
               codigo: doc.data().codigo,
               nombre: doc.data().nombre,
               tipo: doc.data().tipo,
+              validada: doc.data().validada,
               createdAt: doc.data().createdAt,
             }))
           );
         } 
         );
-    return unsubscribe;
-    },[])
+    return setDocAsignaturas;
+  }
+
+  const alertWelcome = () => {
+    Dialog.show({
+       type: ALERT_TYPE.SUCCESS,
+       title: 'Bienvenido',
+     })
+   }
+
+  React.useEffect(() => {
+    alertWelcome(); 
+    consultaAsig();
+  },[])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -49,7 +64,7 @@ const AsignaturasEstudiantesScreen = () => {
             MIS ASIGNATURAS
           </Text>
           <ScrollView style={styles.scrollAsig}>
-          {tutoriaEstudiante.map(tutoriaEstudiante => <ListaAsignaturasEstudiantes key={tutoriaEstudiante.id} {...tutoriaEstudiante}/>)}
+          {asignaturasEstudiante.map(asignaturasEstudiante => <ListaAsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
           </ScrollView>
         </View>
     </SafeAreaView>
@@ -65,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textTitle: {
-    fontSize: 24, 
+    fontSize: 22, 
     textAlign: 'center', 
     padding: 20,
     color: '#293774',
