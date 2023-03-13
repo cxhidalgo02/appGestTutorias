@@ -6,6 +6,7 @@ import { Select, CheckIcon,  NativeBaseProvider} from 'native-base';
 import { initializeApp} from "firebase/app";
 import { firebaseConfig } from '../../firebase-config';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 
 const RegistroUsuariosScreen = (user) => {
 
@@ -26,10 +27,8 @@ const RegistroUsuariosScreen = (user) => {
     const onSend = async () => {
       const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave
         ).then((userCredential) => {
-          //console.log('Cuenta creada...')
           const user = userCredential.user;
-          //console.log("UserCredential: ",user.uid);
-          const docRef = doc(firestore, `registroUsuarios/${user.uid}`);
+          const docRef = doc(firestore, `gestionUsuarios/${user.uid}`);
           setDoc(docRef, {
             cedula: cedula, 
             nombres: nombres, 
@@ -41,9 +40,32 @@ const RegistroUsuariosScreen = (user) => {
           });
           return userCredential;
         });
+        alertRecordUsuario();
         navigation.goBack();
     }
-    
+
+    const alertRecordUsuario = () => {
+      try {
+        Dialog.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: 'Usuario Registrado Correctamente',
+        })
+      } catch (error) {
+        console.log("No pudo mostrar el Error:  ", error);
+      }
+    }
+
+    const alertErrorUsuario = () => {
+      try {
+        Dialog.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Error al Registrar el Usuario',
+        })
+      } catch (error) {
+        console.log("No pudo mostrar el Error:  ", error);
+      }
+    }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
@@ -96,7 +118,7 @@ const RegistroUsuariosScreen = (user) => {
             <TouchableOpacity
               style={styles.button}
               onPress={onSend}>
-              <Text style={styles.textbutton}>REGISTRARSE</Text>
+              <Text style={styles.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
       </View>
@@ -157,20 +179,3 @@ const styles = StyleSheet.create({
   },
 });
 export default RegistroUsuariosScreen;
-
-/*
-      const handleCreateAccount = () =>{
-      createUserWithEmailAndPassword(auth, email, password)
-      .then( (userCredential) => {
-        console.log('Cuenta creada...')
-        const user = userCredential.user;
-        console.log(user);
-        navigation.navigate('InicioScreen')
-      })
-      .catch( error => {
-        console.log(error)
-        Alert.alert(error.message)
-      });
-    }
-      
-*/
