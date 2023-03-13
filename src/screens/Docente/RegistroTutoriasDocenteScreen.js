@@ -1,14 +1,21 @@
 import * as React from 'react';
-import { collection, addDoc } from 'firebase/firestore';
-import { database } from '../../../config/firebaseConfig';
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
+import localStorage from 'react-native-expo-localstorage';
+import { initializeApp} from "firebase/app";
+import { firebaseConfig } from '../../../firebase-config';
+import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 
 const RegistroTutoriasDocenteScreen = () => { 
-  
+
   const navigation = useNavigation();
+  const app = initializeApp(firebaseConfig);
+  const firestore = getFirestore(app);
+
   const [nuevaTutoria, setnuevaTutoria] = React.useState({
+    codigo: '',
     tema: '', 
     descripcion: '',
     aula: '',
@@ -17,6 +24,7 @@ const RegistroTutoriasDocenteScreen = () => {
     createdAt: new Date(),
   })
 
+  const [codigo, setCodigo] = React.useState('')
   const [tema, setTema] = React.useState('')
   const [descripcion, setDescripcion] = React.useState('')
   const [aula, setAula] = React.useState('')
@@ -24,30 +32,61 @@ const RegistroTutoriasDocenteScreen = () => {
   const [semana, setSemana] = React.useState("")
   const [createdAt, setCreatedAt] = React.useState('')
 
+  const pathId = localStorage.getItem(`keyUser`, pathId);
+  console.log('Tetx RegistroTutoriasScreen: ', pathId);
+  const pathAsig = `gestionUsuarios/${pathId}/asignaturas`;
+  // Id de la asignatura que seleccionar el usuario
+  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
+  console.log('Tetx RegistroTutoriasScreen: ', pathCodAsig);
+
   const onSend = async () => {
-    console.log('Datos de registro: ', tema, descripcion, aula, hora, semana, createdAt )
-    const setDoc = {
+    const docRef = doc(firestore, `gestionUsuarios/${pathId}/asignaturas/${pathCodAsig}/tutorias/${codigo}`);
+    setDoc(docRef, {
+      codigo: codigo,
       tema: tema, 
       descripcion: descripcion,
       aula: aula,
       hora: hora,
       semana: semana,
       createdAt: createdAt
-    };
-    console.log("DATOS DE setDoc -- ", setDoc);
-    await addDoc(collection(database, 'registroTutorias'), setDoc);
+    });
+    alertRecordTutoria();
     navigation.goBack();
   }
-  
+
+  const alertRecordTutoria = () => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Asignatura Registrada Correctamente',
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
+  }
+
+  const alertErrorTutoria = () => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: 'Error al Registrar la Asignatura',
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-
+          <ScrollView style = {styles.scrollForm}>
           <Text style={styles.textTitle}>
             FORMULARIO
           </Text>
-
-          <ScrollView style = {styles.scrollForm}>
+            <TextInput style = {styles.textInput}
+              onChangeText={(text) => setCodigo(text)}
+              placeholder="Codigo"
+            />
             <TextInput style = {styles.textInput}
               onChangeText={(text) => setTema(text)}
               placeholder="Tema"
@@ -84,6 +123,14 @@ const RegistroTutoriasDocenteScreen = () => {
                 <Select.Item label="Semana 6" value="Semana 6" />
                 <Select.Item label="Semana 7" value="Semana 7" />
                 <Select.Item label="Semana 8" value="Semana 8" />
+                <Select.Item label="Semana 9" value="Semana 9" />
+                <Select.Item label="Semana 10" value="Semana 10" />
+                <Select.Item label="Semana 11" value="Semana 11" />
+                <Select.Item label="Semana 12" value="Semana 12" />
+                <Select.Item label="Semana 13" value="Semana 13" />
+                <Select.Item label="Semana 14" value="Semana 14" />
+                <Select.Item label="Semana 15" value="Semana 15" />
+                <Select.Item label="Semana 16" value="Semana 16" />
               </Select>
             </NativeBaseProvider>
           
@@ -108,9 +155,11 @@ const styles = StyleSheet.create({
     fontSize: 22, 
     textAlign: 'center', 
     marginBottom: 16, 
+    color: '#293774', 
   },
   scrollForm: {
     textAlign: "center",
+    marginTop: 80,
   },
   textInput:{
     borderWidth: 1,
@@ -122,7 +171,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#2E86C1',
+    backgroundColor: '#293774',
     padding: 10,
     marginTop: 40,
     borderRadius:10,
