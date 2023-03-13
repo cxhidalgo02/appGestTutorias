@@ -3,28 +3,24 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import TutoriasEstudiante from '../../components/TutoriasEstudiante';
-import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import localStorage from 'react-native-expo-localstorage';
 
 const TutoriasDocenteScreen = () => {
 
   const [tutoria, setNuevaTutoria] = React.useState([]);
   const navigation = useNavigation();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => 
-      <Pressable title=''
-          onPress={() => navigation.navigate('')}
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <MaterialIcons name="add-circle" size={30} color="#293774" style={{ marginRight: 5 }}/>
-        </Pressable>
-  })
-  },[navigation])
+  // Id del usuario que inicia sesion
+  const pathIdEst = localStorage.getItem(`keyUser`, pathIdEst);
+  // Id de la asignatura que seleccionar el usuario
+  const pathCodAsigEst = localStorage.getItem(`keyCodigoEst`, pathCodAsigEst);
+  // Id de la tutoria que seleccionar el usuario  
+  const pathIdTut = localStorage.getItem(`keyCodigoTut`, pathIdTut);
 
   React.useEffect(() => {
-    const collectionRef = collection(database, '/registroUsuarios/pcpZE0juMSR0qDp8VSdY5wzjlQM2/asignatura/3cE8YdcwGml0fEYl1aKs/tutoria');
+    const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias`);
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(q, querySnapshot => {
         console.log('querySnapshot dejo los datos de tutorias');
@@ -36,6 +32,8 @@ const TutoriasDocenteScreen = () => {
                 aula: doc.data().aula,
                 hora: doc.data().hora,
                 semana: doc.data().semana,
+                inscripcion: doc.data().inscripcion,
+                validada: doc.data().validada,
                 createdAt: doc.data().createdAt,
             }))
           );
@@ -109,24 +107,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flexDirection: "row",
   },
-
-
-  productContainer: {
-    width: "80%",
-    padding: 10,
-    backgroundColor: '#fff',
-    margin: 15,
-    borderRadius: 10,
-},
-title: {
-    fontSize: 18,
-},
-code: {
-    fontSize: 18,
-    fontWeight: 'bold',
-},
-type: {
-    fontSize: 18,
-},
-
 });
