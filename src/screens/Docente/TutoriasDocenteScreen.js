@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import Tutorias from '../../components/Tutorias';
 import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
+import localStorage from 'react-native-expo-localstorage';
 
 const TutoriasDocenteScreen = () => {
 
@@ -18,15 +19,22 @@ const TutoriasDocenteScreen = () => {
       <Pressable title='registroTutoriasDocenteScreen'
           onPress={() => navigation.navigate('registroTutoriasDocenteScreen')}
           style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <MaterialIcons name="add-circle" size={30} color="#293774" style={{ marginRight: 5 }}/>
+          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
         </Pressable>
   })
   },[navigation])
 
-  React.useEffect(() => {
-    const collectionRef = collection(database, 'registroTutorias');
+  // Id del usuario que inicia sesion
+  const pathId = localStorage.getItem(`keyUser`, pathId);
+  // Id de la asignatura que seleccionar el usuario
+  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
+  // Id de la tutoria que seleccionar el usuario  
+  const pathIdTut = localStorage.getItem(`keyCodigoTut`, pathIdTut);
+
+  const consultaTut = () => {
+    const collectionRef = collection(database, `gestionUsuarios/${pathId}/asignaturas/${pathCodAsig}/tutorias`);
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, querySnapshot => {
+    const setDocTutorias = onSnapshot(q, querySnapshot => {
         console.log('querySnapshot dejo los datos de tutorias');
         setNuevaTutoria(
             querySnapshot.docs.map(doc => ({
@@ -41,7 +49,11 @@ const TutoriasDocenteScreen = () => {
           );
         }
         );
-    return unsubscribe;
+    return setDocTutorias;
+
+  }
+  React.useEffect(() => {
+    consultaTut();
     },[])
 
   return (
@@ -109,8 +121,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flexDirection: "row",
   },
-
-
   productContainer: {
     width: "80%",
     padding: 10,
@@ -118,15 +128,14 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 10,
 },
-title: {
-    fontSize: 18,
+  title: {
+      fontSize: 18,
+  },
+  code: {
+      fontSize: 18,
+      fontWeight: 'bold',
+  },
+  type: {
+      fontSize: 18,
 },
-code: {
-    fontSize: 18,
-    fontWeight: 'bold',
-},
-type: {
-    fontSize: 18,
-},
-
 });
