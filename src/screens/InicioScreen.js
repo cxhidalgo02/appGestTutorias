@@ -4,9 +4,11 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, 
-          TextInput, ScrollView, Alert, LogBox} from 'react-native';
-import { Select, CheckIcon, NativeBaseProvider  } from 'native-base';
-import { createContext } from 'react';
+          TextInput, ScrollView, LogBox, } from 'react-native';
+import { Select, CheckIcon, } from 'native-base';
+import localStorage from 'react-native-expo-localstorage';
+import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
+import { NativeBaseProvider } from "native-base";
 
 LogBox.ignoreAllLogs();
 
@@ -22,8 +24,19 @@ const InicioScreen = ({ navigation })=> {
   const [shown, setShown] = React.useState(false);
   const switchShown = () => setShown(!shown);
 
+  const alertError = (message) => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: 'Error al iniciar sesión',
+        textBody: message 
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
+  }
+
  const handleSingIn = () =>{   
-    //console.log("Datos ingresados formulario: ", correo, clave, tipo);
     signInWithEmailAndPassword(auth, correo, clave)
     .then( (userCredential) => {      
       const user = userCredential.user;
@@ -38,39 +51,33 @@ const InicioScreen = ({ navigation })=> {
           createdAt: doc.data().createdAt,
           }))
         );
-        //console.log("Datos usuario: ", correo, clave, tipo, createdAt);
         switch(tipo){
           case "Docente":
-            const pathUser = `gestionUsuarios/${userUid}`;
-            console.log("Inicio Screen pathUser >>> " , pathUser);
-            
-
             navigation.navigate('asignaturasDocenteScreen');
+            localStorage.setItem("keyUser", userUid);
             console.log('Se ha iniciado sesion como Docente....')
              break;
           case "Estudiante":
             navigation.navigate('asignaturasEstudiantesScreen');
+            localStorage.setItem("keyUser", userUid);
             console.log('Se ha iniciado sesion como Estudiante....')
              break;
         }
        }
       );    
     })
-    .catch( error => {
+    .catch( (error) => {
       console.log(" * ERROR * ",error)
-      Alert.alert(error.message)
-      Alert.alert('Error al iniciar sesión', 'Ingrese nuevamente su usuario y constraseña', [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ]);
+      alertError("Ingrese nuevamente su usuario y constraseña")
     });
   }
- 
+
   return ( 
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
         <ScrollView style = {styles.scrollForm}>
         <Text style={styles.textTitle}>
-            INICIE SU CUENTA
+            ACCEDER A SU CUENTA
           </Text>
             <TextInput style = {styles.textInput}
               id="Email"
@@ -101,13 +108,13 @@ const InicioScreen = ({ navigation })=> {
                 }}>
                 <Select.Item label="Docente" value="Docente" />
                 <Select.Item label="Estudiante" value="Estudiante" />
-            </Select>
+              </Select>
             </NativeBaseProvider>
 
-            <TouchableOpacity style={styles.button} onPress={handleSingIn}>
-              <Text style={styles.textbutton}>INICIO SESIÓN</Text>
-            </TouchableOpacity>
-            
+              <TouchableOpacity style={styles.button} onPress={handleSingIn}>
+                <Text style={styles.textbutton}>INICIO SESIÓN</Text>
+              </TouchableOpacity>
+
             <TouchableOpacity style={styles.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
               <Text style={styles.textbuttonTwo}>Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
@@ -130,7 +137,7 @@ const styles = StyleSheet.create({
     marginTop: 120,
   },
   textTitle: {
-    fontSize: 22, 
+    fontSize: 20, 
     textAlign: 'center', 
     marginBottom: 16, 
     color: '#293774',
