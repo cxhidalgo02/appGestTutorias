@@ -1,22 +1,33 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import Usuarios from '../../components/Usuarios';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { collection, onSnapshot, query, where, } from 'firebase/firestore';
+import DarAltaEstudiante from '../../components/DarAltaEstudiante';
+import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import localStorage from 'react-native-expo-localstorage';
 
 const DarAltaEstudiantesScreen = () => {
 
-  const [usuario, setNuevpUsuario] = React.useState([]);
-  const navigation = useNavigation();
+  const [estudiante, setNuevoEstudiante] = React.useState([]);
+  // Id del usuario que inicia sesion
+  const pathId = localStorage.getItem(`keyUser`, pathId);
+  // Id de la asignatura que seleccionar el usuario
+  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
+  //recuperar el path del estudiante con asignaturas del componente dar de alta estudiant
+  const pathEstudiante = localStorage.getItem(`keyEstAsig`, pathEstudiante);
 
-  React.useEffect(() => {
+  const consulta = () => {
+    //consulta de estudiantes
     const collectionRef = collection(database, 'gestionUsuarios');
-    const q = query(collectionRef, where("tipo", "==", "Estudiante"));
+    const q = query(collectionRef, where("tipo", "==", "Estudiante") );
+    //consulta de asignaturas de estudiantes
+    const collectionRefTwo = collection(database, `/gestionUsuarios/${pathId}/asignaturas/`);
+    const qTwo = query(collectionRefTwo, where("validada", "==", "false"));
+    
     const unsubscribe = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot dejo los datos de usuarios');
-        setNuevpUsuario(
+        console.log('Lista de estudiantes');
+        setNuevoEstudiante(
             querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 cedula: doc.data().cedula,
@@ -32,7 +43,10 @@ const DarAltaEstudiantesScreen = () => {
         }
         );
     return unsubscribe;
-    },[])
+  }
+  React.useEffect(() => {
+    consulta();  
+  },[])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -41,11 +55,8 @@ const DarAltaEstudiantesScreen = () => {
             VALIDAR ACCESO
           </Text>
           <ScrollView style={styles.scrollAsig}>
-            {usuario.map(usuario=> <Usuarios key={usuario.id} {...usuario}/>)}
+            {estudiante.map(estudiante=> <DarAltaEstudiante key={estudiante.id} {...estudiante}/>)}
           </ScrollView>
-          <TouchableOpacity style={styles.button} >
-              <Text style={styles.textbutton}>GUARDAR</Text>
-          </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -77,17 +88,6 @@ const styles = StyleSheet.create({
     width: "80%",
     marginTop:20,
     borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#293774',
-    padding: 10,
-    width: "80%",
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
   },
   btnContiner:{
     width: '35%',  
