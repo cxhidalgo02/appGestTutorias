@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as rn from 'react-native';
-//import { database } from '../src/fb';
-//import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-//import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { database } from '../../config/firebaseConfig';
+import { doc, deleteDoc, updateDoc, where } from 'firebase/firestore';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { Entypo } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons'; 
+import localStorage from 'react-native-expo-localstorage';
 
 export default function TutoriasEstudiante(
     {
@@ -16,32 +14,55 @@ export default function TutoriasEstudiante(
         aula,
         hora,
         semana,
+        inscripcion,
+        validada,
         createdAt,
     }
 ) {    
-    const navigation = useNavigation();
+    // Id del usuario que inicia sesion
+    const pathIdEst = localStorage.getItem(`keyUser`, pathIdEst);
+    // Id de la asignatura que seleccionar el usuario
+    const pathCodAsigEst = localStorage.getItem(`keyCodigoEst`, pathCodAsigEst);
+    // id de la tutoria que selecciona el usuario
+    const pathTutoria = `gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`;
+    const pathIdTutEst= localStorage.setItem("keyCodigoTut", id);
+
+     const onInscribirse = () => {
+        const docRef = doc(database, `/gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`);
+                updateDoc(docRef, {inscripcion: 'true', });
+    } 
+
+    const [isValidateActive, setIsValidateActive] = React.useState(false);
     return(
-        <rn.View style={styles.productContainer}>
+        <rn.TouchableOpacity style={styles.productContainer} 
+            onLongPress={() => setIsValidateActive(true)}
+            onPress={() => setIsValidateActive(false)}
+            activeOpacity={0.8}
+        >
             
             <rn.Text style={styles.title}> {tema} </rn.Text>
+            <rn.Text style={styles.subtitle}> {id} </rn.Text>
             <rn.Text style={styles.descrip}>
-                <MaterialCommunityIcons name="watermark" size={18} color="black" /> - {descripcion} </rn.Text>
+            <AntDesign name="tag" size={18} color="black" /> - {descripcion} </rn.Text>
             <rn.Text style={styles.information}> 
-                <Entypo name="chevron-right" size={18} color="black" /> Aula: {aula} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Aula: {aula} </rn.Text>
             <rn.Text style={styles.information}> 
-                <Entypo name="chevron-right" size={18} color="black" /> Hora: {hora} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Hora: {hora} </rn.Text>
             <rn.Text style={styles.information}>
-                <Entypo name="chevron-right" size={18} color="black" /> {semana} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> {semana} </rn.Text>
+            <rn.Text style={styles.information}>
+                <AntDesign name="right" size={16} color="black" /> Inscrito: {inscripcion} </rn.Text>
+            <rn.Text style={styles.information}>
+                <AntDesign name="right" size={16} color="black" /> Validada: {validada} </rn.Text>
 
-                <rn.View style={styles.btnsContiner}>
-                <rn.Pressable 
-                    onPress={() => alert('Registrar asistencia')}
-                    style={styles.btnContiner}>
-                    <FontAwesome5 name="user-check" size={25} color="black" />
-                </rn.Pressable>
-
+            <rn.View style={styles.btnsContiner}>
+                {isValidateActive && (
+                    <rn.Pressable onPress={onInscribirse} style={styles.validateButton}>
+                        <AntDesign name="checksquareo" size={24} color="white" />
+                    </rn.Pressable>
+                )}
             </rn.View>
-        </rn.View>
+        </rn.TouchableOpacity>
     )
 }
 
@@ -55,11 +76,28 @@ const styles = rn.StyleSheet.create({
         borderColor: "#2E86C1",
         backgroundColor:"#fff",
     },
+    validateButton: {
+        position: "absolute",
+        right: -20,
+        marginTop: 0,
+        width: 40,
+        height: 40,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#D4AC0D",
+        borderRadius: 8,
+    },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
         color: '#293774',
+    },
+    subtitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#D4AC0D',
     },
     descrip: {
         fontSize: 16,
@@ -70,15 +108,10 @@ const styles = rn.StyleSheet.create({
     },
     btnsContiner:{
         width: '100%',
+        marginTop: 10,
         backgroundColor: 'transparent',
         flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
     },
-    btnContiner:{
-        width: '100%',  
-        marginTop: 15,
-        marginBottom: 10,
-        backgroundColor: 'transparent',
-        alignItems: 'center',
-    },
-
 });
