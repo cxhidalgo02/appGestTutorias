@@ -1,32 +1,63 @@
 import * as React from 'react';
-import { database } from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
-import { collection, addDoc } from 'firebase/firestore';
+import { Select, CheckIcon, NativeBaseProvider, Alert} from 'native-base';
+import { doc, setDoc, getFirestore, Firestore, } from 'firebase/firestore';
+import localStorage from 'react-native-expo-localstorage';
+import { initializeApp} from "firebase/app";
+import { firebaseConfig } from '../../../firebase-config';
+import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
 
-const RegistroAsignaturasDocenteScreen = ({ path="/gestionUsuarios/nnLosuPGVMRnFcthuMH9p40mkr43/asignaturas" }) => { 
+const RegistroAsignaturasDocenteScreen = () => { 
   
   const navigation = useNavigation();
+  const app = initializeApp(firebaseConfig);
+  const firestore = getFirestore(app);
+
   const [nombre, setNombreAsignatura] = React.useState('')
   const [codigo, setCodigoAsignatura] = React.useState('')
   const [tipo, setTipo] = React.useState("")
   const [createdAt, setCreatedAt] = React.useState(new Date())
 
+  //  Id del usuario que inicia sesion - nnLosuPGVMRnFcthuMH9p40mkr43
+  const pathId = localStorage.getItem(`keyUser`, pathId);
+  console.log('path Id RegistroAsignatura',pathId);
+  // Id de la asignatura que seleccionar el usuario
+  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
+
   const onSend = async () => {
-    //console.log('Datos de registro: ', nombreAsignatura, codigoAsignatura, tipo, createdAt )
-    const setDoc = {
+    const docRef = doc(Firestore, `gestionUsuarios/${pathId}/asignaturas/${codigo}`); 
+    setDoc(docRef, {
       id: codigo,
       nombre: nombre,
       codigo: codigo,
       tipo: tipo,
       createdAt: createdAt
-    };
-    //console.log("- Path: ", path);
-    //console.log(" - id Codigo: ", docu.codigo);
-    const docRef = doc(database, path, docu.codigo);
-    await setDoc(docRef, (docu) );
+    });
+    alertRecordAsignatura();
     navigation.goBack();
+  }
+
+  const alertRecordAsignatura = () => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Asignatura Registrada Correctamente',
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
+  }
+
+  const alertErrorAsignatura = () => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: 'Error al Registrar la Asignatura',
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
   }
   
   return (
