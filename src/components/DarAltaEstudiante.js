@@ -1,15 +1,11 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
-//import { database } from '../src/fb';
-//import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-//import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons'; 
+import { database } from '../../config/firebaseConfig';
+import { doc, updateDoc,} from 'firebase/firestore';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import {useState} from 'react';
-import { doc, deleteDoc, updateDoc, where } from 'firebase/firestore';
-import { database } from '../../config/firebaseConfig';
+import localStorage from 'react-native-expo-localstorage';
 
 export default function DarAltaEstudiante(
     {
@@ -25,13 +21,17 @@ export default function DarAltaEstudiante(
         createdAt,
     }
 ) {
-    const pathUser=`gestionUsuarios/${id}/asignaturas/CODTT002`
+    //codigo de las asignatura de seleccione
+    const pathIdAsig = localStorage.getItem(`keyCodigo`, pathIdAsig);
+    //path de estudiante con asignaturas y codigo
+    const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}`
+    localStorage.setItem("keyEstAsig", pathEstudiante);
+    console.log('Tetx DarAltaEstudiante: ', pathEstudiante);
     
     const onValidate = () => {
-    const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/CODTT002`);
+    const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
             updateDoc(docRef, {validada: 'true', });
     }    
-
 
     const [isValidateActive, setIsValidateActive] = React.useState(false);
 
@@ -52,12 +52,7 @@ export default function DarAltaEstudiante(
                 <rn.Text> 
                     <MaterialIcons name="mail" size={18} color="black" /> - {correo} 
                 </rn.Text>
-                <rn.Text> 
-                    <MaterialIcons name="mail" size={18} color="black" /> - {validada} 
-                </rn.Text>
-                <rn.Text> 
-                    <MaterialIcons name="mail" size={18} color="black" /> - {pathUser} 
-                </rn.Text>
+
             </rn.View>
             
             {isValidateActive && (
@@ -65,7 +60,6 @@ export default function DarAltaEstudiante(
                     <AntDesign name="checksquareo" size={24} color="white" />
                 </rn.Pressable>
             )}
-            
                 
         </rn.TouchableOpacity>
     )
@@ -84,7 +78,6 @@ const styles = rn.StyleSheet.create({
     validateButton: {
         position: "absolute",
         right: 8,
-        top: 0,
         width: 40,
         height: 40,
         alignItems: "center",
@@ -103,6 +96,4 @@ const styles = rn.StyleSheet.create({
         backgroundColor: "#293774",
         borderRadius: 8,
       },
-    
-
 });
