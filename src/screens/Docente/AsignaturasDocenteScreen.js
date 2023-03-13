@@ -3,29 +3,21 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import Asignaturas from '../../components/Asignaturas';
-import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { StyleSheet, View, Text, SafeAreaView, Pressable,} from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
+import localStorage from 'react-native-expo-localstorage';
+import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 
 const AsignaturasDocenteScreen = () => {
-
+  
   const [asignatura, setNuevaAsignatura] = React.useState([]);
   const navigation = useNavigation();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => 
-      <Pressable title='registroAsignaturasDocenteScreen'
-          onPress={() => navigation.navigate('registroAsignaturasDocenteScreen')}
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <MaterialIcons name="add-circle" size={30} color="#293774" style={{ marginRight: 5 }}/>
-        </Pressable>
-  })
-  },[navigation])
-
-  React.useEffect(() => {
-    // CONSULTA ASIGNATURAS `gestionUsuarios/${userUid}`
-    const collectionRef = collection(database, `gestionUsuarios/nnLosuPGVMRnFcthuMH9p40mkr43/asignaturas`);
+  const pathId = localStorage.getItem(`keyUser`, pathId);
+  console.log('Tetx AsignaturasScreen: ', pathId);
+  const consultaAsig = () =>{
+    const collectionRef = collection(database, `/gestionUsuarios/${pathId}/asignaturas/`);
     const q = query(collectionRef, orderBy('nombre', 'desc'));
     const setDocAsignaturas = onSnapshot(q, querySnapshot => {
         setNuevaAsignatura(
@@ -40,19 +32,47 @@ const AsignaturasDocenteScreen = () => {
         }
         ); 
     return setDocAsignaturas;
-    },[])
+  }   
+
+  const alertWelcome = () => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Bienvenido',
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
+  }
+
+  React.useEffect(() => { 
+    alertWelcome();  
+    consultaAsig(); 
+  },[])
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => 
+      <Pressable title='registroAsignaturasDocenteScreen'
+          onPress={() => navigation.navigate('registroAsignaturasDocenteScreen')}
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
+          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
+        </Pressable>
+  })
+  },[navigation])
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container} >
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container} >
           <Text style={styles.textTitle}>
             MIS ASIGNATURAS
           </Text>
           <ScrollView style={styles.scrollAsig}>
             {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
-          </ScrollView>
+          </ScrollView>  
         </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    
   );
 };
 export default AsignaturasDocenteScreen;
@@ -65,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textTitle: {
-    fontSize: 24, 
+    fontSize: 22, 
     textAlign: 'center', 
     padding: 20,
     color: '#293774',
