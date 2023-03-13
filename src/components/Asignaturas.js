@@ -6,21 +6,24 @@ import { useNavigation } from '@react-navigation/native';
 import { doc, deleteDoc, addDoc } from 'firebase/firestore';
 import { database } from '../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import localStorage from 'react-native-expo-localstorage';
 
 export default function Asignaturas ({
-    mensaje,
     id,
     codigo,
     nombre,
     tipo,
 }) {
+    // Id del usuario que inicia sesion
+    const pathId = localStorage.getItem(`keyUser`, pathId);
+    //console.log('Tetx AsignaturasScreen: ', pathId);
 
-    //const pathUser = localStorage.getItem("itemPath");
-
+    //ESTUDIANTE
     const [estudiante, setEstNoValidate] = React.useState([]);
     React.useEffect(() => {
         //estudiante
         const collectionRef = collection(database, 'gestionUsuarios');
+        //console.log('Tetx AsignaturasScreen UseEffect: ', pathId);
         const q = query(collectionRef, where("tipo","==","Estudiante"));
         const unsubscribe = onSnapshot(q, querySnapshot => {
             //console.log('querySnapshot dejo los datos de usuarios');
@@ -37,22 +40,22 @@ export default function Asignaturas ({
             }
             );
         return unsubscribe;
-        },[])
-
-        
-    //hVUUrfRfKzNkCoBI0CBAHbaJAJJ2
-    const pathUsers=`gestionUsuarios/hola/asignaturas/${codigo}`
+    },[])
 
     const onDelete = () => {
         const docRef = doc(database, 'asignaturaTutorias', id);
         deleteDoc(docRef);
     }
 
+    //hVUUrfRfKzNkCoBI0CBAHbaJAJJ2
+    //path usuario  con asignaturas 
+    const pathAsig=`gestionUsuarios/${pathId}/asignaturas/${codigo}`
+    //guardo el codigo de asignatura para enviar a Dar de alta
+    localStorage.setItem("keyCodigo", codigo);
+
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const navigation = useNavigation();
-
     return(
-
         <RN.TouchableOpacity 
             onLongPress={() => setIsDeleteActive(true)}
             onPress={() => setIsDeleteActive(false)}
@@ -60,12 +63,12 @@ export default function Asignaturas ({
         >
 
             <RN.View style={styles.productContainer}>     
-                <RN.Text style={styles.code}>{codigo}</RN.Text>
-                <RN.Text style={styles.textContent}>{nombre}</RN.Text>
-                <RN.Text style={styles.textContent}>{tipo}</RN.Text> 
-                <RN.Text style={styles.textContent}>{pathUsers}</RN.Text> 
+                <RN.Text style={styles.texttitle}>{nombre}</RN.Text>
+                <RN.Text style={styles.textsubtitle}>{codigo}</RN.Text>
+                <RN.Text style={styles.textContent}> Tipo: {tipo}</RN.Text> 
               
                 <RN.View style={styles.btnsContiner}>
+
                     <RN.Pressable title='darAltaEstudiantesScreen'
                         onPress={() => navigation.navigate('darAltaEstudiantesScreen')}
                         style={styles.btnContiner}>
@@ -75,7 +78,7 @@ export default function Asignaturas ({
                     <RN.Pressable title='tutoriasDocenteScreen'
                         onPress={() => navigation.navigate('tutoriasDocenteScreen')}
                         style={styles.btnContiner}>
-                        <FontAwesome5 name="book" size={25} color="black" />
+                        <FontAwesome5 name="swatchbook" size={25} color="black" />
                     </RN.Pressable>
 
                     <RN.Pressable
@@ -107,14 +110,20 @@ const styles = RN.StyleSheet.create({
         borderColor: "#2E86C1",
         backgroundColor:"#fff",
     },
-    code: {
+    texttitle: {
         fontSize: 18,
         fontWeight: 'bold',
+        textAlign: 'center',
         color: '#293774',
-        padding: 5,
+    },
+    textsubtitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#D4AC0D',
     },
     textContent:{
-        fontSize: 18,
+        fontSize: 16,
+        color: '#293774',
     },
     button: {
         backgroundColor: '#0FA5E9',
