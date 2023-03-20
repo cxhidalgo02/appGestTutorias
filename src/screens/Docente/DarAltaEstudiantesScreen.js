@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, query, where, } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, orderBy, and } from 'firebase/firestore';
 import DarAltaEstudiante from '../../components/DarAltaEstudiante';
 import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -10,42 +10,52 @@ import localStorage from 'react-native-expo-localstorage';
 const DarAltaEstudiantesScreen = () => {
 
   const [estudiante, setNuevoEstudiante] = React.useState([]);
+  const [asignatura, setNuevaAsignatura] = React.useState([]);
+  const [estudianteAlta, setNuevoEstudianteAlta] = React.useState([]);
+  ///gestionUsuarios/hVUUrfRfKzNkCoBI0CBAHbaJAJJ2/asignaturas/CODTT001
   // Id del usuario que inicia sesion
   const pathId = localStorage.getItem(`keyUser`, pathId);
+  // Id del estudiante
+  const UidEst = localStorage.getItem(`keyEst`, UidEst);
+  console.log('UidEst => ', UidEst);
   // Id de la asignatura que seleccionar el usuario
   const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
   //recuperar el path del estudiante con asignaturas del componente dar de alta estudiant
-  const pathEstudiante = localStorage.getItem(`keyEstAsig`, pathEstudiante);
+    const pathEstudiante = localStorage.getItem(`keyEstAsig`, pathEstudiante);
+  //console.log('Dar de alta estudiantes Screen: ',pathEstudiante);
 
-  const consulta = () => {
+  const pathIdAsig = localStorage.getItem(`keyCodigo`, pathIdAsig);
+
+  //console.log('pathId => ', pathId);
+  //console.log('UidEst => ', UidEst);
+  //console.log('pathCodAsig => ', pathCodAsig);
+  //console.log('pathEstudiante => ', pathEstudiante);
+  //console.log('pathIdAsig => ', pathIdAsig);
+
+
+
+  const consultaEstudiantes = () => {
     //consulta de estudiantes
     const collectionRef = collection(database, 'gestionUsuarios');
-    const q = query(collectionRef, where("tipo", "==", "Estudiante") );
-    //consulta de asignaturas de estudiantes
-    const collectionRefTwo = collection(database, `/gestionUsuarios/${pathId}/asignaturas/`);
-    const qTwo = query(collectionRefTwo, where("validada", "==", "false"));
-    
-    const unsubscribe = onSnapshot(q, querySnapshot => {
-        console.log('Lista de estudiantes');
+    const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
+    const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
         setNuevoEstudiante(
             querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 cedula: doc.data().cedula,
                 nombres: doc.data().nombres,
                 apellidos: doc.data().apellidos,
-                tipo: doc.data().tipo,
                 correo: doc.data().correo,
-                clave: doc.data().clave,
-                validado: doc.data().validado,
-                createdAt: doc.data().createdAt,
             }))
           );
-        }
-        );
-    return unsubscribe;
-  }
-  React.useEffect(() => {
-    consulta();  
+        });
+    return unsubscribe2;
+
+}
+
+  React.useEffect(() => { 
+    //consultaAsignaturas();
+    consultaEstudiantes(); 
   },[])
 
   return (
@@ -108,7 +118,7 @@ const styles = StyleSheet.create({
     margin: 15,
     borderRadius: 10,
 },
-title: {
-    fontSize: 18,
-}
+  title: {
+      fontSize: 18,
+  }
 });
