@@ -3,19 +3,21 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import Asignaturas from '../../components/Asignaturas';
-import { StyleSheet, View, Text, SafeAreaView, Pressable,} from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Pressable, } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
-import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
+import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
 
 const AsignaturasDocenteScreen = () => {
   
   const [asignatura, setNuevaAsignatura] = React.useState([]);
   const navigation = useNavigation();
 
+  //nnLosuPGVMRnFcthuMH9p40mkr43
   const pathId = localStorage.getItem(`keyUser`, pathId);
-  console.log('Tetx AsignaturasScreen: ', pathId);
+  //console.log('Tetx AsignaturasScreen: ', pathId);
+  //`gestionUsuarios/${pathId}/asignaturas/${codigo}`
   const consultaAsig = () =>{
     const collectionRef = collection(database, `/gestionUsuarios/${pathId}/asignaturas/`);
     const q = query(collectionRef, orderBy('nombre', 'desc'));
@@ -71,8 +73,7 @@ const AsignaturasDocenteScreen = () => {
             {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
           </ScrollView>  
         </View>
-      </SafeAreaView>
-    
+      </SafeAreaView>    
   );
 };
 export default AsignaturasDocenteScreen;
@@ -93,81 +94,4 @@ const styles = StyleSheet.create({
   scrollAsig: {
     width: '90%',
   },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    paddingStart: 20,
-    width: "80%",
-    marginTop:20,
-    borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#2E86C1',
-    padding: 10,
-    width: "80%",
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
-  },
-  btnContiner:{
-    width: '35%',  
-    marginTop: 15,
-    marginBottom: 10,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-  },
-  btnsContiner:{
-    width: '75%',
-    backgroundColor: 'transparent',
-    flexDirection: "row",
-  },
- productContainer: {
-        width: "85%",
-        padding: 10,
-        margin: 15,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: "#2E86C1",
-        backgroundColor:"#fff",
-    },
-    title: {
-        fontSize: 18,
-    },
-    code: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#0FA5E9',
-    },
-    type: {
-        fontSize: 18,
-    },
-    button: {
-        backgroundColor: '#0FA5E9',
-        padding: 10,
-        marginVertical: 6,
-        borderRadius: 8,
-        alignItems: 'center'
-   },
-    buttonText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    btnsContiner:{
-        width: '90%',
-        backgroundColor: 'transparent',
-        flexDirection: "row",
-    },
-    btnContiner:{
-        width: '35%',  
-        marginTop: 15,
-        marginBottom: 10,
-        backgroundColor: 'transparent',
-        alignItems: 'center',
-    },
 });
