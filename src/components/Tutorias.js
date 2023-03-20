@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as rn from 'react-native';
+//import { database } from '../src/fb';
+//import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -31,7 +33,6 @@ export default function Tutorias(
     // id de la tutoria que selecciona el usuario
     const pathTutoria = `gestionUsuarios/${pathId}/asignaturas/${pathCodAsig}/tutorias/${id}`
     const pathIdTut = localStorage.setItem("keyCodigoTut", id);
-    //const pathIdTutoria = localStorage.getItem(`keyCodigoTut`, id);
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const navigation = useNavigation();
