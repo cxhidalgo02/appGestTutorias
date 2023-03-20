@@ -36,8 +36,6 @@ export default function DarAltaEstudiante(
     localStorage.setItem("keyEstAsig", pathEstudiante);
     //console.log('Tetx DarAltaEstudiante: ', pathEstudiante);
 
-
-
     //SQL PARA CONSULTAR LAS ASIGNATURAS DEL ESTUDIANTE
     const pathAsig =`gestionUsuarios/${id}/asignaturas/`
     localStorage.setItem("keySql", pathAsig);
@@ -54,7 +52,7 @@ export default function DarAltaEstudiante(
                     codigo: doc.data().codigo,
                     nombre: doc.data().nombre,
                     tipo: doc.data().tipo,
-                    validada: doc.data.validada,
+                    validada: doc.data().validada,
                 }))
               );
             });
