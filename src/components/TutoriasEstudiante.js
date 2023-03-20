@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as rn from 'react-native';
 import { database } from '../../config/firebaseConfig';
-import { doc, deleteDoc, updateDoc, where } from 'firebase/firestore';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { doc, updateDoc,} from 'firebase/firestore';
 import { AntDesign } from '@expo/vector-icons'; 
 import localStorage from 'react-native-expo-localstorage';
 
