@@ -16,17 +16,13 @@ export default function Asignaturas ({
 }) {
     // Id del usuario que inicia sesion
     const pathId = localStorage.getItem(`keyUser`, pathId);
-    //console.log('Tetx AsignaturasScreen: ', pathId);
 
     //ESTUDIANTE
     const [estudiante, setEstNoValidate] = React.useState([]);
     React.useEffect(() => {
-        //estudiante
         const collectionRef = collection(database, 'gestionUsuarios');
-        //console.log('Tetx AsignaturasScreen UseEffect: ', pathId);
         const q = query(collectionRef, where("tipo","==","Estudiante"));
         const unsubscribe = onSnapshot(q, querySnapshot => {
-            //console.log('querySnapshot dejo los datos de usuarios');
             setEstNoValidate(
                 querySnapshot.docs.map(doc => ({
                     id: doc.id,
@@ -47,7 +43,6 @@ export default function Asignaturas ({
         deleteDoc(docRef);
     }
 
-    //hVUUrfRfKzNkCoBI0CBAHbaJAJJ2
     //path usuario  con asignaturas 
     const pathAsig=`gestionUsuarios/${pathId}/asignaturas/${codigo}`
     //guardo el codigo de asignatura para enviar a Dar de alta
@@ -93,8 +88,7 @@ export default function Asignaturas ({
                 <RN.Pressable onPress={onDelete} style={styles.deleteButton}>
                 <AntDesign name="delete" size={24} color="white" />
                 </RN.Pressable>
-            )}
-            
+            )}    
         </RN.TouchableOpacity>
         
     )
