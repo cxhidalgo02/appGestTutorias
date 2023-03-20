@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query,} from 'firebase/firestore';
 import Tutorias from '../../components/Tutorias';
 import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
@@ -127,15 +127,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     margin: 15,
     borderRadius: 10,
-},
-  title: {
-      fontSize: 18,
-  },
-  code: {
-      fontSize: 18,
-      fontWeight: 'bold',
-  },
-  type: {
-      fontSize: 18,
 },
 });
