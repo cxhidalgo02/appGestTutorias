@@ -6,7 +6,7 @@ import { Select, CheckIcon,  NativeBaseProvider} from 'native-base';
 import { initializeApp} from "firebase/app";
 import { firebaseConfig } from '../../firebase-config';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
+import { ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
 const RegistroUsuariosScreen = (user) => {
 
