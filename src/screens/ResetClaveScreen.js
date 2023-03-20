@@ -1,31 +1,44 @@
 import * as React from 'react';
 import { firebaseConfig } from '../../firebase-config';
 import { initializeApp} from "firebase/app";
-import { getAuth, verifyPasswordResetCode, confirmPasswordReset} from 'firebase/auth'; 
+import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, Alert,} from 'react-native';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const resetClave = ({ route, navigation })=> {
 
-  const [correo, setCorreo] = React.useState('')
-  const [clave, setClave] = React.useState('')
+  const alertErrorInicio = () => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.DANGER,
+        title: 'Error',
+        textBody: 'Ingrese nuevamente su correo o registrese!',
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
+  }
+
+  const [email, setEmail] = React.useState('')
+  //const keyEmail = localStorage.getItem(`keyEmail`, keyEmail);
+  //console.log('keyEmail => ', keyEmail);
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+
+
 // RESETEAR LA CLAVE -----------------------------------------------------------------------------------------
-
-   function handleResetPassword(auth, actionCode, continueUrl, lang) {
-
-    verifyPasswordResetCode(auth, actionCode).then((email) => {
-      const accountEmail = email;
-      const newPassword = "...";
-      confirmPasswordReset(auth, actionCode, newPassword).then((resp) => {
-
-      }).catch((error) => {
-
-      });
-    }).catch((error) => {
-    });
-  }
+sendPasswordResetEmail(auth, email)
+  .then(() => {
+    // Password reset email sent!
+    // ..
+    console.log('correo => ', email);
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alertErrorInicio();
+  });
 
 
   return (
@@ -43,14 +56,10 @@ const resetClave = ({ route, navigation })=> {
               placeholder="Correo"
               textContentType="emailAddress"
               autoCapitalize='none'
-              onChangeText={(text) => setCorreo(text)}/>
+              onChangeText={(text) => setEmail(text)}/>
 
               <TouchableOpacity style={styles.button} 
-                  onPress={ () =>
-                  Alert.alert('Disculpas!!', 'Estamos trabajando', [
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ])
-                  }>
+                  onPress={ sendPasswordResetEmail }>
                 <Text style={styles.textbutton}>ENVIAR</Text>
               </TouchableOpacity>
               
@@ -125,4 +134,3 @@ const styles = StyleSheet.create({
 
 });
 export default resetClave;
-
