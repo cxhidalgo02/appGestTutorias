@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, 
-          TextInput, ScrollView, LogBox, } from 'react-native';
+          TextInput, ScrollView, LogBox,} from 'react-native';
 import { Select, CheckIcon, } from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
@@ -17,26 +17,25 @@ const InicioScreen = ({ navigation })=> {
   const [correo, setCorreo] = React.useState('');
   const [clave, setClave] = React.useState('');
   const [tipo, setTipo] = React.useState("");
-  const [createdAt, setCreatedAt] = React.useState(new Date());
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const firestore = getFirestore(app);
   const [shown, setShown] = React.useState(false);
   const switchShown = () => setShown(!shown);
 
-  const alertError = (message) => {
+  const alertErrorInicio = () => {
     try {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
         title: 'Error al iniciar sesión',
-        textBody: message 
+        textBody: 'Ingrese nuevamente su usuario y constraseña',
       })
     } catch (error) {
       console.log("No pudo mostrar el Error:  ", error);
     }
   }
 
- const handleSingIn = () =>{   
+ const handleSingIn = () =>{
     signInWithEmailAndPassword(auth, correo, clave)
     .then( (userCredential) => {      
       const user = userCredential.user;
@@ -55,12 +54,9 @@ const InicioScreen = ({ navigation })=> {
           case "Docente":
             navigation.navigate('asignaturasDocenteScreen');
             localStorage.setItem("keyUser", userUid);
-            console.log('Se ha iniciado sesion como Docente....')
-             break;
           case "Estudiante":
             navigation.navigate('asignaturasEstudiantesScreen');
             localStorage.setItem("keyUser", userUid);
-            console.log('Se ha iniciado sesion como Estudiante....')
              break;
         }
        }
@@ -68,7 +64,7 @@ const InicioScreen = ({ navigation })=> {
     })
     .catch( (error) => {
       console.log(" * ERROR * ",error)
-      alertError("Ingrese nuevamente su usuario y constraseña")
+      alertErrorInicio();
     });
   }
 
