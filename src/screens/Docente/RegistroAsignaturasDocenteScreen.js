@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { Select, CheckIcon, NativeBaseProvider, Alert} from 'native-base';
+import { Select, CheckIcon, NativeBaseProvider,} from 'native-base';
 import { doc, setDoc, getFirestore, Firestore, } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import { initializeApp} from "firebase/app";
