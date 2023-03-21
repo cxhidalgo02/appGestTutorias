@@ -102,33 +102,7 @@ export default function Navigation() {
     )
 }
 
-/*  mostaza - #D4AC0D / azul - #293774 / blanco - #FDFEFE / verde - #0E6655 / gris - #B2BABB
+/*  
+mostaza - #D4AC0D / azul - #293774 / blanco - #FDFEFE / verde - #0E6655 / gris - #B2BABB
 
-    async function getRol(uid){
-    const docRef = doc(firestore, `registroUsuarios/${user.uid}`);
-    const docCifrada = getDoc(docRef);
-    const infoFinal = docCifrada.data().rol;
-    return infoFinal;
-  }
-
-  function setUserWithFirebaseAndFirebaseRol (usuarioFirebase){
-    getRol( usuarioFirebase.uid).then((rol) => {
-      const userData ={
-        uid: usuarioFirebase.uid,
-        correo: usuarioFirebase.correo,
-        rol: rol,
-      };
-      setUsuario(userData);
-      console.log("userData final: ", userData);
-    });
-  }
-  onAuthStateChanged ( auth, (usuarioFirebase) => {
-    if (usuarioFirebase) {
-      if(!user){
-        setUserWithFirebaseAndFirebaseRol(usuarioFirebase);
-      }
-    } else {
-        setUsuario(null);
-     }
-  });
 */
