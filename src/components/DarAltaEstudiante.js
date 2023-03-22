@@ -111,6 +111,7 @@ const styles = rn.StyleSheet.create({
         borderWidth: 1,
         borderColor: "#2E86C1",
         backgroundColor:"#fff",
+        elevation: 5,
     },
     validateButton: {
         position: "absolute",
