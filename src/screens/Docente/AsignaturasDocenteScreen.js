@@ -10,7 +10,6 @@ import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
 
 const AsignaturasDocenteScreen = () => {
-  
   const [asignatura, setNuevaAsignatura] = React.useState([]);
   const navigation = useNavigation();
 
@@ -19,6 +18,7 @@ const AsignaturasDocenteScreen = () => {
   //console.log('Tetx AsignaturasScreen: ', pathId);
   //`gestionUsuarios/${pathId}/asignaturas/${codigo}`
   const consultaAsig = () =>{
+    
     const collectionRef = collection(database, `/gestionUsuarios/${pathId}/asignaturas/`);
     const q = query(collectionRef, orderBy('nombre', 'desc'));
     const setDocAsignaturas = onSnapshot(q, querySnapshot => {
