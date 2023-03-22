@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import * as rn from 'react-native';
+import { database } from '../../config/firebaseConfig';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
