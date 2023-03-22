@@ -80,6 +80,7 @@ export default function Asignaturas ({
                 <RN.Text style={styles.texttitle}>{nombre}</RN.Text>
                 <RN.Text style={styles.textsubtitle}>{codigo}</RN.Text>
                 <RN.Text style={styles.textContent}> Tipo: {tipo}</RN.Text> 
+                <RN.Text style={styles.textContent}> Path: {pathAsig}</RN.Text> 
               
                 <RN.View style={styles.btnsContiner}>
 
