@@ -6,6 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
+import { getFirestore, collection, getCountFromServer, query, where } from 'firebase/firestore';
 
 export default function ListaAsignaturasEstudiantes({
     id,
@@ -25,6 +26,23 @@ export default function ListaAsignaturasEstudiantes({
     //guardo el codigo de asignatura que seleecione
     localStorage.setItem("keyCodigoEst", id);
 
+    const pathAsig=`gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`
+
+    const consulta = () => {
+        try {
+            const collectionRef = collection(database, `/gestionUsuarios/hVUUrfRfKzNkCoBI0CBAHbaJAJJ2/asignaturas/CODTT001/tutorias`);
+            const q = query(collectionRef, where("inscripcion", "==", "true"));
+            //const snapshot = getCountFromServer(q);
+            //const snapshotResult =  snapshot.data().count;
+            console.log("Conteo: ", q);
+        } catch (error) {
+          console.log(" Error:  ", error);
+        }
+    }
+    React.useEffect(() => { 
+        consulta();
+      },[])
+
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
@@ -38,6 +56,7 @@ export default function ListaAsignaturasEstudiantes({
              <RN.Text style={styles.texttitle}>{nombre}</RN.Text>
                 <RN.Text style={styles.textsubtitle}>{codigo}</RN.Text>
                 <RN.Text style={styles.textContent}>Tipo: {tipo}</RN.Text>  
+                <RN.Text style={styles.textContent}>Path: {pathAsig}</RN.Text> 
                 
                 <RN.View style={styles.btnsContiner}>
 
