@@ -72,7 +72,9 @@ export default function ListaAsignaturasEstudiantes({
                     <RN.View style={styles.centeredView}>
                     <RN.View style={styles.modalView}>
                         <RN.Text style={styles.modalTextTitle}>INFORMACIÓN!</RN.Text>
-                        <RN.Text style={styles.modalText}>Número de tutorias:</RN.Text>
+                        <RN.Text style={styles.modalText}>Número de tutoría:</RN.Text>
+                        <RN.Text style={styles.modalText}>Tutoría inscritas:</RN.Text>
+                        <RN.Text style={styles.modalText}>Tutoría validadas:</RN.Text>
 
                         <RN.Pressable
                         style={styles.buttonClose}
