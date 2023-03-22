@@ -1,4 +1,3 @@
-
 import * as RN from 'react-native';
 import React, {useState} from 'react';
 import { FontAwesome5 } from '@expo/vector-icons'; 
