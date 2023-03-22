@@ -1,7 +1,7 @@
 export default {
   "expo": {
-    "name": "CRUD_Firebase",
-    "slug": "CRUD_Firebase",
+    "name": "appgestiontutorias",
+    "slug": "appgestiontutorias",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
