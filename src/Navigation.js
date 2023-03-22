@@ -1,13 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
-import { Pressable, StyleSheet, ImageBackground } from 'react-native';
+import { Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { firebaseConfig } from '../firebase-config';
 import { initializeApp} from "firebase/app"; 
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from 'firebase/auth'; 
-import { useState } from "react";
 
 import InicioScreen from "./screens/InicioScreen";
 import RegistroUsuariosScreen from "./screens/RegistroUsuariosScreen";
@@ -104,5 +103,4 @@ export default function Navigation() {
 
 /*  
 mostaza - #D4AC0D / azul - #293774 / blanco - #FDFEFE / verde - #0E6655 / gris - #B2BABB
-
 */
