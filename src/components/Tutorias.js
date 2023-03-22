@@ -1,7 +1,5 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import * as rn from 'react-native';
-//import { database } from '../src/fb';
-//import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -17,7 +15,6 @@ export default function Tutorias(
         aula,
         hora,
         semana,
-        fechaCreacion,
     }
 ) {
 
@@ -35,6 +32,7 @@ export default function Tutorias(
     const pathIdTut = localStorage.setItem("keyCodigoTut", id);
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
     return(
         <rn.TouchableOpacity 
@@ -62,9 +60,9 @@ export default function Tutorias(
                     </rn.Pressable>
 
                     <rn.Pressable
-                        onPress={() => alert('Reporte de asistencia a la tutoria') }
+                        onPress={() => setModalVisible(true)}
                         style={styles.btnContiner}>
-                        <FontAwesome5 name="file-download" size={25} color="black" />
+                        <AntDesign name="appstore1" size={25} color="black" />
                     </rn.Pressable>
                 </rn.View>
             </rn.View>
@@ -73,6 +71,33 @@ export default function Tutorias(
                 <AntDesign name="delete" size={24} color="white" />
                 </rn.Pressable>
             )}
+
+            <rn.View style={styles.centeredView}>
+                <rn.Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!modalVisible);
+                    }}>
+                    <rn.View style={styles.centeredView}>
+                    <rn.View style={styles.modalView}>
+                        <rn.Text style={styles.modalTextTitle}>INFORMACIÓN!</rn.Text>
+                        <rn.Text style={styles.modalText}>Estudiantes inscritos:</rn.Text>
+                        <rn.Text style={styles.modalText}>Tutorias validadas:</rn.Text>
+
+                        <rn.Pressable
+                        style={styles.buttonClose}
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <rn.Text style={styles.textButtonClose}>CERRAR</rn.Text>
+                        </rn.Pressable>
+
+                    </rn.View>
+                    </rn.View>
+                </rn.Modal>
+            </rn.View>
+
         </rn.TouchableOpacity>
     )
 }
@@ -86,6 +111,7 @@ const styles = rn.StyleSheet.create({
         borderWidth: 1,
         borderColor: "#2E86C1",
         backgroundColor:"#fff",
+        elevation: 5,
     },
     title: {
         fontSize: 18,
@@ -128,5 +154,51 @@ const styles = rn.StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#293774",
         borderRadius: 8,
+      },
+//VENTANA MODAL
+      centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        width: '100%',
+        height: '80%',
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: '#FDFEFE',
+        borderRadius: 10,
+        padding: 40,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      buttonClose: {
+        marginTop: 20,
+        borderRadius: 8,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: '#D4AC0D',
+      },
+      textButtonClose: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalTextTitle: {
+        marginBottom: 15,
+        color: '#293774',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalText: {
+        fontSize: 16,
+        color: '#293774',
+        textAlign: 'center',
+        padding: 8,
       },
 });
