@@ -1,12 +1,16 @@
-import * as React from 'react';
+
 import * as RN from 'react-native';
+import React, {useState} from 'react';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { doc, deleteDoc, addDoc } from 'firebase/firestore';
+import { doc, deleteDoc,} from 'firebase/firestore';
 import { database } from '../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
+import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
+import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+
 
 export default function Asignaturas ({
     id,
@@ -14,6 +18,7 @@ export default function Asignaturas ({
     nombre,
     tipo,
 }) {
+   
     // Id del usuario que inicia sesion
     const pathId = localStorage.getItem(`keyUser`, pathId);
 
@@ -43,12 +48,27 @@ export default function Asignaturas ({
         deleteDoc(docRef);
     }
 
+    const alertInformation = () => {
+        try {
+          Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: 'INFORMACIÓN',
+            textBody: 'Tutorias creadas:',
+            textBody: 'Número de estudiantes:',
+          })
+        } catch (error) {
+          console.log("No pudo mostrar el Error:  ", error);
+        }
+      }
+
+
     //path usuario  con asignaturas 
     const pathAsig=`gestionUsuarios/${pathId}/asignaturas/${codigo}`
     //guardo el codigo de asignatura para enviar a Dar de alta
     localStorage.setItem("keyCodigo", codigo);
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
     return(
         <RN.TouchableOpacity 
@@ -77,9 +97,9 @@ export default function Asignaturas ({
                     </RN.Pressable>
 
                     <RN.Pressable
-                        onPress={() => alert('Reporte semanal') }
+                        onPress={() => setModalVisible(true)}
                         style={styles.btnContiner}>
-                        <FontAwesome5 name="file-download" size={25} color="black" />
+                        <AntDesign name="appstore1" size={25} color="black" />
                     </RN.Pressable>
                     
                 </RN.View>
@@ -89,6 +109,32 @@ export default function Asignaturas ({
                 <AntDesign name="delete" size={24} color="white" />
                 </RN.Pressable>
             )}    
+
+            <RN.View style={styles.centeredView}>
+                <RN.Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!modalVisible);
+                    }}>
+                    <RN.View style={styles.centeredView}>
+                    <RN.View style={styles.modalView}>
+                        <RN.Text style={styles.modalTextTitle}>INFORMACIÓN!</RN.Text>
+                        <RN.Text style={styles.modalText}>Número de tutorias:</RN.Text>
+
+                        <RN.Pressable
+                        style={styles.buttonClose}
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <RN.Text style={styles.textButtonClose}>CERRAR</RN.Text>
+                        </RN.Pressable>
+
+                    </RN.View>
+                    </RN.View>
+                </RN.Modal>
+            </RN.View>
+
         </RN.TouchableOpacity>
         
     )
@@ -103,6 +149,7 @@ const styles = RN.StyleSheet.create({
         borderWidth: 1,
         borderColor: "#2E86C1",
         backgroundColor:"#fff",
+        elevation: 5,
     },
     texttitle: {
         fontSize: 18,
@@ -153,5 +200,51 @@ const styles = RN.StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#293774",
         borderRadius: 8,
+      },
+    //VENTANA MODAL
+      centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        width: '100%',
+        height: '80%',
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: '#FDFEFE',
+        borderRadius: 10,
+        padding: 40,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      buttonClose: {
+        marginTop: 20,
+        borderRadius: 8,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: '#D4AC0D',
+      },
+      textButtonClose: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalTextTitle: {
+        marginBottom: 15,
+        color: '#293774',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalText: {
+        fontSize: 16,
+        color: '#293774',
+        textAlign: 'center',
+        padding: 8,
       },
 });
