@@ -28,7 +28,7 @@ export default function ListaAsignaturasEstudiantes({
     localStorage.setItem("keyCodigoEst", id);
 
     //Path para consultas de estudiante
-    const pathAsig=`gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`
+    const pathAsig=`gestionUsuarios/${pathIdEst}/asignaturas/${codigo}`
 
     const [numTutorias, setNumTutorias] = React.useState([]);
     async function numTutoriasData() {
@@ -91,6 +91,7 @@ export default function ListaAsignaturasEstudiantes({
              <RN.Text style={styles.texttitle}>{ nombre }</RN.Text>
                 <RN.Text style={styles.textsubtitle}>{ codigo}</RN.Text>
                 <RN.Text style={styles.textContent}>Tipo: { tipo }</RN.Text>  
+                <RN.Text style={styles.textContent}>path: { pathAsig }</RN.Text>  
                 
                 <RN.View style={styles.btnsContiner}>
 
