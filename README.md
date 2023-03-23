@@ -4,17 +4,31 @@ La aplicación multiplataforma esta desarrollada en React Native conjuntamente c
 
 Esta aplicación esta desarrollada para los docentes y estudiantes de la universidad, la misma permitirá el control y gestión de las tutorias presenciales de manera mas eficiente. 
 
-### Sprints
+## MÓDULOS DE LA APLICACIÓN
 
-Sprint 1 - Prototipado.
-Sprint 2 - Desarrollo del Módulo Registro de Usuarios
-Sprint 3 – Desarrollo del Módulo de Inicio de Sesión 
-Sprint 4 – Registro de Asignatura para Tutorías
-Sprint 5 – Registro Tema de Tutoría 
-Sprint 6 – Registro del Estudiante en la Asignatura
-Sprint 7 – Validar Acceso a la Asignatura  
-Sprint 8 – Inscribirse en el tema de Tutoría Semanal
-Sprint 9 – Validar la Asistencia de Tutorías
-Sprint 10 – Generar Reportes de Asistencia a Tutorías
-Sprint 11 – Despliegue de la Aplicación 
-Sprint 12 – Entrega Final
+### REGISTRO DE USUARIOS
+El registro de usuarios se lo hace mediante un formulario utilizando los servicios de Firbase para el alamacenamiento de la informacioón, en este apartado se registra como Docente o Estudiante.
+
+### INICIO DE SESIÓN
+El inicio de sesión de se lo realiza con el usuario, contraseña y tipo, la autenticacion se la realizacon el servicio de Firbase.
+
+### REGISTRO DE ASIGNATURAS
+El docente crea la asignatura para poder registrar las tutorias en la misma.
+
+### REGISTRO DE TUTORIAS
+El docente crea las tutorias correspondente a cada asignatura.
+
+### REGISTRO DEL ESTUDIANTE EN LA ASIGNATURA
+El estudiante mediante el codigo de la asignatura que brinda el docente se registra y espera el acceso a la asignatura.
+
+### VALIDAR ACCESO A LA ASIGNATURA
+El docente valida el acceso a los estudiantes que corresponden a la asignatura para la visualizacion de las tutorias.
+
+### INSCRIPCIÓN EN EL TEMA DE TUTORIA
+El eestudiante una vez que visualice las tutorias podrá inscribirse o confirmar la asistencia a la tutoria.
+
+### VALIDAR ASISTENCIA DE TUTORIAS
+El docente validará la asistencia de todos los estudiantes que se inscribieron y asistieron a las tutorias de la asignatura.
+
+### GENERAR REPORTE DE ASISTENCIA A TUTORIAS
+El docente o estudiante podra generar un reporte de asistencias a las tutorias, vuzualizar a cuantas tutorias se inscribieron, cuantas fueron validadas, número total de tutorias, etc.
