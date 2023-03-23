@@ -36,7 +36,6 @@ export default function ListaAsignaturasEstudiantes({
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             console.log('=> ', result);
-          // operaciones con el resultado
         } catch (error) {
           console.log('Se produjo un error:', error);
         }
