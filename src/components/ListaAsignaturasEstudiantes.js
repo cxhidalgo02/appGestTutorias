@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { doc } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, size, getCountFromServer } from 'firebase/firestore';
 
 export default function ListaAsignaturasEstudiantes({
     id,
@@ -14,6 +14,7 @@ export default function ListaAsignaturasEstudiantes({
     nombre,
     tipo,
     createdAt,
+    result
 }) {
 
     const onDelete = () => {
@@ -27,6 +28,23 @@ export default function ListaAsignaturasEstudiantes({
     localStorage.setItem("keyCodigoEst", id);
 
     const pathAsig=`gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`
+
+    async function myFunction() {
+        try {
+            const collectionRef = collection(database, '/gestionUsuarios/Lt6BqAXvYxQmgf76vtke0n93aw82/asignaturas');
+            const q = query(collectionRef, where('tipo', '==', 'Complementaria'));
+            const snapshot = await getCountFromServer(q); 
+            const result = snapshot.data().count;
+            console.log('=> ', result);
+          // operaciones con el resultado
+        } catch (error) {
+          console.log('Se produjo un error:', error);
+        }
+      }
+
+    React.useEffect(() => { 
+        myFunction();   
+    },[])
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -42,6 +60,7 @@ export default function ListaAsignaturasEstudiantes({
                 <RN.Text style={styles.textsubtitle}>{codigo}</RN.Text>
                 <RN.Text style={styles.textContent}>Tipo: {tipo}</RN.Text>  
                 <RN.Text style={styles.textContent}>Path: {pathAsig}</RN.Text> 
+                <RN.Text style={styles.textContent}>Número: {}</RN.Text> 
                 
                 <RN.View style={styles.btnsContiner}>
 
