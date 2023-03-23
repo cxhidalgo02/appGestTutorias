@@ -6,7 +6,7 @@ Esta aplicación esta desarrollada para los docentes y estudiantes de la univers
 
 ### Sprints
 
-Sprint 1 - Prototipado 
+Sprint 1 - Prototipado.
 Sprint 2 - Desarrollo del Módulo Registro de Usuarios
 Sprint 3 – Desarrollo del Módulo de Inicio de Sesión 
 Sprint 4 – Registro de Asignatura para Tutorías
