@@ -27,6 +27,7 @@ export default function ListaAsignaturasEstudiantes({
     //guardo el codigo de asignatura que seleecione
     localStorage.setItem("keyCodigoEst", id);
 
+    //Path para consultas de estudiante
     const pathAsig=`gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`
 
     const [numTutorias, setNumTutorias] = React.useState([]);
@@ -90,7 +91,6 @@ export default function ListaAsignaturasEstudiantes({
              <RN.Text style={styles.texttitle}>{ nombre }</RN.Text>
                 <RN.Text style={styles.textsubtitle}>{ codigo}</RN.Text>
                 <RN.Text style={styles.textContent}>Tipo: { tipo }</RN.Text>  
-                <RN.Text style={styles.textContent}>Path: { pathAsig }</RN.Text> 
                 
                 <RN.View style={styles.btnsContiner}>
 
@@ -129,10 +129,10 @@ export default function ListaAsignaturasEstudiantes({
                                 Número de tutoría: { numTutorias }
                             </RN.Text>
                             <RN.Text style={styles.modalText}>
-                                Tutoría inscritas: { numTutoriasInscritas }
+                                Tutoría inscritas: { numTutoriasInscritas } / { numTutorias }
                              </RN.Text>
                             <RN.Text style={styles.modalText}>
-                                Tutoría validadas: { numTutoriasValidadas }
+                                Tutoría validadas: { numTutoriasValidadas } / { numTutorias }
                             </RN.Text>
 
                         <RN.Pressable
