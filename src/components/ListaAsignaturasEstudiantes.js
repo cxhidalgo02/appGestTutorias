@@ -29,20 +29,52 @@ export default function ListaAsignaturasEstudiantes({
 
     const pathAsig=`gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`
 
-    async function myFunction() {
+    const [numTutorias, setNumTutorias] = React.useState([]);
+    async function numTutoriasData() {
         try {
-            const collectionRef = collection(database, '/gestionUsuarios/Lt6BqAXvYxQmgf76vtke0n93aw82/asignaturas');
-            const q = query(collectionRef, where('tipo', '==', 'Complementaria'));
+            const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`);
+            const q = query(collectionRef);
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
-            console.log('=> ', result);
+            setNumTutorias(result);
+            //console.log('# Tutorias => ', result);
+        } catch (error) {
+          //console.log('Se produjo un error:', error);
+        }
+    }
+
+    const [numTutoriasInscritas, setNumTutoriasInscritas] = React.useState([]);
+    async function tutoriasInscritasData() {
+        try {
+            const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`);
+            const q = query(collectionRef, where('inscripcion', '==', 'true'));
+            const snapshot = await getCountFromServer(q); 
+            const result = snapshot.data().count;
+            setNumTutoriasInscritas(result);
+            //console.log('# Tutorias inscritas => ', result);
         } catch (error) {
           console.log('Se produjo un error:', error);
         }
-      }
+    }
+
+    const [numTutoriasValidadas, setNumTutoriasValidadas] = React.useState([]);
+    async function tutoriasValidadasData() {
+        try {
+            const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/${codigo}/tutorias/`);
+            const q = query(collectionRef, where('validada', '==', 'true'));
+            const snapshot = await getCountFromServer(q); 
+            const result = snapshot.data().count;
+            setNumTutoriasValidadas(result);
+            //console.log('# Tutorias Validadas => ', result);
+        } catch (error) {
+          console.log('Se produjo un error:', error);
+        }
+    }
 
     React.useEffect(() => { 
-        myFunction();   
+        numTutoriasData();  
+        tutoriasInscritasData(); 
+        tutoriasValidadasData();
     },[])
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
@@ -55,11 +87,10 @@ export default function ListaAsignaturasEstudiantes({
             activeOpacity={0.8}
         >
              <RN.View style={styles.productContainer} >     
-             <RN.Text style={styles.texttitle}>{nombre}</RN.Text>
-                <RN.Text style={styles.textsubtitle}>{codigo}</RN.Text>
-                <RN.Text style={styles.textContent}>Tipo: {tipo}</RN.Text>  
-                <RN.Text style={styles.textContent}>Path: {pathAsig}</RN.Text> 
-                <RN.Text style={styles.textContent}>Número: {}</RN.Text> 
+             <RN.Text style={styles.texttitle}>{ nombre }</RN.Text>
+                <RN.Text style={styles.textsubtitle}>{ codigo}</RN.Text>
+                <RN.Text style={styles.textContent}>Tipo: { tipo }</RN.Text>  
+                <RN.Text style={styles.textContent}>Path: { pathAsig }</RN.Text> 
                 
                 <RN.View style={styles.btnsContiner}>
 
@@ -93,10 +124,16 @@ export default function ListaAsignaturasEstudiantes({
                     }}>
                     <RN.View style={styles.centeredView}>
                     <RN.View style={styles.modalView}>
-                        <RN.Text style={styles.modalTextTitle}>INFORMACIÓN!</RN.Text>
-                        <RN.Text style={styles.modalText}>Número de tutoría:</RN.Text>
-                        <RN.Text style={styles.modalText}>Tutoría inscritas:</RN.Text>
-                        <RN.Text style={styles.modalText}>Tutoría validadas:</RN.Text>
+                        <RN.Text style={styles.modalTextTitle}>REPORTE DE TUTORIAS</RN.Text>
+                            <RN.Text style={styles.modalText}>
+                                Número de tutoría: { numTutorias }
+                            </RN.Text>
+                            <RN.Text style={styles.modalText}>
+                                Tutoría inscritas: { numTutoriasInscritas }
+                             </RN.Text>
+                            <RN.Text style={styles.modalText}>
+                                Tutoría validadas: { numTutoriasValidadas }
+                            </RN.Text>
 
                         <RN.Pressable
                         style={styles.buttonClose}
