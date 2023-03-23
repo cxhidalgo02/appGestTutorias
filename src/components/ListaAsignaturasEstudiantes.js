@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { collection, onSnapshot, query, where, size, getCountFromServer } from 'firebase/firestore';
+import { collection, query, where, getCountFromServer } from 'firebase/firestore';
 
 export default function ListaAsignaturasEstudiantes({
     id,
@@ -40,7 +40,7 @@ export default function ListaAsignaturasEstudiantes({
             setNumTutorias(result);
             //console.log('# Tutorias => ', result);
         } catch (error) {
-          //console.log('Se produjo un error:', error);
+          console.log('Se produjo un error:', error);
         }
     }
 
@@ -126,13 +126,13 @@ export default function ListaAsignaturasEstudiantes({
                     <RN.View style={styles.modalView}>
                         <RN.Text style={styles.modalTextTitle}>REPORTE DE TUTORIAS</RN.Text>
                             <RN.Text style={styles.modalText}>
-                                Número de tutoría: { numTutorias }
+                                Número de tutorías: { numTutorias }
                             </RN.Text>
                             <RN.Text style={styles.modalText}>
-                                Tutoría inscritas: { numTutoriasInscritas } / { numTutorias }
+                                Tutorías inscritas: { numTutoriasInscritas } / { numTutorias }
                              </RN.Text>
                             <RN.Text style={styles.modalText}>
-                                Tutoría validadas: { numTutoriasValidadas } / { numTutorias }
+                                Tutorías validadas: { numTutoriasValidadas } / { numTutorias }
                             </RN.Text>
 
                         <RN.Pressable

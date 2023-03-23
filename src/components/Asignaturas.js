@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { doc, deleteDoc,} from 'firebase/firestore';
 import { database } from '../../config/firebaseConfig';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, getCountFromServer } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
@@ -66,6 +66,24 @@ export default function Asignaturas ({
     //guardo el codigo de asignatura para enviar a Dar de alta
     localStorage.setItem("keyCodigo", codigo);
 
+    const [numTutorias, setNumTutorias] = React.useState([]);
+    async function numTutoriasData() {
+        try {
+            const collectionRef = collection(database, `gestionUsuarios/${pathId}/asignaturas/${codigo}/tutorias/`);
+            const q = query(collectionRef);
+            const snapshot = await getCountFromServer(q); 
+            const result = snapshot.data().count;
+            setNumTutorias(result);
+            //console.log('# Tutorias D => ', result);
+        } catch (error) {
+          //console.log('Se produjo un error:', error);
+        }
+    }
+
+    React.useEffect(() => { 
+        numTutoriasData();  
+    },[])
+
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
@@ -122,7 +140,9 @@ export default function Asignaturas ({
                     <RN.View style={styles.centeredView}>
                     <RN.View style={styles.modalView}>
                         <RN.Text style={styles.modalTextTitle}>INFORMACIÓN!</RN.Text>
-                        <RN.Text style={styles.modalText}>Número de tutorias:</RN.Text>
+                        <RN.Text style={styles.modalText}>
+                            Número de tutorías: { numTutorias }
+                        </RN.Text>
 
                         <RN.Pressable
                         style={styles.buttonClose}
