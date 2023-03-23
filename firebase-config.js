@@ -1,8 +1,8 @@
 export const firebaseConfig = {
-  apiKey: "AIzaSyB2xt4xhFWRMaZcK46hN4VwsbJE-kMM1Zg",
-  authDomain: "databasefirebase-9a17e.firebaseapp.com",
-  projectId: "databasefirebase-9a17e",
-  storageBucket: "databasefirebase-9a17e.appspot.com",
-  messagingSenderId: "24528262519",
-  appId: "1:24528262519:web:7fa5719ab8efa2785cbd72"
+  apiKey: "AIzaSyDOYzrFZbgV_esj5GTGae57BTJZ9Mopg3c",
+  authDomain: "datafirebase-a1747.firebaseapp.com",
+  projectId: "datafirebase-a1747",
+  storageBucket: "datafirebase-a1747.appspot.com",
+  messagingSenderId: "45438180320",
+  appId: "1:45438180320:web:86a7fee80063e1bca3e985"
   };
