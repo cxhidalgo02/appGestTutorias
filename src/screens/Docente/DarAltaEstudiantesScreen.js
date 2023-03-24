@@ -37,7 +37,7 @@ const DarAltaEstudiantesScreen = () => {
 
         //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
         const collectionRef1 = collection(database, `gestionUsuarios/${UidEst}/asignaturas/`);
-        const q = query(collectionRef1, where('codigo','==',`${pathCodAsig}`) );
+        const q = query(collectionRef1, where('codigo','==',`${pathCodAsig}`));
         //const q = query(collection(database, `gestionUsuarios/${UidEst}/asignaturas/`), where('validada','==','false'));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -68,29 +68,6 @@ const DarAltaEstudiantesScreen = () => {
         });
 
       }
-
-    const consultaEstudiantes = () => {
-      //consulta de estudiantes
-      const collectionRef = collection(database, 'gestionUsuarios');
-      const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
-      const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
-          setNuevoEstudiante(
-              querySnapshot.docs.map(doc => ({
-                  id: doc.id,
-                  cedula: doc.data().cedula,
-                  nombres: doc.data().nombres,
-                  apellidos: doc.data().apellidos,
-                  correo: doc.data().correo,
-              }))
-            );
-          });
-      return unsubscribe2;
-  }
-
-  React.useEffect(() => { 
-    consultaAsignaturas();
-    //consultaEstudiantes(); 
-  },[])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
