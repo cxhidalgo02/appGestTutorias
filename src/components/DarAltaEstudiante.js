@@ -40,36 +40,13 @@ export default function DarAltaEstudiante(
     const pathAsig =`gestionUsuarios/${id}/asignaturas/`
     localStorage.setItem("keySql", pathAsig);
     //console.log('Path SQL => ', pathAsig); 
-    React.useEffect(() => { 
-    const consultaAsignaturas = () => {
-        //consulta de asignaturas
-        const collectionRef1 = collection(database, `gestionUsuarios/${UidEst}/asignaturas/`);
-        const q = query(collectionRef1, where('id','==',`${pathIdAsig}`), where('validada','==','false') );
-        const unsubscribe = onSnapshot(q, querySnapshot => { 
-            setNuevaAsignatura(
-                querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    codigo: doc.data().codigo,
-                    nombre: doc.data().nombre,
-                    tipo: doc.data().tipo,
-                    validada: doc.data().validada,
-                }))
-              );
-            });
-            console.log('Asignatura => ', asignatura);
-        return unsubscribe;
-    }
-},[])
-    
 
-    
     const onValidate = () => {
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
             updateDoc(docRef, {validada: 'true' });
     }    
 
     const [isValidateActive, setIsValidateActive] = React.useState(false);
-
     return(
         <rn.TouchableOpacity 
             onLongPress={() => setIsValidateActive(true)}
@@ -87,7 +64,7 @@ export default function DarAltaEstudiante(
                     <MaterialIcons name="mail" size={18} color="black" /> - {correo} 
                 </rn.Text>
                 <rn.Text> 
-                    <MaterialIcons name="mail" size={18} color="black" /> URL: {pathEstudiante} 
+                    <MaterialIcons name="mail" size={18} color="black" /> Path: {pathEstudiante} 
                 </rn.Text>
 
             </rn.View>

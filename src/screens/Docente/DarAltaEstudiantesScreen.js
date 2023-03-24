@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, query, where, orderBy, and } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, orderBy, and, getDoc, getDocs } from 'firebase/firestore';
 import DarAltaEstudiante from '../../components/DarAltaEstudiante';
 import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -17,9 +17,10 @@ const DarAltaEstudiantesScreen = () => {
   const pathId = localStorage.getItem(`keyUser`, pathId);
   // Id del estudiante
   const UidEst = localStorage.getItem(`keyEst`, UidEst);
-  console.log('UidEst => ', UidEst);
+  //console.log('UidEst => ', UidEst);
   // Id de la asignatura que seleccionar el usuario
   const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
+  console.log(pathCodAsig);
   //recuperar el path del estudiante con asignaturas del componente dar de alta estudiant
     const pathEstudiante = localStorage.getItem(`keyEstAsig`, pathEstudiante);
   //console.log('Dar de alta estudiantes Screen: ',pathEstudiante);
@@ -32,30 +33,63 @@ const DarAltaEstudiantesScreen = () => {
   //console.log('pathEstudiante => ', pathEstudiante);
   //console.log('pathIdAsig => ', pathIdAsig);
 
+  async function consultaAsignaturas() {
 
+        //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
+        const collectionRef1 = collection(database, `gestionUsuarios/${UidEst}/asignaturas/`);
+        const q = query(collectionRef1, where('codigo','==',`${pathCodAsig}`) );
+        //const q = query(collection(database, `gestionUsuarios/${UidEst}/asignaturas/`), where('validada','==','false'));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          const result = doc.data().validada;
+          console.log(doc.id, " => ", result);
+          //console.log(doc.id, " => ", doc.data());
+          if ( result ==  'false') {
+            console.log('DATOS DEL ESTUDIANTE');
 
-  const consultaEstudiantes = () => {
-    //consulta de estudiantes
-    const collectionRef = collection(database, 'gestionUsuarios');
-    const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
-    const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
-        setNuevoEstudiante(
-            querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                cedula: doc.data().cedula,
-                nombres: doc.data().nombres,
-                apellidos: doc.data().apellidos,
-                correo: doc.data().correo,
-            }))
-          );
+            const collectionRef = collection(database, 'gestionUsuarios');
+            const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
+            const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
+                setNuevoEstudiante(
+                    querySnapshot.docs.map(doc => ({
+                        id: doc.id,
+                        cedula: doc.data().cedula,
+                        nombres: doc.data().nombres,
+                        apellidos: doc.data().apellidos,
+                        correo: doc.data().correo,
+                    }))
+                  );
+                });
+
+          } else {
+            console.log('NO HAY DATOS');
+          }
         });
-    return unsubscribe2;
 
-}
+      }
+
+    const consultaEstudiantes = () => {
+      //consulta de estudiantes
+      const collectionRef = collection(database, 'gestionUsuarios');
+      const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
+      const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
+          setNuevoEstudiante(
+              querySnapshot.docs.map(doc => ({
+                  id: doc.id,
+                  cedula: doc.data().cedula,
+                  nombres: doc.data().nombres,
+                  apellidos: doc.data().apellidos,
+                  correo: doc.data().correo,
+              }))
+            );
+          });
+      return unsubscribe2;
+  }
 
   React.useEffect(() => { 
-    //consultaAsignaturas();
-    consultaEstudiantes(); 
+    consultaAsignaturas();
+    //consultaEstudiantes(); 
   },[])
 
   return (
