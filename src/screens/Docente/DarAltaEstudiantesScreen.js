@@ -10,9 +10,6 @@ import localStorage from 'react-native-expo-localstorage';
 const DarAltaEstudiantesScreen = () => {
 
   const [estudiante, setNuevoEstudiante] = React.useState([]);
-  const [asignatura, setNuevaAsignatura] = React.useState([]);
-  const [estudianteAlta, setNuevoEstudianteAlta] = React.useState([]);
-  ///gestionUsuarios/hVUUrfRfKzNkCoBI0CBAHbaJAJJ2/asignaturas/CODTT001
   // Id del usuario que inicia sesion
   const pathId = localStorage.getItem(`keyUser`, pathId);
   // Id del estudiante
@@ -27,47 +24,47 @@ const DarAltaEstudiantesScreen = () => {
 
   const pathIdAsig = localStorage.getItem(`keyCodigo`, pathIdAsig);
 
-  //console.log('pathId => ', pathId);
-  //console.log('UidEst => ', UidEst);
-  //console.log('pathCodAsig => ', pathCodAsig);
-  //console.log('pathEstudiante => ', pathEstudiante);
-  //console.log('pathIdAsig => ', pathIdAsig);
-
   async function consultaAsignaturas() {
-
         //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
         const collectionRef1 = collection(database, `gestionUsuarios/${UidEst}/asignaturas/`);
-        const q = query(collectionRef1, where('codigo','==',`${pathCodAsig}`));
+        const q = query(collectionRef1, where('codigo','==',`${pathCodAsig}`) );
         //const q = query(collection(database, `gestionUsuarios/${UidEst}/asignaturas/`), where('validada','==','false'));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           const result = doc.data().validada;
           console.log(doc.id, " => ", result);
-          //console.log(doc.id, " => ", doc.data());
+          console.log(doc.id, " => ", doc.data());
           if ( result ==  'false') {
-            console.log('DATOS DEL ESTUDIANTE');
-
-            const collectionRef = collection(database, 'gestionUsuarios');
-            const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
-            const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
-                setNuevoEstudiante(
-                    querySnapshot.docs.map(doc => ({
-                        id: doc.id,
-                        cedula: doc.data().cedula,
-                        nombres: doc.data().nombres,
-                        apellidos: doc.data().apellidos,
-                        correo: doc.data().correo,
-                    }))
-                  );
-                });
-
+          console.log('DATOS DEL ESTUDIANTE');
           } else {
             console.log('NO HAY DATOS');
           }
         });
-
       }
+
+async function consultaEstudiantes() {
+    const collectionRef = collection(database, 'gestionUsuarios');
+    const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
+    const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
+        setNuevoEstudiante(
+            querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                cedula: doc.data().cedula,
+                nombres: doc.data().nombres,
+                apellidos: doc.data().apellidos,
+                correo: doc.data().correo,
+            }))
+          );
+        });
+    return unsubscribe2;
+}
+
+
+  React.useEffect(() => { 
+    consultaAsignaturas();
+    consultaEstudiantes();
+  },[])
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
