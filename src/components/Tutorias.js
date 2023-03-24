@@ -55,7 +55,7 @@ export default function Tutorias(
 
                     <rn.View style={styles.btnsContiner}>
                     <rn.Pressable 
-                        onPress={() => alert('Lista de estudiantes que asistiran a la tutoria')}
+                        onPress={() => navigation.navigate('validarAsistenciaScreen')}
                         style={styles.btnContiner}>
                         <FontAwesome5 name="user-check" size={25} color="black" />
                     </rn.Pressable>
