@@ -35,7 +35,7 @@ const TutoriasDocenteScreen = () => {
     const collectionRef = collection(database, `gestionUsuarios/${pathId}/asignaturas/${pathCodAsig}/tutorias`);
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const setDocTutorias = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot dejo los datos de tutorias');
+        //console.log('querySnapshot dejo los datos de tutorias');
         setNuevaTutoria(
             querySnapshot.docs.map(doc => ({
                 id: doc.id,
