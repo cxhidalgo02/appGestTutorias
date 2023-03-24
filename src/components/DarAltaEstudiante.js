@@ -1,7 +1,7 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
 import { database } from '../../config/firebaseConfig';
-import { doc, updateDoc, collection, query, where, onSnapshot} from 'firebase/firestore';
+import { doc, updateDoc,} from 'firebase/firestore';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -16,30 +16,17 @@ export default function DarAltaEstudiante(
         correo,
     }
 ) {
-    
-    const [asignatura, setNuevaAsignatura] = React.useState([]);
-    
+    //Uid del usuario que inicio sesion    
     const pathUid =  localStorage.getItem(`keyUser`, pathUid);
-    //console.log('pathUid A-U=> ', pathUid);
-
     //UID del estudiante 
     const UidEst = id;
     localStorage.setItem("keyEst", UidEst);
-    //console.log('UidEstudent => ', UidEst);
-
     //codigo de las asignatura de seleccione
     const pathIdAsig = localStorage.getItem(`keyCodigo`, pathIdAsig);
-    //console.log('pathIdAsignatura => ', pathIdAsig);
-
     //path de estudiante con asignaturas y codigo
     const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}`
     localStorage.setItem("keyEstAsig", pathEstudiante);
     //console.log('Tetx DarAltaEstudiante: ', pathEstudiante);
-
-    //SQL PARA CONSULTAR LAS ASIGNATURAS DEL ESTUDIANTE
-    const pathAsig =`gestionUsuarios/${id}/asignaturas/`
-    localStorage.setItem("keySql", pathAsig);
-    //console.log('Path SQL => ', pathAsig); 
 
     const onValidate = () => {
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
