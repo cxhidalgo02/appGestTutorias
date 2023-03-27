@@ -18,6 +18,7 @@ import RegistroAsignaturasDocenteScreen from "./screens/Docente/RegistroAsignatu
 import TutoriasDocenteScreen from "./screens/Docente//TutoriasDocenteScreen";
 import RegistroTutoriasDocenteScreen from "./screens/Docente/RegistroTutoriasDocenteScreen";
 import DarAltaEstudiantesScreen from "./screens/Docente/DarAltaEstudiantesScreen";
+import ValidarAsistenciaScreen from "./screens/Docente/ValidarAsistenciaScreen";
 // SCREEN DE ESTUDIANTES
 import AsignaturasEstudiantesScreen from "./screens/Estudiante/AsignaturasEstudiantesScreen";
 import RegistroAsignaturasEstudianteScreen from "./screens/Estudiante/RegistroAsignaturasEstudianteScreen";
@@ -48,7 +49,8 @@ function MyStack( usuerio ) {
       <Stack.Screen name="tutoriasDocenteScreen" component={TutoriasDocenteScreen} options={{title:'Lista tutorias',}} />
       <Stack.Screen name="registroTutoriasDocenteScreen" component={RegistroTutoriasDocenteScreen} options={{title:'Agregar tutoria',}} />
       <Stack.Screen name="darAltaEstudiantesScreen" component={DarAltaEstudiantesScreen} options={{title:'Lista estudiantes',}} />
-      
+      <Stack.Screen name="validarAsistenciaScreen" component={ValidarAsistenciaScreen} options={{title:'Lista estudiantes',}} />
+
       <Stack.Screen name="asignaturasEstudiantesScreen" component={AsignaturasEstudiantesScreen} options={{title:'Lista asignaturas',}} />
       <Stack.Screen name="registroAsignaturasEstudianteScreen" component={RegistroAsignaturasEstudianteScreen} options={{title:'Agregar asignatura',}} />
       <Stack.Screen name="tutoriasEstudianteScreen" component={TutoriasEstudianteScreen} options={{title:'Lista tutorias',}} />
