@@ -20,11 +20,12 @@ export default function TutoriasEstudiante(
 ) {    
     // Id del usuario que inicia sesion
     const pathIdEst = localStorage.getItem(`keyUser`, pathIdEst);
-    // Id de la asignatura que seleccionar el usuario
-    const pathCodAsigEst = localStorage.getItem(`keyCodigoEst`, pathCodAsigEst);
-    // id de la tutoria que selecciona el usuario
+    // Id de la asignatura que seleccionar el estudiante
+    const pathCodAsigEst = localStorage.getItem(`keyCodAsigEst`, pathCodAsigEst);
+    // id de la tutoria que selecciona el estudiante
+    const pathCodTutEst = localStorage.setItem("keyCodTutEst", id);
+
     const pathTutoria = `gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`;
-    const pathIdTutEst= localStorage.setItem("keyCodigoTut", id);
 
      const onInscribirse = () => {
         const docRef = doc(database, `/gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`);
@@ -42,17 +43,25 @@ export default function TutoriasEstudiante(
             <rn.Text style={styles.title}> {tema} </rn.Text>
             <rn.Text style={styles.subtitle}> {id} </rn.Text>
             <rn.Text style={styles.descrip}>
-            <AntDesign name="tag" size={18} color="black" /> - {descripcion} </rn.Text>
+                <AntDesign name="tag" size={18} color="black" /> - {descripcion} 
+            </rn.Text>
             <rn.Text style={styles.information}> 
-                <AntDesign name="right" size={16} color="black" /> Aula: {aula} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Aula: {aula} 
+            </rn.Text>
             <rn.Text style={styles.information}> 
-                <AntDesign name="right" size={16} color="black" /> Hora: {hora} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Hora: {hora} 
+            </rn.Text>
             <rn.Text style={styles.information}>
                 <AntDesign name="right" size={16} color="black" /> {semana} </rn.Text>
             <rn.Text style={styles.information}>
-                <AntDesign name="right" size={16} color="black" /> Inscrito: {inscripcion} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Inscrito: {inscripcion} 
+            </rn.Text>
             <rn.Text style={styles.information}>
-                <AntDesign name="right" size={16} color="black" /> Validada: {validada} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Validada: {validada} 
+            </rn.Text>
+            <rn.Text style={styles.information}>
+                <AntDesign name="right" size={16} color="black" /> Path: {pathTutoria} 
+            </rn.Text>
 
             <rn.View style={styles.btnsContiner}>
                 {isValidateActive && (
