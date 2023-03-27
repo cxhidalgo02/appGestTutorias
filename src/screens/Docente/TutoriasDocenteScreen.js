@@ -25,14 +25,15 @@ const TutoriasDocenteScreen = () => {
   },[navigation])
 
   // Id del usuario que inicia sesion
-  const pathId = localStorage.getItem(`keyUser`, pathId);
-  // Id de la asignatura que seleccionar el usuario
-  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
-  // Id de la tutoria que seleccionar el usuario  
-  const pathIdTut = localStorage.getItem(`keyCodigoTut`, pathIdTut);
+  //const pathId = localStorage.getItem(`keyUser`, pathId);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  // Id de la asignatura que seleccionar el docente
+  const pathIdAsigDoc = localStorage.getItem(`keyCodAsigDoc`, pathIdAsigDoc);
+  // Id de la tutoria que seleccionar el docente 
+  const pathIdTutDoc = localStorage.getItem(`keyCodTutDoc`, pathIdTutDoc);
 
-  const consultaTut = () => {
-    const collectionRef = collection(database, `gestionUsuarios/${pathId}/asignaturas/${pathCodAsig}/tutorias`);
+  const consultaTutorias = () => {
+    const collectionRef = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsigDoc}/tutorias`);
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const setDocTutorias = onSnapshot(q, querySnapshot => {
         //console.log('querySnapshot dejo los datos de tutorias');
@@ -53,7 +54,7 @@ const TutoriasDocenteScreen = () => {
 
   }
   React.useEffect(() => {
-    consultaTut();
+    consultaTutorias();
     },[])
 
   return (
