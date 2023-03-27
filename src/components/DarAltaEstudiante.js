@@ -16,17 +16,13 @@ export default function DarAltaEstudiante(
         correo,
     }
 ) {
-    //Uid del usuario que inicio sesion    
-    const pathUid =  localStorage.getItem(`keyUser`, pathUid);
-    //UID del estudiante 
-    const UidEst = id;
-    localStorage.setItem("keyEst", UidEst);
+    //Uid del estudiante que encuentre en la base de datos    
+    const pathIdEstData = localStorage.setItem("keyUserEstData", id);
     //codigo de las asignatura de seleccione
-    const pathIdAsig = localStorage.getItem(`keyCodigo`, pathIdAsig);
+    const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
     //path de estudiante con asignaturas y codigo
     const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}`
-    localStorage.setItem("keyEstAsig", pathEstudiante);
-    //console.log('Tetx DarAltaEstudiante: ', pathEstudiante);
+    //localStorage.setItem("keyEstAsig", pathEstudiante);
 
     const onValidate = () => {
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
@@ -53,7 +49,6 @@ export default function DarAltaEstudiante(
                 <rn.Text> 
                     <MaterialIcons name="mail" size={18} color="black" /> Path: {pathEstudiante} 
                 </rn.Text>
-
             </rn.View>
             
             {isValidateActive && (
