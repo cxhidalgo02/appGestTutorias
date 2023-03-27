@@ -19,64 +19,29 @@ export default function Asignaturas ({
 }) {
    
     // Id del usuario que inicia sesion
-    const pathId = localStorage.getItem(`keyUser`, pathId);
-
-    //ESTUDIANTE
-    const [estudiante, setEstNoValidate] = React.useState([]);
-    React.useEffect(() => {
-        const collectionRef = collection(database, 'gestionUsuarios');
-        const q = query(collectionRef, where("tipo","==","Estudiante"));
-        const unsubscribe = onSnapshot(q, querySnapshot => {
-            setEstNoValidate(
-                querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    cedula: doc.data().cedula,
-                    nombres: doc.data().nombres,
-                    tipo: doc.data().tipo,
-                    validada: doc.data().validada,
-                }))
-                
-              );
-            }
-            );
-        return unsubscribe;
-    },[])
+    const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
     const onDelete = () => {
         const docRef = doc(database, 'asignaturaTutorias', id);
         deleteDoc(docRef);
     }
 
-    const alertInformation = () => {
-        try {
-          Dialog.show({
-            type: ALERT_TYPE.WARNING,
-            title: 'INFORMACIÓN',
-            textBody: 'Tutorias creadas:',
-            textBody: 'Número de estudiantes:',
-          })
-        } catch (error) {
-          console.log("No pudo mostrar el Error:  ", error);
-        }
-      }
-
-
     //path usuario  con asignaturas 
-    const pathAsig=`gestionUsuarios/${pathId}/asignaturas/${codigo}`
+    const pathAsig=`gestionUsuarios/${pathIdDoc}/asignaturas/${codigo}`
     //guardo el codigo de asignatura para enviar a Dar de alta
-    localStorage.setItem("keyCodigo", codigo);
+    const pathIdAsigDoc = localStorage.setItem("keyCodAsigDoc", codigo);
 
     const [numTutorias, setNumTutorias] = React.useState([]);
     async function numTutoriasData() {
         try {
-            const collectionRef = collection(database, `gestionUsuarios/${pathId}/asignaturas/${codigo}/tutorias/`);
+            const collectionRef = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/${codigo}/tutorias/`);
             const q = query(collectionRef);
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             setNumTutorias(result);
             //console.log('# Tutorias D => ', result);
         } catch (error) {
-          //console.log('Se produjo un error:', error);
+          console.log('ERROR => ', error);
         }
     }
 
