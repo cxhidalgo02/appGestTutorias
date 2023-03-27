@@ -13,13 +13,12 @@ const AsignaturasDocenteScreen = () => {
   const [asignatura, setNuevaAsignatura] = React.useState([]);
   const navigation = useNavigation();
 
-  //nnLosuPGVMRnFcthuMH9p40mkr43
-  const pathId = localStorage.getItem(`keyUser`, pathId);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   //console.log('Tetx AsignaturasScreen: ', pathId);
   //`gestionUsuarios/${pathId}/asignaturas/${codigo}`
   const consultaAsig = () =>{
     
-    const collectionRef = collection(database, `/gestionUsuarios/${pathId}/asignaturas/`);
+    const collectionRef = collection(database, `/gestionUsuarios/${pathIdDoc}/asignaturas/`);
     const q = query(collectionRef, orderBy('nombre', 'desc'));
     const setDocAsignaturas = onSnapshot(q, querySnapshot => {
         setNuevaAsignatura(
