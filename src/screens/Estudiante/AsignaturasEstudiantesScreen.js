@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import ListaAsignaturasEstudiantes from '../../components/ListaAsignaturasEstudiantes';
+import AsignaturasEstudiantes from '../../components/AsignaturasEstudiantes';
 import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
@@ -25,7 +25,7 @@ const AsignaturasEstudiantesScreen = () => {
   })
   },[navigation])
 
-  const pathIdEst = localStorage.getItem(`keyUser`, pathIdEst);
+  const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
   const consultaAsig = () =>{
     const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/`);
     const q = query(collectionRef, where('validada', '==','true'));
@@ -64,7 +64,7 @@ const AsignaturasEstudiantesScreen = () => {
             MIS ASIGNATURAS
           </Text>
           <ScrollView style={styles.scrollAsig}>
-          {asignaturasEstudiante.map(asignaturasEstudiante => <ListaAsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
+          {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
           </ScrollView>
         </View>
     </SafeAreaView>
