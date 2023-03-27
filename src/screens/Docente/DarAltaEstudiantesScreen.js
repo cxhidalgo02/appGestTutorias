@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, query, where, orderBy, and, getDoc, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, getDocs } from 'firebase/firestore';
 import DarAltaEstudiante from '../../components/DarAltaEstudiante';
 import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -11,27 +10,18 @@ const DarAltaEstudiantesScreen = () => {
 
   const [estudiante, setNuevoEstudiante] = React.useState([]);
   // Id del usuario que inicia sesion
-  const pathId = localStorage.getItem(`keyUser`, pathId);
-  // Id del estudiante
-  const UidEst = localStorage.getItem(`keyEst`, UidEst);
-  //console.log('UidEst => ', UidEst);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  // Id del estudiante que se trae de dar de alata estudiante screen
+  const pathIdEstData = localStorage.getItem(`keyUserEstData`, pathIdEstData);
   // Id de la asignatura que seleccionar el usuario
-  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
-  console.log(pathCodAsig);
-  //recuperar el path del estudiante con asignaturas del componente dar de alta estudiant
-    const pathEstudiante = localStorage.getItem(`keyEstAsig`, pathEstudiante);
-  //console.log('Dar de alta estudiantes Screen: ',pathEstudiante);
-
-  const pathIdAsig = localStorage.getItem(`keyCodigo`, pathIdAsig);
+  const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
 
   async function consultaAsignaturas() {
         //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
-        const collectionRef1 = collection(database, `gestionUsuarios/${UidEst}/asignaturas/`);
-        const q = query(collectionRef1, where('codigo','==',`${pathCodAsig}`) );
-        //const q = query(collection(database, `gestionUsuarios/${UidEst}/asignaturas/`), where('validada','==','false'));
+        const collectionRef1 = collection(database, `gestionUsuarios/${pathIdEstData}/asignaturas/`);
+        const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
           const result = doc.data().validada;
           console.log(doc.id, " => ", result);
           console.log(doc.id, " => ", doc.data());
