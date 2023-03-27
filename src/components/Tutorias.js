@@ -25,12 +25,13 @@ export default function Tutorias(
     }
 
     // Id del usuario que inicia sesion
-    const pathId = localStorage.getItem(`keyUser`, pathId);
+    const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
     // Id de la asignatura que seleccionar el usuario
-    const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
+    const pathIdAsigDoc = localStorage.getItem(`keyCodAsigDoc`, pathIdAsigDoc);
     // id de la tutoria que selecciona el usuario
-    const pathTutoria = `gestionUsuarios/${pathId}/asignaturas/${pathCodAsig}/tutorias/${id}`
-    const pathIdTut = localStorage.setItem("keyCodigoTut", id);
+    const pathIdTutDoc = localStorage.setItem("keyCodTutDoc", id);
+    //path de tutorias
+    const pathTutoria = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsigDoc}/tutorias/${id}`
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -47,11 +48,17 @@ export default function Tutorias(
                 <rn.Text style={styles.descrip}>
                     <MaterialCommunityIcons name="watermark" size={18} color="black" /> - {descripcion} </rn.Text>
                 <rn.Text style={styles.information}> 
-                    <Entypo name="chevron-right" size={18} color="black" /> Aula: {aula} </rn.Text>
+                    <Entypo name="chevron-right" size={18} color="black" /> Aula: {aula} 
+                 </rn.Text>
                 <rn.Text style={styles.information}> 
-                    <Entypo name="chevron-right" size={18} color="black" /> Hora: {hora} </rn.Text>
+                    <Entypo name="chevron-right" size={18} color="black" /> Hora: {hora} 
+                </rn.Text>
                 <rn.Text style={styles.information}>
-                    <Entypo name="chevron-right" size={18} color="black" /> {semana} </rn.Text>
+                    <Entypo name="chevron-right" size={18} color="black" /> {semana} 
+                </rn.Text>
+                <rn.Text style={styles.information}>
+                    <Entypo name="chevron-right" size={18} color="black" /> Path: {pathTutoria} 
+                </rn.Text>
 
                     <rn.View style={styles.btnsContiner}>
                     <rn.Pressable 
