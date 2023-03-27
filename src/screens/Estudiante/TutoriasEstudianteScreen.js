@@ -13,17 +13,17 @@ const TutoriasDocenteScreen = () => {
   const navigation = useNavigation();
 
   // Id del usuario que inicia sesion
-  const pathIdEst = localStorage.getItem(`keyUser`, pathIdEst);
+  const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
   // Id de la asignatura que seleccionar el usuario
-  const pathCodAsigEst = localStorage.getItem(`keyCodigoEst`, pathCodAsigEst);
+  const pathCodAsigEst = localStorage.getItem(`keyCodAsigEst`, pathCodAsigEst);
   // Id de la tutoria que seleccionar el usuario  
-  const pathIdTut = localStorage.getItem(`keyCodigoTut`, pathIdTut);
+  const pathCodTutEst = localStorage.getItem(`keyCodTutEst`, pathCodTutEst);
 
   React.useEffect(() => {
     const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias`);
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(q, querySnapshot => {
-        console.log('querySnapshot dejo los datos de tutorias');
+        //console.log('querySnapshot dejo los datos de tutorias');
         setNuevaTutoria(
             querySnapshot.docs.map(doc => ({
                 id: doc.id,
