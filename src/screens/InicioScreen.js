@@ -53,10 +53,12 @@ const InicioScreen = ({ navigation })=> {
         switch(tipo){
           case "Docente":
             navigation.navigate('asignaturasDocenteScreen');
-            localStorage.setItem("keyUser", userUid);
+            //localStorage.setItem("keyUser", userUid);
+            localStorage.setItem("keyUserDoc", userUid);
           case "Estudiante":
             navigation.navigate('asignaturasEstudiantesScreen');
-            localStorage.setItem("keyUser", userUid);
+            //localStorage.setItem("keyUser", userUid);
+            localStorage.setItem("keyUserEst", userUid);
              break;
         }
        }
