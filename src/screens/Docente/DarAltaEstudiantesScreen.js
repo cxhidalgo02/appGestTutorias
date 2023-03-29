@@ -22,18 +22,20 @@ const DarAltaEstudiantesScreen = () => {
         const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-          const result = doc.data().validada;
-          console.log(doc.id, " => ", result);
+          const resNombre = doc.data().nombre;
+          const resTipo = doc.data().tipo;
+          const resValidada = doc.data().validada;
+          console.log(doc.id, " => ", resNombre, " => ", resTipo, " => ", resValidada);
           console.log(doc.id, " => ", doc.data());
-          if ( result ==  'false') {
+          if ( resValidada ==  'false') {
           console.log('DATOS DEL ESTUDIANTE');
           } else {
             console.log('NO HAY DATOS');
           }
         });
-      }
+  }
 
-async function consultaEstudiantes() {
+  async function consultaEstudiantes() {
     const collectionRef = collection(database, 'gestionUsuarios');
     const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
     const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
