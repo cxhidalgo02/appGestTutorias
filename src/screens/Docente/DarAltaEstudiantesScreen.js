@@ -16,46 +16,84 @@ const DarAltaEstudiantesScreen = () => {
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
 
+ // const [nombreRes, setNombreAsig] = React.useState('')
+ // const [tipoRes, setTipoAsig] = React.useState('')
+
+ //Funcion para hacer la consulta ala base de datos de la asignanura a la que se inscribio el estudiante
+  async function consultaAsignaturasDocente() {
+    try {
+      //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
+      const collectionRef1 = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/`);
+      const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setNombreData = doc.data().nombre;
+        setTipoData = doc.data().tipo;
+        console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, " => ", setNombreData, " => ", setTipoData);
+        //console.log(doc.id, " => ", doc.data());
+      });
+    } catch (error) {
+      console.log('ERROR =>', error);
+    }
+}
+
   async function consultaAsignaturas() {
-        //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
-        const collectionRef1 = collection(database, `gestionUsuarios/${pathIdEstData}/asignaturas/`);
-        const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          const resNombre = doc.data().nombre;
-          const resTipo = doc.data().tipo;
-          const resValidada = doc.data().validada;
-          console.log(doc.id, " => ", resNombre, " => ", resTipo, " => ", resValidada);
-          console.log(doc.id, " => ", doc.data());
-          if ( resValidada ==  'false') {
-          console.log('DATOS DEL ESTUDIANTE');
-          } else {
-            console.log('NO HAY DATOS');
-          }
-        });
+    try {
+      //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
+      const collectionRef1 = collection(database, `gestionUsuarios/${pathIdEstData}/asignaturas/`);
+      const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
+      const querySnapshot = await getDocs(q);
+       querySnapshot.forEach((doc) => {
+        const resNombre = doc.data().nombre;
+        const resTipo = doc.data().tipo;
+        const resValidada = doc.data().validada;
+        console.log('DATOS ASIGNATURA DEL ESTUDIANTE =>', doc.id, " => ", resNombre, " => ", resTipo, " => ", resValidada);
+        //console.log(doc.id, " => ", doc.data());
+      });
+    } catch (error) {
+      console.log('ERROR =>', error);
+    }
+
   }
 
+  async function updateAsignaturaEst() {
+    //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
+    try {
+      const docRef = doc(database, `gestionUsuarios/${pathIdEstData}/asignaturas/${pathIdAsig}`);
+      updateDoc(docRef, {nombre: resNombre, tipo: resTipo });
+    } catch (error) {
+      console.log('ERROR =>', error);
+    }
+}
+
   async function consultaEstudiantes() {
-    const collectionRef = collection(database, 'gestionUsuarios');
-    const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
-    const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
-        setNuevoEstudiante(
-            querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                cedula: doc.data().cedula,
-                nombres: doc.data().nombres,
-                apellidos: doc.data().apellidos,
-                correo: doc.data().correo,
-            }))
-          );
-        });
-    return unsubscribe2;
+    try {
+      const collectionRef = collection(database, 'gestionUsuarios');
+      const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
+      const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
+          setNuevoEstudiante(
+              querySnapshot.docs.map(doc => ({
+                  id: doc.id,
+                  cedula: doc.data().cedula,
+                  nombres: doc.data().nombres,
+                  apellidos: doc.data().apellidos,
+                  correo: doc.data().correo,
+              }))
+            );
+          });
+      return unsubscribe2;
+    } catch (error) {
+      console.log('ERROR =>', error);
+    }
+
 }
 
 
   React.useEffect(() => { 
+    consultaAsignaturasDocente();
     consultaAsignaturas();
     consultaEstudiantes();
+    //updateAsignaturaEst();
   },[])
 
   return (
