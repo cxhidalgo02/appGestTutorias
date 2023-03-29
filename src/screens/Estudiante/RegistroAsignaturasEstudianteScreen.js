@@ -15,16 +15,21 @@ const RegistroAsignaturasEstudianteScreen = () => {
   const navigations = useNavigation();
   const [codigo, setCodigoAsignatura] = React.useState('')
   const onSend = async () => {
-    const docu = {
-      codigo: codigo,
-      createdAt: new Date(),
-      nombre: '',
-      tipo: '',
-      validada: 'false',
-    };
-    const docRef = doc(database, pathUrl, docu.codigo);
-    await setDoc(docRef, (docu) );
-    navigations.goBack();
+    try {
+      const docu = {
+        codigo: codigo,
+        createdAt: new Date(),
+        nombre: '',
+        tipo: '',
+        validada: 'false',
+      };
+      const docRef = doc(database, pathUrl, docu.codigo);
+      await setDoc(docRef, (docu) );
+      navigations.goBack();
+      
+    } catch (error) {
+      console.log('ERROR => ',error);
+    }
   }
     
   return (
