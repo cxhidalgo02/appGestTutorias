@@ -53,8 +53,8 @@ const AsignaturasEstudiantesScreen = () => {
    }
 
   React.useEffect(() => {
-    alertWelcome(); 
     consultaAsig();
+    alertWelcome(); 
   },[])
 
   return (
