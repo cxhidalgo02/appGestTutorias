@@ -5,10 +5,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { doc, deleteDoc,} from 'firebase/firestore';
 import { database } from '../../config/firebaseConfig';
-import { collection, onSnapshot, query, where, getCountFromServer } from 'firebase/firestore';
+import { collection, query,  getCountFromServer } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
-import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import {Alert,} from 'react-native';
 
 
 export default function Asignaturas ({
