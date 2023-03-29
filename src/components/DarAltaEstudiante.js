@@ -1,6 +1,5 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { database } from '../../config/firebaseConfig';
 import { doc, updateDoc, Firestore,} from 'firebase/firestore';
 import { FontAwesome5 } from '@expo/vector-icons'; 
@@ -23,7 +22,7 @@ export default function DarAltaEstudiante(
     const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
     //path de estudiante con asignaturas y codigo
     const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}`
-    //localStorage.setItem("keyEstAsig", pathEstudiante);
+
 
     const onValidate = () => {
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
