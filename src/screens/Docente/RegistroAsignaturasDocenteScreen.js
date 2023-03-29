@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { Select, CheckIcon, NativeBaseProvider,} from 'native-base';
 import { doc, setDoc, getFirestore, Firestore, } from 'firebase/firestore';
+import { database } from '../../../config/firebaseConfig';
 import localStorage from 'react-native-expo-localstorage';
 import { initializeApp} from "firebase/app";
 import { firebaseConfig } from '../../../firebase-config';
@@ -20,22 +21,29 @@ const RegistroAsignaturasDocenteScreen = () => {
   const [createdAt, setCreatedAt] = React.useState(new Date())
 
   //  Id del usuario que inicia sesion - nnLosuPGVMRnFcthuMH9p40mkr43
-  const pathId = localStorage.getItem(`keyUser`, pathId);
-  console.log('path Id RegistroAsignatura',pathId);
-  // Id de la asignatura que seleccionar el usuario
-  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  //console.log('path Id RegistroAsignatura',pathIdDoc);
 
+  const pathUrl = `gestionUsuarios/${pathIdDoc}/asignaturas/`;
+  const navigations = useNavigation();
   const onSend = async () => {
-    const docRef = doc(Firestore, `gestionUsuarios/${pathId}/asignaturas/${codigo}`); 
-    setDoc(docRef, {
-      id: codigo,
-      nombre: nombre,
-      codigo: codigo,
-      tipo: tipo,
-      createdAt: createdAt
-    });
-    alertRecordAsignatura();
-    navigation.goBack();
+    try {
+      const docu = {
+        id: codigo,
+        nombre: nombre,
+        codigo: codigo,
+        tipo: tipo,
+        createdAt: createdAt
+      };
+      const docRef = doc(database, pathUrl, docu.codigo);
+      await setDoc(docRef, (docu) );
+      alertRecordAsignatura();
+      navigation.goBack();
+      
+    } catch (error) {
+      console.log('ERROR =>', error);
+    }
+
   }
 
   const alertRecordAsignatura = () => {
