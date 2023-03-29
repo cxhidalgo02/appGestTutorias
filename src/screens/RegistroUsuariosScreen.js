@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, ImageBackground} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
 import { Select, CheckIcon,  NativeBaseProvider} from 'native-base';
@@ -22,8 +22,7 @@ const RegistroUsuariosScreen = (user) => {
   const [clave, setClave] = React.useState('')
   const [tipo, setTipo] = React.useState("")
   const [createdAt, setCreatedAt] = React.useState(new Date())
- 
-  //CREAR USUARIO  ---------------------------------------------------------------------------------------------
+
     const onSend = async () => {
       const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave
         ).then((userCredential) => {
