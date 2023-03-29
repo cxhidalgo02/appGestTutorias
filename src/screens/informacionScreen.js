@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, ImageBackground } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
 const image = {uri: 'https://www.utpl.edu.ec/sites/default/files/archivos/marca%20UTPL%202018-03.png'};
@@ -12,7 +12,7 @@ const informacionScreen = ({ route, navigation })  => {
           <AntDesign name="appstore-o" size={35} color="#293774" style={{marginBottom: 25}} />
 
           <Text style={styles.textContent}>
-              La aplicación esta desarrollada para el control y gestión de tutorias presenciales
+              La aplicación esta desarrollada para el control y seguimiento de tutorias presenciales a los estudiantes
           </Text>
           
         </View>
