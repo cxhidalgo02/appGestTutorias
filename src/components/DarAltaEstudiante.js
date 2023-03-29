@@ -1,7 +1,8 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { database } from '../../config/firebaseConfig';
-import { doc, updateDoc,} from 'firebase/firestore';
+import { doc, updateDoc, Firestore,} from 'firebase/firestore';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -28,6 +29,19 @@ export default function DarAltaEstudiante(
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
             updateDoc(docRef, {validada: 'true' });
     }    
+
+    //const navigation = useNavigation();
+    /*const addAsignaturaEstudiante = async () => {
+        const docRef = doc(Firestore, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`); 
+        setDoc(docRef, {
+          id: codigo,
+          nombre: nombre,
+          codigo: codigo,
+          tipo: tipo,
+          createdAt: createdAt
+        });
+       // navigation.goBack();
+    }*/
 
     const [isValidateActive, setIsValidateActive] = React.useState(false);
     return(
