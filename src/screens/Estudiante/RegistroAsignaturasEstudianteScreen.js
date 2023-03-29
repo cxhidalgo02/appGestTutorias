@@ -2,10 +2,18 @@ import * as React from 'react';
 import { setDoc, doc } from 'firebase/firestore';
 import { database } from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
+import localStorage from 'react-native-expo-localstorage';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 
-const RegistroAsignaturasEstudianteScreen = ({ path="gestionUsuarios/hVUUrfRfKzNkCoBI0CBAHbaJAJJ2/asignaturas" }) => { 
+const RegistroAsignaturasEstudianteScreen = () => { 
   
+  const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
+  //const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
+  //console.log( 'Inicio sesion estudiante UID =>', pathIdEst );
+
+  const pathUrl = `gestionUsuarios/${pathIdEst}/asignaturas/`;
+  //console.log('=> ', pathUrl);
+
   const navigations = useNavigation();
   const [codigo, setCodigoAsignatura] = React.useState('')
   const onSend = async () => {
@@ -14,11 +22,11 @@ const RegistroAsignaturasEstudianteScreen = ({ path="gestionUsuarios/hVUUrfRfKzN
       validada: 'false',
       createdAt: new Date(),
     };
-    const docRef = doc(database, path, docu.codigo);
+    const docRef = doc(database, pathUrl, docu.codigo);
     await setDoc(docRef, (docu) );
     navigations.goBack();
-  }
-  
+  }//FALTA NOMBRE Y TIPO
+    
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
