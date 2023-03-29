@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import TutoriasEstudiante from '../../components/TutoriasEstudiante';
@@ -10,7 +9,6 @@ import localStorage from 'react-native-expo-localstorage';
 const TutoriasDocenteScreen = () => {
 
   const [tutoria, setNuevaTutoria] = React.useState([]);
-  const navigation = useNavigation();
 
   // Id del usuario que inicia sesion
   const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
@@ -23,7 +21,6 @@ const TutoriasDocenteScreen = () => {
     const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias`);
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(q, querySnapshot => {
-        //console.log('querySnapshot dejo los datos de tutorias');
         setNuevaTutoria(
             querySnapshot.docs.map(doc => ({
                 id: doc.id,
