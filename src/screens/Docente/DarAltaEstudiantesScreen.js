@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, query, where, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import DarAltaEstudiante from '../../components/DarAltaEstudiante';
 import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -16,9 +16,6 @@ const DarAltaEstudiantesScreen = () => {
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
 
- // const [nombreRes, setNombreAsig] = React.useState('')
- // const [tipoRes, setTipoAsig] = React.useState('')
-
  //Funcion para hacer la consulta ala base de datos de la asignanura a la que se inscribio el estudiante
   async function consultaAsignaturasDocente() {
     try {
@@ -27,11 +24,12 @@ const DarAltaEstudiantesScreen = () => {
       const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        setNombreData = doc.data().nombre;
-        setTipoData = doc.data().tipo;
-        console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, " => ", setNombreData, " => ", setTipoData);
+        const setNombreAsignatura = doc.data().nombre;
+        const setTipoAsignatura = doc.data().tipo;
+        console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, " => ", setNombreAsignatura, " => ", setTipoAsignatura);
         //console.log(doc.id, " => ", doc.data());
       });
+      console.log('DATA => ', setNombreAsignatura, ', ', setTipoAsignatura);
     } catch (error) {
       console.log('ERROR =>', error);
     }
@@ -59,8 +57,10 @@ const DarAltaEstudiantesScreen = () => {
   async function updateAsignaturaEst() {
     //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
     try {
+      console.log('DATA UPDATE => ', setNombreAsignatura, ', ', setTipoAsignatura);
       const docRef = doc(database, `gestionUsuarios/${pathIdEstData}/asignaturas/${pathIdAsig}`);
-      updateDoc(docRef, {nombre: resNombre, tipo: resTipo });
+      updateDoc(docRef, {nombre: setNombreAsignatura, tipo: setTipoAsignatura });
+      console.log('SQL EJECUTADO...');
     } catch (error) {
       console.log('ERROR =>', error);
     }
@@ -93,7 +93,7 @@ const DarAltaEstudiantesScreen = () => {
     consultaAsignaturasDocente();
     consultaAsignaturas();
     consultaEstudiantes();
-    //updateAsignaturaEst();
+    updateAsignaturaEst();
   },[])
 
   return (
