@@ -7,12 +7,10 @@ import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, Scro
 
 const RegistroAsignaturasEstudianteScreen = () => { 
   
+  //UID del estudiante que inicia sesion
   const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
-  //const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
-  //console.log( 'Inicio sesion estudiante UID =>', pathIdEst );
-
+  //pat path con el UID del estudiante que inica sesion y crea el documento y coleccion
   const pathUrl = `gestionUsuarios/${pathIdEst}/asignaturas/`;
-  //console.log('=> ', pathUrl);
 
   const navigations = useNavigation();
   const [codigo, setCodigoAsignatura] = React.useState('')
