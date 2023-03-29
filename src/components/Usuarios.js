@@ -3,7 +3,7 @@ import * as rn from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
-import {useState} from 'react';
+import { useState } from 'react';
 
 export default function Usuarios(
     {
