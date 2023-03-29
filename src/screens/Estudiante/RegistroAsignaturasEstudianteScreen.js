@@ -17,13 +17,15 @@ const RegistroAsignaturasEstudianteScreen = () => {
   const onSend = async () => {
     const docu = {
       codigo: codigo,
-      validada: 'false',
       createdAt: new Date(),
+      nombre: '',
+      tipo: '',
+      validada: 'false',
     };
     const docRef = doc(database, pathUrl, docu.codigo);
     await setDoc(docRef, (docu) );
     navigations.goBack();
-  }//FALTA NOMBRE Y TIPO
+  }
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
