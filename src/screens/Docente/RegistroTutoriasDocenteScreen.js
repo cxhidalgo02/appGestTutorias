@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import { database } from '../../../config/firebaseConfig';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
@@ -32,33 +33,37 @@ const RegistroTutoriasDocenteScreen = () => {
   const [semana, setSemana] = React.useState("")
   const [createdAt, setCreatedAt] = React.useState('')
 
-  const pathId = localStorage.getItem(`keyUser`, pathId);
-  console.log('Tetx RegistroTutoriasScreen: ', pathId);
-  const pathAsig = `gestionUsuarios/${pathId}/asignaturas`;
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el usuario
-  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
-  console.log('Tetx RegistroTutoriasScreen: ', pathCodAsig);
+  const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
+  //console.log('UID codigo Asig para Tut: ', pathIdAsig);
 
+  const pathUrl  = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsig}/tutorias/`;
   const onSend = async () => {
-    const docRef = doc(firestore, `gestionUsuarios/${pathId}/asignaturas/${pathCodAsig}/tutorias/${codigo}`);
-    setDoc(docRef, {
-      codigo: codigo,
-      tema: tema, 
-      descripcion: descripcion,
-      aula: aula,
-      hora: hora,
-      semana: semana,
-      createdAt: createdAt
-    });
-    alertRecordTutoria();
-    navigation.goBack();
+    try {
+      const docu = {
+        codigo: codigo,
+        tema: tema, 
+        descripcion: descripcion,
+        aula: aula,
+        hora: hora,
+        semana: semana,
+        createdAt: createdAt
+      };
+      const docRef = doc(database, pathUrl, docu.codigo);
+      await setDoc(docRef, (docu) );
+      alertRecordTutoria();
+      navigation.goBack();
+    } catch (error) {
+      console.log('ERROR => ',error);
+    }
   }
 
   const alertRecordTutoria = () => {
     try {
       Dialog.show({
         type: ALERT_TYPE.SUCCESS,
-        title: 'Asignatura Registrada Correctamente',
+        title: 'Tutoria Registrada Correctamente',
       })
     } catch (error) {
       console.log("No pudo mostrar el Error:  ", error);
