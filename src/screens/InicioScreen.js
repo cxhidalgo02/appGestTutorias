@@ -27,7 +27,7 @@ const InicioScreen = ({ navigation })=> {
     try {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
-        title: 'Error al iniciar sesión',
+        title: 'Error de inicio de sesión',
         textBody: 'Ingrese nuevamente su usuario y constraseña',
       })
     } catch (error) {

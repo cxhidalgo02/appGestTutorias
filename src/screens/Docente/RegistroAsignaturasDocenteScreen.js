@@ -41,6 +41,7 @@ const RegistroAsignaturasDocenteScreen = () => {
       navigation.goBack();
       
     } catch (error) {
+      alertErrorAsignatura();
       console.log('ERROR =>', error);
     }
 
@@ -50,7 +51,7 @@ const RegistroAsignaturasDocenteScreen = () => {
     try {
       Dialog.show({
         type: ALERT_TYPE.SUCCESS,
-        title: 'Asignatura Registrada Correctamente',
+        title: 'Asignatura registrada',
       })
     } catch (error) {
       console.log("No pudo mostrar el Error:  ", error);
@@ -61,7 +62,7 @@ const RegistroAsignaturasDocenteScreen = () => {
     try {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
-        title: 'Error al Registrar la Asignatura',
+        title: 'Error al registrar la asignatura',
       })
     } catch (error) {
       console.log("No pudo mostrar el Error:  ", error);

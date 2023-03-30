@@ -55,6 +55,7 @@ const RegistroTutoriasDocenteScreen = () => {
       alertRecordTutoria();
       navigation.goBack();
     } catch (error) {
+      alertErrorTutoria();
       console.log('ERROR => ',error);
     }
   }
@@ -63,7 +64,7 @@ const RegistroTutoriasDocenteScreen = () => {
     try {
       Dialog.show({
         type: ALERT_TYPE.SUCCESS,
-        title: 'Tutoria Registrada Correctamente',
+        title: 'Tutoria registrada',
       })
     } catch (error) {
       console.log("No pudo mostrar el Error:  ", error);
@@ -74,7 +75,7 @@ const RegistroTutoriasDocenteScreen = () => {
     try {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
-        title: 'Error al Registrar la Asignatura',
+        title: 'Error al registrar la tutoria',
       })
     } catch (error) {
       console.log("No pudo mostrar el Error:  ", error);

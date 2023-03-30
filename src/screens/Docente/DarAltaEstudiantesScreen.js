@@ -19,23 +19,23 @@ const DarAltaEstudiantesScreen = () => {
  //Funcion para hacer la consulta ala base de datos de la asignanura a la que se inscribio el estudiante
   async function consultaAsignaturasDocente() {
     try {
+
       //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
       const collectionRef1 = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/`);
       const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        const setNombreAsignatura = doc.data().nombre;
-        const setTipoAsignatura = doc.data().tipo;
+        setNombreAsignatura = doc.data().nombre;
+        setTipoAsignatura = doc.data().tipo;
         console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, " => ", setNombreAsignatura, " => ", setTipoAsignatura);
         //console.log(doc.id, " => ", doc.data());
       });
-      console.log('DATA => ', setNombreAsignatura, ', ', setTipoAsignatura);
     } catch (error) {
       console.log('ERROR =>', error);
     }
 }
 
-  async function consultaAsignaturas() {
+  async function consultaAsignaturasEstudiante() {
     try {
       //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
       const collectionRef1 = collection(database, `gestionUsuarios/${pathIdEstData}/asignaturas/`);
@@ -91,9 +91,9 @@ const DarAltaEstudiantesScreen = () => {
 
   React.useEffect(() => { 
     consultaAsignaturasDocente();
-    consultaAsignaturas();
+    //consultaAsignaturasEstudiante();
     consultaEstudiantes();
-    updateAsignaturaEst();
+    //updateAsignaturaEst();
   },[])
 
   return (
