@@ -16,25 +16,6 @@ const DarAltaEstudiantesScreen = () => {
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
 
- //Funcion para hacer la consulta ala base de datos de la asignanura a la que se inscribio el estudiante
-  async function consultaAsignaturasDocente() {
-    try {
-
-      //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
-      const collectionRef1 = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/`);
-      const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setNombreAsignatura = doc.data().nombre;
-        setTipoAsignatura = doc.data().tipo;
-        console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, " => ", setNombreAsignatura, " => ", setTipoAsignatura);
-        //console.log(doc.id, " => ", doc.data());
-      });
-    } catch (error) {
-      console.log('ERROR =>', error);
-    }
-}
-
   async function consultaAsignaturasEstudiante() {
     try {
       //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
@@ -53,18 +34,6 @@ const DarAltaEstudiantesScreen = () => {
     }
 
   }
-
-  async function updateAsignaturaEst() {
-    //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
-    try {
-      console.log('DATA UPDATE => ', setNombreAsignatura, ', ', setTipoAsignatura);
-      const docRef = doc(database, `gestionUsuarios/${pathIdEstData}/asignaturas/${pathIdAsig}`);
-      updateDoc(docRef, {nombre: setNombreAsignatura, tipo: setTipoAsignatura });
-      console.log('SQL EJECUTADO...');
-    } catch (error) {
-      console.log('ERROR =>', error);
-    }
-}
 
   async function consultaEstudiantes() {
     try {
@@ -86,11 +55,11 @@ const DarAltaEstudiantesScreen = () => {
       console.log('ERROR =>', error);
     }
 
-}
+  }
 
 
   React.useEffect(() => { 
-    consultaAsignaturasDocente();
+    //consultaAsignaturasDocente();
     //consultaAsignaturasEstudiante();
     consultaEstudiantes();
     //updateAsignaturaEst();
