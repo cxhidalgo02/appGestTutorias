@@ -1,7 +1,7 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
 import { database } from '../../config/firebaseConfig';
-import { doc, updateDoc, Firestore,} from 'firebase/firestore';
+import { doc, updateDoc, Firestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -16,17 +16,49 @@ export default function DarAltaEstudiante(
         correo,
     }
 ) {
-    //Uid del estudiante que encuentre en la base de datos    
-    const pathIdEstData = localStorage.setItem("keyUserEstData", id);
+    //Uid del estudiante que encuentre en la base de datos   (id) 
+    const pathIdEstData = localStorage.setItem("keyUserEstData", id); //console.log('UID del estudiante = ', id);
+    //Uid del docente que inicia sesion   (id) 
+    const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc); //console.log('UID del docente =', pathIdDoc);
     //codigo de las asignatura de seleccione
     const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
     //path de estudiante con asignaturas y codigo
     const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}`
 
 
+
+
+    const [isDataN, setIsDataN] = React.useState('');
+    const [isDataT, setIsDataT] = React.useState('');
+   //Funcion para hacer la consulta ala base de datos de la asignanura a la que se inscribio el estudiante
+    async function consultaAsignaturasDocente() {
+      try {
+        //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
+        const collectionRef1 = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/`);
+        const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          setIsDataN(doc.data().nombre);
+          setIsDataT(doc.data().tipo);
+          //setNombreAsignatura = doc.data().nombre;
+          //setTipoAsignatura = doc.data().tipo;
+          console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
+          //console.log(doc.id, " => ", doc.data());
+        })
+         // console.log('DATA UPDATE => ', isDataN, isDataT);
+  
+      } catch (error) {
+        console.log('ERROR =>', error);
+      }
+  }
+
+  React.useEffect(() => { 
+    consultaAsignaturasDocente();
+  },[])
+
     const onValidate = () => {
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
-            updateDoc(docRef, {validada: 'true' });
+            updateDoc(docRef, {nombre: isDataN, tipo: isDataT,  validada: 'true' });
     }    
 
     //const navigation = useNavigation();
