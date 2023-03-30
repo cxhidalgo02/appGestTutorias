@@ -54,6 +54,7 @@ const InicioScreen = ({ navigation })=> {
           case "Docente":
             navigation.navigate('asignaturasDocenteScreen');
             localStorage.setItem("keyUserDoc", userUid);
+            break;
           case "Estudiante":
             navigation.navigate('asignaturasEstudiantesScreen');
             localStorage.setItem("keyUserEst", userUid);
