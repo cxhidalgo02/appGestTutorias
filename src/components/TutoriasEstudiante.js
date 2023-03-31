@@ -19,13 +19,14 @@ export default function TutoriasEstudiante(
     }
 ) {    
     // Id del usuario que inicia sesion
-    const pathIdEst = localStorage.getItem(`keyUser`, pathIdEst);
+    const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
     // Id de la asignatura que seleccionar el estudiante
-    const pathCodAsigEst = localStorage.getItem(`keyCodAsigEst`, pathCodAsigEst);
+    const pathCodAsigEst = localStorage.getItem(`keyCodAsigEst`, pathCodAsigEst); 
     // id de la tutoria que selecciona el estudiante
     const pathCodTutEst = localStorage.setItem("keyCodTutEst", id);
 
     const pathTutoria = `gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`;
+    console.log('E Inscripcion Tutoria - pathTutoria => ',pathTutoria);
 
      const onInscribirse = () => {
         const docRef = doc(database, `/gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`);
@@ -58,9 +59,6 @@ export default function TutoriasEstudiante(
             </rn.Text>
             <rn.Text style={styles.information}>
                 <AntDesign name="right" size={16} color="black" /> Validada: {validada} 
-            </rn.Text>
-            <rn.Text style={styles.information}>
-                <AntDesign name="right" size={16} color="black" /> Path: {pathTutoria} 
             </rn.Text>
 
             <rn.View style={styles.btnsContiner}>
