@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { database } from '../../../config/firebaseConfig';
-import { collection, onSnapshot, query, where, orderBy, and, getDoc, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, } from 'firebase/firestore';
 import ValidarAsistencia from '../../components/ValidarAsistencia';
 import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -10,18 +10,9 @@ const ValidarAsistenciaScreen = () => {
 
   const [estudiante, setNuevoEstudiante] = React.useState([]);
   // Id del usuario que inicia sesion
-  const pathId = localStorage.getItem(`keyUser`, pathId);
-  // Id del estudiante
-  const UidEst = localStorage.getItem(`keyEst`, UidEst);
-  // Id de la asignatura que seleccionar el usuario
-  const pathCodAsig = localStorage.getItem(`keyCodigo`, pathCodAsig);
-  //recuperar el path del estudiante con asignaturas del componente dar de alta estudiant
-  const pathEstudiante = localStorage.getItem(`keyEstAsig`, pathEstudiante);
-  //console.log('Dar de alta estudiantes Screen: ',pathEstudiante);
-  
-  //tutoria seleccionada
-  const pathCodTut = localStorage.getItem(`keyCodigoTut`, pathCodTut);
-  console.log('Codigo T => ', pathCodTut);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  // Id del estudiante que se trae de dar de alata estudiante screen
+  const pathIdEstData = localStorage.getItem(`keyUserEstData`, pathIdEstData);
   
   async function consultaEstudiantes() {
     const collectionRef = collection(database, 'gestionUsuarios');
