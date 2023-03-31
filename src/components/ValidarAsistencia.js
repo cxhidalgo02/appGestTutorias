@@ -17,25 +17,18 @@ export default function ValidarAsistencia(
     }
 ) {
     
-    //UID del usuario
-    const pathUid =  localStorage.getItem(`keyUser`, pathUid);
-
-    //UID del estudiante 
-    const UidEst = id;
-    localStorage.setItem("keyEst", UidEst);
-
+    //UID del usuario (id)
     //codigo de las asignatura de seleccione
-    const pathIdAsig = localStorage.getItem(`keyCodigo`, pathIdAsig);
+    const pathIdAsigDoc = localStorage.getItem(`keyCodAsigDoc`, pathIdAsigDoc);
+     //tutoria seleccionada
+    const pathCodTutDoc = localStorage.getItem(`keyCodTutDoc`, pathCodTutDoc);
 
     //path de estudiante con asignaturas y codigo
-    const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}/tutorias`
-    localStorage.setItem("keyEstAsig", pathEstudiante);
-
-    //tutoria seleccionada
-    const pathCodTut = localStorage.getItem(`keyCodigoTut`, pathCodTut);
+    const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsigDoc}/tutorias/${pathCodTutDoc}`
+    console.log('D Validar asistencia - pathEstudiante = > ', pathEstudiante);
 
     const onValidate = () => {
-        const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}/tutorias/${pathCodTut}`);
+        const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsigDoc}/tutorias/${pathCodTutDoc}`);
                 updateDoc(docRef, {validada: 'true' });
         }   
 
@@ -56,7 +49,6 @@ export default function ValidarAsistencia(
                 <rn.Text> 
                     <MaterialIcons name="mail" size={18} color="black" /> - {correo} 
                 </rn.Text>
-
             </rn.View>
             
             {isValidateActive && (
