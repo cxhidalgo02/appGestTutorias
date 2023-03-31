@@ -25,9 +25,6 @@ export default function DarAltaEstudiante(
     //path de estudiante con asignaturas y codigo
     const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}`
 
-
-
-
     const [isDataN, setIsDataN] = React.useState('');
     const [isDataT, setIsDataT] = React.useState('');
    //Funcion para hacer la consulta ala base de datos de la asignanura a la que se inscribio el estudiante
