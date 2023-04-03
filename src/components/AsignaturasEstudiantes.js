@@ -52,7 +52,6 @@ export default function AsignaturasEstudiantes({
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             setNumTutoriasInscritas(result);
-            //console.log('# Tutorias inscritas => ', result);
         } catch (error) {
           console.log('Se produjo un error:', error);
         }
@@ -66,7 +65,6 @@ export default function AsignaturasEstudiantes({
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             setNumTutoriasValidadas(result);
-            //console.log('# Tutorias Validadas => ', result);
         } catch (error) {
           console.log('Se produjo un error:', error);
         }
