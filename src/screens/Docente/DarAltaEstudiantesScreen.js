@@ -16,25 +16,6 @@ const DarAltaEstudiantesScreen = () => {
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
 
-  async function consultaAsignaturasEstudiante() {
-    try {
-      //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
-      const collectionRef1 = collection(database, `gestionUsuarios/${pathIdEstData}/asignaturas/`);
-      const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
-      const querySnapshot = await getDocs(q);
-       querySnapshot.forEach((doc) => {
-        const resNombre = doc.data().nombre;
-        const resTipo = doc.data().tipo;
-        const resValidada = doc.data().validada;
-        console.log('DATOS ASIGNATURA DEL ESTUDIANTE =>', doc.id, " => ", resNombre, " => ", resTipo, " => ", resValidada);
-        //console.log(doc.id, " => ", doc.data());
-      });
-    } catch (error) {
-      console.log('ERROR =>', error);
-    }
-
-  }
-
   async function consultaEstudiantes() {
     try {
       const collectionRef = collection(database, 'gestionUsuarios');
@@ -59,10 +40,7 @@ const DarAltaEstudiantesScreen = () => {
 
 
   React.useEffect(() => { 
-    //consultaAsignaturasDocente();
-    //consultaAsignaturasEstudiante();
     consultaEstudiantes();
-    //updateAsignaturaEst();
   },[])
 
   return (
