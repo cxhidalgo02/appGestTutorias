@@ -22,7 +22,6 @@ const RegistroAsignaturasDocenteScreen = () => {
 
   //  Id del usuario que inicia sesion - nnLosuPGVMRnFcthuMH9p40mkr43
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
-  //console.log('path Id RegistroAsignatura',pathIdDoc);
 
   const pathUrl = `gestionUsuarios/${pathIdDoc}/asignaturas/`;
   const navigations = useNavigation();
