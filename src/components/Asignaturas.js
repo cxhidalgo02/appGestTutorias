@@ -27,6 +27,7 @@ export default function Asignaturas ({
 
     //path usuario  con asignaturas 
     const pathAsig=`gestionUsuarios/${pathIdDoc}/asignaturas/${codigo}`
+    console.log('D Asignaturas docente - pathAsig => ', pathAsig);
     //guardo el codigo de asignatura para enviar a Dar de alta
     const pathIdAsigDoc = localStorage.setItem("keyCodAsigDoc", codigo);
 
@@ -61,7 +62,6 @@ export default function Asignaturas ({
                 <RN.Text style={styles.texttitle}>{nombre}</RN.Text>
                 <RN.Text style={styles.textsubtitle}>{codigo}</RN.Text>
                 <RN.Text style={styles.textContent}> Tipo: {tipo}</RN.Text> 
-                <RN.Text style={styles.textContent}> Path: {pathAsig}</RN.Text> 
               
                 <RN.View style={styles.btnsContiner}>
 
