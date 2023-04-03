@@ -14,8 +14,7 @@ const AsignaturasDocenteScreen = () => {
   const navigation = useNavigation();
 
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
-  //console.log('Tetx AsignaturasScreen: ', pathId);
-  //`gestionUsuarios/${pathId}/asignaturas/${codigo}`
+
   const consultaAsig = () =>{
     
     const collectionRef = collection(database, `/gestionUsuarios/${pathIdDoc}/asignaturas/`);
