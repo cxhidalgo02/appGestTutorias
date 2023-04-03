@@ -13,6 +13,8 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native-stack": "^6.9.12",
     "expo": "~48.0.4",
+    "expo-constants": "^14.2.1",
+    "expo-notifications": "^0.18.1",
     "expo-status-bar": "~1.4.4",
     "firebase": "^9.17.1",
     "localStorage": "^1.0.4",
