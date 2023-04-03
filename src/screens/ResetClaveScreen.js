@@ -5,7 +5,7 @@ import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, Alert,} from 'react-native';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
-const resetClave = ({ route, navigation })=> {
+const resetClave = ({ navigation })=> {
 
   const alertSendEmail = () => {
     try {
