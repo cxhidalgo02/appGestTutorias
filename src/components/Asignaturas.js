@@ -38,7 +38,6 @@ export default function Asignaturas ({
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             setNumTutorias(result);
-            //console.log('# Tutorias D => ', result);
         } catch (error) {
           console.log('ERROR => ', error);
         }
