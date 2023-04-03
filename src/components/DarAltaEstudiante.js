@@ -37,13 +37,8 @@ export default function DarAltaEstudiante(
         querySnapshot.forEach((doc) => {
           setIsDataN(doc.data().nombre);
           setIsDataT(doc.data().tipo);
-          //setNombreAsignatura = doc.data().nombre;
-          //setTipoAsignatura = doc.data().tipo;
           console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
-          //console.log(doc.id, " => ", doc.data());
         })
-         // console.log('DATA UPDATE => ', isDataN, isDataT);
-  
       } catch (error) {
         console.log('ERROR =>', error);
       }
@@ -57,19 +52,6 @@ export default function DarAltaEstudiante(
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
             updateDoc(docRef, {nombre: isDataN, tipo: isDataT,  validada: 'true' });
     }    
-
-    //const navigation = useNavigation();
-    /*const addAsignaturaEstudiante = async () => {
-        const docRef = doc(Firestore, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`); 
-        setDoc(docRef, {
-          id: codigo,
-          nombre: nombre,
-          codigo: codigo,
-          tipo: tipo,
-          createdAt: createdAt
-        });
-       // navigation.goBack();
-    }*/
 
     const [isValidateActive, setIsValidateActive] = React.useState(false);
     return(
