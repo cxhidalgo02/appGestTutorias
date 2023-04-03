@@ -12,7 +12,8 @@ const informacionScreen = ({ route, navigation })  => {
           <AntDesign name="appstore-o" size={35} color="#293774" style={{marginBottom: 25}} />
 
           <Text style={styles.textContent}>
-              La aplicación esta desarrollada para el control y seguimiento de tutorias presenciales a los estudiantes
+              La aplicación esta desarrollada para el control y seguimiento 
+              de tutorias a los estudiantes en la modalidad presencial.
           </Text>
           
         </View>

@@ -7,7 +7,19 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const resetClave = ({ route, navigation })=> {
 
-  const alertErrorInicio = () => {
+  const alertSendEmail = () => {
+    try {
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Correo enviado',
+        textBody: 'Verifique su bandeja de entrada!',
+      })
+    } catch (error) {
+      console.log("No pudo mostrar el Error:  ", error);
+    }
+  }
+
+  const alertErrorSendEmail = () => {
     try {
       Dialog.show({
         type: ALERT_TYPE.DANGER,
@@ -20,26 +32,24 @@ const resetClave = ({ route, navigation })=> {
   }
 
   const [email, setEmail] = React.useState('')
-  //const keyEmail = localStorage.getItem(`keyEmail`, keyEmail);
-  //console.log('keyEmail => ', keyEmail);
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-
-
-// RESETEAR LA CLAVE -----------------------------------------------------------------------------------------
-sendPasswordResetEmail(auth, email)
-  .then(() => {
-    // Password reset email sent!
-    // ..
-    console.log('correo => ', email);
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    alertErrorInicio();
-  });
-
+  async function resetPass() {
+    try {
+      sendPasswordResetEmail(auth, email)
+      .then(() => {
+        alertSendEmail();
+      })
+      .catch((error) => {
+        alertErrorSendEmail();
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+    } catch (error) {
+      console.log('Se produjo un error:', error);
+    }
+}
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -59,7 +69,7 @@ sendPasswordResetEmail(auth, email)
               onChangeText={(text) => setEmail(text)}/>
 
               <TouchableOpacity style={styles.button} 
-                  onPress={ sendPasswordResetEmail }>
+                  onPress={ resetPass }>
                 <Text style={styles.textbutton}>ENVIAR</Text>
               </TouchableOpacity>
               
