@@ -25,7 +25,6 @@ const TutoriasDocenteScreen = () => {
   },[navigation])
 
   // Id del usuario que inicia sesion
-  //const pathId = localStorage.getItem(`keyUser`, pathId);
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el docente
   const pathIdAsigDoc = localStorage.getItem(`keyCodAsigDoc`, pathIdAsigDoc);
