@@ -36,7 +36,6 @@ const RegistroTutoriasDocenteScreen = () => {
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
-  //console.log('UID codigo Asig para Tut: ', pathIdAsig);
 
   const pathUrl  = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsig}/tutorias/`;
   const onSend = async () => {
