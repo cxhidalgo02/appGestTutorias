@@ -32,6 +32,7 @@ export default function Tutorias(
     const pathIdTutDoc = localStorage.setItem("keyCodTutDoc", id);
     //path de tutorias
     const pathTutoria = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsigDoc}/tutorias/${id}`
+    console.log('D tutorias docente - pathTutoria => ', pathTutoria);
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -55,9 +56,6 @@ export default function Tutorias(
                 </rn.Text>
                 <rn.Text style={styles.information}>
                     <Entypo name="chevron-right" size={18} color="black" /> {semana} 
-                </rn.Text>
-                <rn.Text style={styles.information}>
-                    <Entypo name="chevron-right" size={18} color="black" /> Path: {pathTutoria} 
                 </rn.Text>
 
                     <rn.View style={styles.btnsContiner}>
