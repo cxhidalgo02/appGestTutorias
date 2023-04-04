@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, 
+  SafeAreaView, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
 import { Select, CheckIcon,  NativeBaseProvider} from 'native-base';
@@ -8,7 +9,7 @@ import { firebaseConfig } from '../../firebase-config';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 
-const RegistroUsuariosScreen = (user) => {
+const RegistroUsuariosScreen = () => {
 
   const navigation = useNavigation();
   const app = initializeApp(firebaseConfig);
@@ -65,10 +66,22 @@ const RegistroUsuariosScreen = (user) => {
       }
     }
 
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
+    }, []);
+    
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-          <ScrollView style = {styles.scrollForm}>
+          <ScrollView style = {styles.scrollForm}
+            refreshControl={
+              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+            } 
+          >
           <Text style={styles.textTitle}>
             FORMULARIO
           </Text>

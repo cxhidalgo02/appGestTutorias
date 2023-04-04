@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query,} from 'firebase/firestore';
 import Tutorias from '../../components/Tutorias';
-import { StyleSheet, View, Text, SafeAreaView, Pressable } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
@@ -56,6 +56,14 @@ const TutoriasDocenteScreen = () => {
     consultaTutorias();
     },[])
 
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
+    }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
@@ -63,7 +71,11 @@ const TutoriasDocenteScreen = () => {
         <Text style={styles.textTitle}>
             MIS TUTORIAS
           </Text>
-          <ScrollView style={styles.scrollAsig}>
+          <ScrollView style={styles.scrollAsig}
+            refreshControl={
+              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+            } 
+          >
             {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
           </ScrollView>
         </View>

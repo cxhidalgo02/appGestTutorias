@@ -2,7 +2,7 @@ import * as React from 'react';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import TutoriasEstudiante from '../../components/TutoriasEstudiante';
-import { StyleSheet, View, Text, SafeAreaView, } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
 
@@ -39,6 +39,14 @@ const TutoriasDocenteScreen = () => {
     return unsubscribe;
     },[])
 
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
+    }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
@@ -46,7 +54,11 @@ const TutoriasDocenteScreen = () => {
         <Text style={styles.textTitle}>
             MIS TUTORIAS
           </Text>
-          <ScrollView style={styles.scrollAsig}>
+          <ScrollView style={styles.scrollAsig}
+            refreshControl={
+              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+            } 
+          >
             {tutoria.map(tutoria => <TutoriasEstudiante key={tutoria.id} {...tutoria}/>)}
           </ScrollView>
         </View>

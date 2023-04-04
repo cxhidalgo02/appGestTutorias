@@ -2,7 +2,8 @@ import * as React from 'react';
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, 
+  TextInput, ScrollView, RefreshControl } from 'react-native';
 import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
 import { initializeApp} from "firebase/app";
@@ -82,10 +83,22 @@ const RegistroTutoriasDocenteScreen = () => {
     }
   }
 
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-          <ScrollView style = {styles.scrollForm}>
+          <ScrollView style = {styles.scrollForm}
+            refreshControl={
+              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+            } 
+          >
           <Text style={styles.textTitle}>
             FORMULARIO
           </Text>

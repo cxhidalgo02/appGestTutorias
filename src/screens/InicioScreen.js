@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, 
-          TextInput, ScrollView, LogBox,} from 'react-native';
+          TextInput, ScrollView, LogBox, RefreshControl} from 'react-native';
 import { Select, CheckIcon, } from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
@@ -69,10 +69,22 @@ const InicioScreen = ({ navigation })=> {
     });
   }
 
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return ( 
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-        <ScrollView style = {styles.scrollForm}>
+        <ScrollView style = {styles.scrollForm} 
+          refreshControl={
+             <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+          } 
+        >
         <Text style={styles.textTitle}>
             ACCEDER A SU CUENTA
           </Text>
