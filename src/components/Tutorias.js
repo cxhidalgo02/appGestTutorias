@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
+import { doc, deleteDoc} from 'firebase/firestore';
 
 export default function Tutorias(
     {
@@ -19,11 +20,6 @@ export default function Tutorias(
     }
 ) {
 
-    const onDelete = () => {
-        const docRef = doc(database, 'asignaturaTutorias', id);
-        deleteDoc(docRef);
-    }
-
     // Id del usuario que inicia sesion
     const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
     // Id de la asignatura que seleccionar el usuario
@@ -33,6 +29,11 @@ export default function Tutorias(
     //path de tutorias
     const pathTutoria = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsigDoc}/tutorias/${id}`
     console.log('D tutorias docente - pathTutoria => ', pathTutoria);
+
+    const onDelete = () => {
+        const docRef = doc(database, `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsigDoc}/tutorias/${id}`);
+        deleteDoc(docRef);
+    }
 
     const [isDeleteActive, setIsDeleteActive] = React.useState(false);
     const [modalVisible, setModalVisible] = useState(false);
