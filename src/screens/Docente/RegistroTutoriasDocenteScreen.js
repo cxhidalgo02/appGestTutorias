@@ -36,6 +36,8 @@ const RegistroTutoriasDocenteScreen = () => {
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
+ // id del codigo que selecciona en la tutoria
+  const codigoTut = localStorage.setItem(`keyCodTutDoc`, codigo);
 
   const pathUrl  = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsig}/tutorias/`;
   const onSend = async () => {
@@ -58,6 +60,7 @@ const RegistroTutoriasDocenteScreen = () => {
       console.log('ERROR => ',error);
     }
   }
+  
 
   const alertRecordTutoria = () => {
     try {
