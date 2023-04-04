@@ -9,7 +9,6 @@ import { collection, query,  getCountFromServer } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import {Alert,} from 'react-native';
 
-
 export default function Asignaturas ({
     id,
     codigo,
@@ -64,7 +63,6 @@ export default function Asignaturas ({
                 <RN.Text style={styles.textContent}> Tipo: {tipo}</RN.Text> 
               
                 <RN.View style={styles.btnsContiner}>
-
                     <RN.Pressable title='darAltaEstudiantesScreen'
                         onPress={() => navigation.navigate('darAltaEstudiantesScreen')}
                         style={styles.btnContiner}>
@@ -119,7 +117,6 @@ export default function Asignaturas ({
             </RN.View>
 
         </RN.TouchableOpacity>
-        
     )
 }
 
