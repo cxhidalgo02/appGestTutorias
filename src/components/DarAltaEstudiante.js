@@ -1,7 +1,7 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
 import { database } from '../../config/firebaseConfig';
-import { doc, updateDoc, Firestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, updateDoc, Firestore, collection, query, where, getDocs, setDoc } from 'firebase/firestore';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -37,20 +37,71 @@ export default function DarAltaEstudiante(
         querySnapshot.forEach((doc) => {
           setIsDataN(doc.data().nombre);
           setIsDataT(doc.data().tipo);
-          console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
+          //console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
         })
       } catch (error) {
-        console.log('ERROR =>', error);
+        console.log('ERROR A =>', error);
       }
-  }
+    }
+
+    const [idData, setIdData] = React.useState('')
+    const [codigoData, setCodigoData] = React.useState('')
+    const [temaData, setTemaData] = React.useState('')
+    const [descripcionData, setDescripcionData] = React.useState('')
+    const [aulaData, setAulaData] = React.useState('')
+    const [horaData, setHoraData] = React.useState('')
+    const [semanaData, setSemanaData] = React.useState("")
+    const [createdAtData, setCreatedAtData] = React.useState('')
+
+    const pathIdTut = localStorage.getItem(`keyCodTutDoc`, pathIdTut);
+    //console.log('=> pathIdTut', pathIdTut);
+
+    async function consultaTutoriasDocente() {
+        try {
+          //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
+          const collectionRef1 = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsig}/tutorias/`);
+          const q = query(collectionRef1, where('codigo', '==', `${pathIdTut}`) ); //`${pathIdTut}`
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            setIdData(doc.id);
+            setCodigoData(doc.data().codigo);
+            setAulaData(doc.data().aula);
+            setDescripcionData(doc.data().descripcion);
+            setHoraData(doc.data().hora);
+            setSemanaData(doc.data().semana);
+            setTemaData(doc.data().tema);
+            setCreatedAtData(doc.data().createdAt);
+            //console.log('DATOS TUTORIA DEL DOCENTE =>', doc.id, "<= ");
+          })
+        } catch (error) {
+          console.log('ERROR T =>', error);
+        }
+        console.log('DATA => ', idData, codigoData, aulaData, descripcionData, horaData, semanaData, temaData, createdAtData,' <=');
+    }
 
   React.useEffect(() => { 
     consultaAsignaturasDocente();
+    consultaTutoriasDocente();
   },[])
 
     const onValidate = () => {
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
             updateDoc(docRef, {nombre: isDataN, tipo: isDataT,  validada: 'true' });
+
+    const pathUrl  = `gestionUsuarios/${id}/asignaturas/${pathIdAsig}/tutorias/`;    
+        const docu = {
+          codigo: pathIdTut,
+          tema: temaData, 
+          descripcion: descripcionData,
+          aula: aulaData,
+          hora: horaData,
+          semana: semanaData,
+          createdAt: new Date(),
+          inscripcion: 'false',
+          validada: 'false'
+        };
+        const docRef2 = doc(database, pathUrl, docu.codigo);
+            setDoc(docRef2, (docu) );
     }    
 
     const [isValidateActive, setIsValidateActive] = React.useState(false);
@@ -69,9 +120,6 @@ export default function DarAltaEstudiante(
                 </rn.Text>
                 <rn.Text> 
                     <MaterialIcons name="mail" size={18} color="black" /> - {correo} 
-                </rn.Text>
-                <rn.Text> 
-                    <MaterialIcons name="mail" size={18} color="black" /> Path: {pathEstudiante} 
                 </rn.Text>
             </rn.View>
             

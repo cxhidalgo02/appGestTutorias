@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { collection, query, where, getCountFromServer } from 'firebase/firestore';
+import { collection, query, where, getCountFromServer, doc, deleteDoc } from 'firebase/firestore';
 
 export default function AsignaturasEstudiantes({
     id,
@@ -16,15 +16,15 @@ export default function AsignaturasEstudiantes({
     createdAt,
 }) {
 
-    const onDelete = () => {
-        const docRef = doc(database, 'asignaturaTutorias', id);
-        deleteDoc(docRef);
-    }
-
     // Id del usuario que inicia sesion
     const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
     //guardo el codigo de asignatura que seleecione
     const pathCodAsigEst = localStorage.setItem("keyCodAsigEst", id);
+
+    const onDelete = () => {
+        const docRef = doc(database, `gestionUsuarios/${pathIdEst}/asignaturas/`, id);
+            deleteDoc(docRef);
+    }
 
     //Path para consultas de estudiante
     const pathAsig = `gestionUsuarios/${pathIdEst}/asignaturas/${codigo}`
