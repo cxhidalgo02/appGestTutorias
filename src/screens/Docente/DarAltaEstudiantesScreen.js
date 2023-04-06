@@ -57,6 +57,8 @@ const DarAltaEstudiantesScreen = () => {
   function MySkeleton() {
     return (
       <>
+        <Skeleton width={'60%'} height={40} colorMode={'light'} />
+        <Spacer/>
         <Skeleton width={'80%'} height={105} colorMode={'light'} />
         <Spacer/>
         <Skeleton width={'80%'} height={105} colorMode={'light'} />
@@ -73,10 +75,11 @@ const DarAltaEstudiantesScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-        <Text style={styles.textTitle}>
+        <React.Suspense fallback={<MySkeleton />}>
+          <Text style={styles.textTitle}>
             VALIDAR ACCESO
           </Text>
-          <React.Suspense fallback={<MySkeleton />}>
+          
             <ScrollView style={styles.scrollAsig}
               refreshControl={
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
@@ -84,7 +87,7 @@ const DarAltaEstudiantesScreen = () => {
             >
               {estudiante.map(estudiante=> <DarAltaEstudiante key={estudiante.id} {...estudiante}/>)}
             </ScrollView>
-          </React.Suspense>
+        </React.Suspense>
       </View>
     </SafeAreaView>
   );
