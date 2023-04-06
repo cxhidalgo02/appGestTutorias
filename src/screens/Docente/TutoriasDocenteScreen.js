@@ -70,6 +70,8 @@ const TutoriasDocenteScreen = () => {
     function MySkeleton() {
       return (
         <>
+          <Skeleton width={'60%'} height={40} colorMode={'light'} />
+          <Spacer/>
           <Skeleton width={'80%'} height={135} colorMode={'light'} />
           <Spacer/>
           <Skeleton width={'80%'} height={135} colorMode={'light'} />
@@ -80,15 +82,14 @@ const TutoriasDocenteScreen = () => {
         </>
       );
     }
-  
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-        <Text style={styles.textTitle}>
+        <React.Suspense fallback={<MySkeleton />}>
+          <Text style={styles.textTitle}>
             MIS TUTORIAS
           </Text>
-          <React.Suspense fallback={<MySkeleton />}>
             <ScrollView style={styles.scrollAsig}
               refreshControl={
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
@@ -96,8 +97,8 @@ const TutoriasDocenteScreen = () => {
             >
               {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
             </ScrollView>
-          </React.Suspense>
-        </View>
+        </React.Suspense>
+      </View>
     </SafeAreaView>
   );
 };
