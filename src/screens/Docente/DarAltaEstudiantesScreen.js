@@ -57,13 +57,15 @@ const DarAltaEstudiantesScreen = () => {
   function MySkeleton() {
     return (
       <>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
         <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
         <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
         <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
       </>
     );
   }
