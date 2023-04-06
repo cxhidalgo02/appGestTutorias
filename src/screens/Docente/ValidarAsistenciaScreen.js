@@ -49,15 +49,17 @@ const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
 function MySkeleton() {
   return (
     <>
-      <Skeleton width={'80%'} height={105} colorMode={'light'} />
-      <Spacer/>
-      <Skeleton width={'80%'} height={105} colorMode={'light'} />
-      <Spacer/>
-      <Skeleton width={'80%'} height={105} colorMode={'light'} />
-      <Spacer/>
-      <Skeleton width={'80%'} height={105} colorMode={'light'} />
-      <Spacer/>
-      <Skeleton width={'80%'} height={105} colorMode={'light'} />
+        <Skeleton width={'60%'} height={40} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={105} colorMode={'light'} />
     </>
   );
 }
@@ -65,10 +67,11 @@ function MySkeleton() {
 return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-        <Text style={styles.textTitle}>
+        <React.Suspense fallback={<MySkeleton />}>
+          <Text style={styles.textTitle}>
             VALIDAR ASISTENCIA
           </Text>
-          <React.Suspense fallback={<MySkeleton />}>
+          
             <ScrollView style={styles.scrollAsig}
               refreshControl={
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
@@ -76,7 +79,7 @@ return (
             >
               {estudiante.map(estudiante=> <ValidarAsistencia key={estudiante.id} {...estudiante}/>)}
             </ScrollView>
-          </React.Suspense>
+        </React.Suspense>
       </View>
     </SafeAreaView>
   );
