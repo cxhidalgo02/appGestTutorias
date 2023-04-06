@@ -7,6 +7,8 @@ import { StyleSheet, View, Text, SafeAreaView, Pressable, RefreshControl } from 
 import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
+import { Skeleton } from 'moti/skeleton'; 
+import { MotiView } from 'moti';
 
 const TutoriasDocenteScreen = () => {
 
@@ -64,20 +66,37 @@ const TutoriasDocenteScreen = () => {
       }, 2000);
     }, []);
 
+    const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
+    function MySkeleton() {
+      return (
+        <>
+          <Skeleton width={'80%'} height={135} colorMode={'light'} />
+          <Spacer/>
+          <Skeleton width={'80%'} height={135} colorMode={'light'} />
+          <Spacer/>
+          <Skeleton width={'80%'} height={135} colorMode={'light'} />
+          <Spacer/>
+          <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        </>
+      );
+    }
+  
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
-
         <Text style={styles.textTitle}>
             MIS TUTORIAS
           </Text>
-          <ScrollView style={styles.scrollAsig}
-            refreshControl={
-              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-            } 
-          >
-            {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
-          </ScrollView>
+          <React.Suspense fallback={<MySkeleton />}>
+            <ScrollView style={styles.scrollAsig}
+              refreshControl={
+                <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+              } 
+            >
+              {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
+            </ScrollView>
+          </React.Suspense>
         </View>
     </SafeAreaView>
   );
