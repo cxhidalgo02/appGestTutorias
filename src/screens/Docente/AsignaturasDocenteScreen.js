@@ -75,6 +75,8 @@ const AsignaturasDocenteScreen = () => {
   function MySkeleton() {
     return (
       <>
+        <Skeleton width={'60%'} height={40} colorMode={'light'} />
+        <Spacer/>
         <Skeleton width={'80%'} height={135} colorMode={'light'} />
         <Spacer/>
         <Skeleton width={'80%'} height={135} colorMode={'light'} />
@@ -89,10 +91,11 @@ const AsignaturasDocenteScreen = () => {
   return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container} >
-          <Text style={styles.textTitle}>
-            MIS ASIGNATURAS
-          </Text>
           <React.Suspense fallback={<MySkeleton />}>
+            <Text style={styles.textTitle}>
+              MIS ASIGNATURAS
+            </Text>
+          
             <ScrollView style={styles.scrollAsig}   
               refreshControl={
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
