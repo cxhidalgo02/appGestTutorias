@@ -66,19 +66,17 @@ const TutoriasDocenteScreen = () => {
       }, 2000);
     }, []);
 
-    const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
+    const Spacer =  ({height = 30}) => <MotiView style={{height}}/>
     function MySkeleton() {
       return (
         <>
           <Skeleton width={'60%'} height={40} colorMode={'light'} />
           <Spacer/>
-          <Skeleton width={'80%'} height={135} colorMode={'light'} />
+          <Skeleton width={'80%'} height={175} colorMode={'light'} />
           <Spacer/>
-          <Skeleton width={'80%'} height={135} colorMode={'light'} />
+          <Skeleton width={'80%'} height={175} colorMode={'light'} />
           <Spacer/>
-          <Skeleton width={'80%'} height={135} colorMode={'light'} />
-          <Spacer/>
-          <Skeleton width={'80%'} height={135} colorMode={'light'} />
+          <Skeleton width={'80%'} height={175} colorMode={'light'} />
         </>
       );
     }
