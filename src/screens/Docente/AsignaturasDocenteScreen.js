@@ -8,6 +8,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
+import { Skeleton } from 'moti/skeleton'; 
+import { MotiView } from 'moti';
 
 const AsignaturasDocenteScreen = () => {
   const [asignatura, setNuevaAsignatura] = React.useState([]);
@@ -69,19 +71,36 @@ const AsignaturasDocenteScreen = () => {
     }, 2000);
   }, []);
 
+  const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
+  function MySkeleton() {
+    return (
+      <>
+        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+        <Spacer/>
+        <Skeleton width={'80%'} height={135} colorMode={'light'} />
+      </>
+    );
+  }
+
   return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container} >
           <Text style={styles.textTitle}>
             MIS ASIGNATURAS
           </Text>
-          <ScrollView style={styles.scrollAsig}   
-            refreshControl={
-              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-            } 
-          >
-            {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
-          </ScrollView>  
+          <React.Suspense fallback={<MySkeleton />}>
+            <ScrollView style={styles.scrollAsig}   
+              refreshControl={
+                <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+              } 
+            >
+              {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
+            </ScrollView> 
+          </React.Suspense>
         </View>
       </SafeAreaView>    
   );
