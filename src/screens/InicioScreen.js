@@ -125,8 +125,8 @@ const InicioScreen = ({ navigation })=> {
                 <Text style={style.textbutton}>INICIO SESIÓN</Text>
               </TouchableOpacity>
 
-            <TouchableOpacity style={styles.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
-              <Text style={styles.textbuttonTwo}>Olvidaste tu contraseña?</Text>
+            <TouchableOpacity style={style.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
+              <Text style={style.textbuttonTwo}>Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
         </ScrollView> 
       </View>
@@ -139,23 +139,5 @@ const styles = StyleSheet.create({
   scrollForm: {
     textAlign: "center",
     marginTop: 120,
-  },
-  textSelect:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    paddingStart: 20,
-    width: "80%",
-    marginTop:20,
-    borderRadius: 10,
-  },
-  buttonTwo: {
-    alignItems: 'center',
-    padding: 10,
-    marginTop: 40,
-  },
-  textbuttonTwo: {
-    color: '#293774',
   },
 });
