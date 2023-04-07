@@ -1,14 +1,15 @@
 import * as React from 'react';
+import { style } from '../../styles/styles';
+import { firebaseConfig } from '../../../firebase-config';
+import { database } from '../../../config/firebaseConfig';
+import { initializeApp} from "firebase/app";
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { database } from '../../../config/firebaseConfig';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, 
-  TextInput, ScrollView, RefreshControl } from 'react-native';
-import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
-import { initializeApp} from "firebase/app";
-import { firebaseConfig } from '../../../firebase-config';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
+
 
 const RegistroTutoriasDocenteScreen = () => { 
 
@@ -93,32 +94,32 @@ const RegistroTutoriasDocenteScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container} >
+      <View style={style.container} >
           <ScrollView style = {styles.scrollForm}
             refreshControl={
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
             } 
           >
-          <Text style={styles.textTitle}>
+          <Text style={style.textTitle}>
             FORMULARIO
           </Text>
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
               onChangeText={(text) => setCodigo(text)}
               placeholder="Codigo"
             />
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
               onChangeText={(text) => setTema(text)}
               placeholder="Tema"
             />
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
             onChangeText={(text) => setDescripcion(text)}
               placeholder="Descripción"
             />
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
             onChangeText={(text) => setAula(text)}
               placeholder="Aula"
             />  
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
             onChangeText={(text) => setHora(text)}
               placeholder="Hora"
             /> 
@@ -153,8 +154,8 @@ const RegistroTutoriasDocenteScreen = () => {
               </Select>
             </NativeBaseProvider>
           
-            <TouchableOpacity style={styles.button} onPress={onSend} >
-              <Text style={styles.textbutton}>REGISTRAR</Text>
+            <TouchableOpacity style={style.button} onPress={onSend} >
+              <Text style={style.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -164,38 +165,8 @@ const RegistroTutoriasDocenteScreen = () => {
 export default RegistroTutoriasDocenteScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    padding: 16,
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
-  textTitle: {
-    fontSize: 22, 
-    textAlign: 'center', 
-    marginBottom: 16, 
-    color: '#293774', 
-  },
   scrollForm: {
     textAlign: "center",
     marginTop: 80,
-  },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    marginTop:20,
-    borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#293774',
-    padding: 10,
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
   },
 });

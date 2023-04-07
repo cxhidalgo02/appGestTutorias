@@ -1,15 +1,17 @@
 import * as React from 'react';
+import { style } from '../../styles/styles';
+import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import localStorage from 'react-native-expo-localstorage';
 import Asignaturas from '../../components/Asignaturas';
 import { StyleSheet, View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
-import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
 import { Skeleton } from 'moti/skeleton'; 
 import { MotiView } from 'moti';
+
 
 const AsignaturasDocenteScreen = () => {
   const [asignatura, setNuevaAsignatura] = React.useState([]);
@@ -90,9 +92,9 @@ const AsignaturasDocenteScreen = () => {
 
   return (
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container} >
+        <View style={style.container} >
           <React.Suspense fallback={<MySkeleton />}>
-            <Text style={styles.textTitle}>
+            <Text style={style.textTitle}>
               MIS ASIGNATURAS
             </Text>
           
@@ -111,18 +113,6 @@ const AsignaturasDocenteScreen = () => {
 export default AsignaturasDocenteScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    padding: 16,
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
-  textTitle: {
-    fontSize: 22, 
-    textAlign: 'center', 
-    padding: 20,
-    color: '#293774',
-  },
   scrollAsig: {
     width: '90%',
   },
