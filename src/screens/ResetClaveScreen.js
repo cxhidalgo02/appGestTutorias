@@ -54,7 +54,6 @@ const resetClave = ({ navigation })=> {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      
         <View style={style.container}>  
           <View style={styles.subcontainer}> 
 
@@ -75,11 +74,11 @@ const resetClave = ({ navigation })=> {
               </TouchableOpacity>
               
               <View style={styles.subcontainerText}>
-                <Text style={styles.textContent}>
+                <Text style={style.textContentt}>
                     Prodrá restablecer su contraseña si se encuentra registrado, de lo contrario
                 </Text>
-                <TouchableOpacity style={styles.buttonTwo} onPress={() => navigation.navigate('bottomTabNavigator')}>
-                  <Text style={styles.textbuttonTwo}>Registrerse aquí!</Text>
+                <TouchableOpacity style={style.buttonThree} onPress={() => navigation.navigate('bottomTabNavigator')}>
+                  <Text style={style.textbuttonThree}>Registrerse aquí!</Text>
                 </TouchableOpacity>
               </View>
           </View>
@@ -89,27 +88,11 @@ const resetClave = ({ navigation })=> {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    flex: 1,
-  },
   subcontainer: {
     width: '80%',
-  },
-  textContent: {
-    fontSize: 16, 
-    textAlign: 'center', 
-    color: '#293774',
   },
   subcontainerText: {
     marginTop: 50,
   },
-  buttonTwo: {
-    alignItems: 'center',
-    padding: 10,
-  },
-  textbuttonTwo: {
-    color: '#293774',
-  },
-
 });
 export default resetClave;
