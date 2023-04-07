@@ -14,10 +14,15 @@ export const style = StyleSheet.create({
     marginBottom: 16, 
     color: myColors.navyblue,
   },
+  textContentt: {
+    fontSize: 16, 
+    textAlign: 'center', 
+    color: myColors.navyblue,
+  },
   textContent: {
     fontSize: 22, 
     textAlign: 'center', 
-    color: '#293774',
+    color: myColors.navyblue,
   },
   textInput:{
     borderWidth: 1,
@@ -38,5 +43,20 @@ export const style = StyleSheet.create({
   },
   textbutton: {
     color: myColors.light,
+  },
+  buttonTwo: {
+    alignItems: 'center',
+    padding: 10,
+    marginTop: 40,
+  },
+  textbuttonTwo: {
+    color: myColors.navyblue,
+  },
+  buttonThree: {
+    alignItems: 'center',
+    padding: 10,
+  },
+  textbuttonThree: {
+    color: myColors.navyblue,
   },
   });
