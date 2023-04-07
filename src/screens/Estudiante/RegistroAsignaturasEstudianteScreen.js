@@ -6,6 +6,7 @@ import localStorage from 'react-native-expo-localstorage';
 import { StyleSheet, View, Text, SafeAreaView, 
   TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { style } from '../../styles/styles'; 
+import { myColors } from '../../styles/colors';
 
 const RegistroAsignaturasEstudianteScreen = () => { 
   
@@ -107,6 +108,6 @@ const styles = StyleSheet.create({
   textContent: {
     fontSize: 16, 
     textAlign: 'center', 
-    color: '#293774',
+    color: myColors.navyblue,
   },
 });
