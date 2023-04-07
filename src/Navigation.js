@@ -1,13 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
-import { Pressable } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons'; 
 import { firebaseConfig } from '../firebase-config';
 import { initializeApp} from "firebase/app"; 
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from 'firebase/auth'; 
+import { myColors } from "./styles/colors"; 
+//iconos
+import { Pressable } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
 
 import InicioScreen from "./screens/InicioScreen";
 import RegistroUsuariosScreen from "./screens/RegistroUsuariosScreen";
@@ -49,8 +51,8 @@ function MyStack( ) {
   return(
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: '#D4AC0D' },
-        headerTintColor: '#293774',
+        headerStyle: { backgroundColor: myColors.mustard },
+        headerTintColor: myColors.navyblue,
         headerTitleStyle: { fontWeight: 'bold' },
       }}>
       <Stack.Screen name="bottomTabNavigator"  component={BottomTabNavigator} options={{ headerShown: false}}/>   
@@ -148,8 +150,8 @@ function BottomTabNavigator({ navigation })  {
     return (
         <Tab.Navigator initialRouteName="Feed"
           screenOptions={{
-            headerStyle: { backgroundColor: '#D4AC0D' },
-            headerTintColor: '#293774',
+            headerStyle: { backgroundColor: myColors.mustard },
+            headerTintColor: myColors.navyblue,
             headerTitleStyle: { fontWeight: 'bold' },
           }}>
             <Tab.Screen
@@ -157,7 +159,8 @@ function BottomTabNavigator({ navigation })  {
                 component={InicioScreen}
                 options={{
                 tabBarLabel: 'INICIO',
-                tabBarActiveTintColor: '#D4AC0D', tabBarInactiveTintColor:'#293774',
+                tabBarActiveTintColor: myColors.mustard, 
+                tabBarInactiveTintColor: myColors.navyblue,
                 tabBarIcon: ({ color, size }) => (<AntDesign name="home" size={25} color="#293774" />),
                 headerRight: () => (
                     <Pressable
@@ -173,7 +176,8 @@ function BottomTabNavigator({ navigation })  {
                 component={RegistroUsuariosScreen}
                 options={{
                 tabBarLabel: 'REGISTRO', 
-                tabBarActiveTintColor: '#D4AC0D', tabBarInactiveTintColor:'#293774',
+                tabBarActiveTintColor: myColors.mustard, 
+                tabBarInactiveTintColor: myColors.navyblue,
                 tabBarIcon: ({ color, size }) => (<AntDesign name="user" size={25} color="#293774" />),
                 headerRight: () => (
                   <Pressable
@@ -195,7 +199,3 @@ export default function Navigation() {
         </NavigationContainer>
     )
 }
-
-/*  
-mostaza - #D4AC0D / azul - #293774 / blanco - #FDFEFE / verde - #0E6655 / gris - #B2BABB
-*/
