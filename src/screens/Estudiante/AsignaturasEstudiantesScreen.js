@@ -10,6 +10,7 @@ import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 import { Skeleton } from 'moti/skeleton'; 
 import { MotiView } from 'moti';
+import { style } from '../../styles/styles'; 
 
 const AsignaturasEstudiantesScreen = () => {
   
@@ -86,9 +87,9 @@ const AsignaturasEstudiantesScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container} >
+      <View style={style.container} >
         <React.Suspense fallback={<MySkeleton />}>
-          <Text style={styles.textTitle}>
+          <Text style={style.textTitle}>
             MIS ASIGNATURAS
           </Text>
           <ScrollView style={styles.scrollAsig}
@@ -106,62 +107,7 @@ const AsignaturasEstudiantesScreen = () => {
 export default AsignaturasEstudiantesScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    padding: 16,
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
-  textTitle: {
-    fontSize: 22, 
-    textAlign: 'center', 
-    padding: 20,
-    color: '#293774',
-  },
   scrollAsig: {
     width: '90%',
-  },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    paddingStart: 20,
-    width: "80%",
-    marginTop:20,
-    borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#2E86C1',
-    padding: 10,
-    width: "80%",
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
-  },
-  btnContiner:{
-    width: '35%',  
-    marginTop: 15,
-    marginBottom: 10,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-  },
-  btnsContiner:{
-    width: '75%',
-    backgroundColor: 'transparent',
-    flexDirection: "row",
-  },
-  productContainer: {
-    width: "80%",
-    padding: 10,
-    backgroundColor: '#fff',
-    margin: 15,
-    borderRadius: 10,
-},
-  title: {
-      fontSize: 18,
   },
 });

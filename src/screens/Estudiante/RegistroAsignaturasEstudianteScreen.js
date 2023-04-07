@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
 import { StyleSheet, View, Text, SafeAreaView, 
   TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { style } from '../../styles/styles'; 
 
 const RegistroAsignaturasEstudianteScreen = () => { 
   
@@ -67,9 +68,9 @@ const RegistroAsignaturasEstudianteScreen = () => {
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container} >
+      <View style={style.container} >
         <View style={styles.subcontainer}> 
-          <Text style={styles.textTitle}>
+          <Text style={style.textTitle}>
             FORMULARIO
           </Text>
           <Text style={styles.textContent}>
@@ -80,12 +81,12 @@ const RegistroAsignaturasEstudianteScreen = () => {
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
             } 
           >
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
               onChangeText={(text) => setCodigoAsignatura(text)}
               placeholder="Ingrese el codigo"
             />
-            <TouchableOpacity style={styles.button} onPress={onSend} >
-              <Text style={styles.textbutton}>REGISTRAR</Text>
+            <TouchableOpacity style={style.button} onPress={onSend} >
+              <Text style={style.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -96,12 +97,6 @@ const RegistroAsignaturasEstudianteScreen = () => {
 export default RegistroAsignaturasEstudianteScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16, 
-  },
   subcontainer: {
     width: '80%',
     marginTop: -20,
@@ -109,34 +104,9 @@ const styles = StyleSheet.create({
   scrollForm: {
     textAlign: "center",
   },
-  textTitle: {
-    fontSize: 22, 
-    textAlign: 'center', 
-    marginTop: 15,
-    marginBottom: 15, 
-    color: '#293774',
-  },
   textContent: {
     fontSize: 16, 
     textAlign: 'center', 
     color: '#293774',
-  },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    marginTop:20,
-    borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#293774',
-    padding: 10,
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
   },
 });
