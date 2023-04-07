@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { style } from '../../styles/styles';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where, } from 'firebase/firestore';
 import ValidarAsistencia from '../../components/ValidarAsistencia';
+import localStorage from 'react-native-expo-localstorage';
 import { StyleSheet, View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import localStorage from 'react-native-expo-localstorage';
 import { Skeleton } from 'moti/skeleton'; 
 import { MotiView } from 'moti';
+
 
 const ValidarAsistenciaScreen = () => {
 
@@ -66,9 +68,9 @@ function MySkeleton() {
 
 return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container} >
+      <View style={style.container} >
         <React.Suspense fallback={<MySkeleton />}>
-          <Text style={styles.textTitle}>
+          <Text style={style.textTitle}>
             VALIDAR ASISTENCIA
           </Text>
           
@@ -87,51 +89,7 @@ return (
 export default ValidarAsistenciaScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    padding: 16,
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
-  textTitle: {
-    fontSize: 24, 
-    textAlign: 'center', 
-    padding: 20,
-    color: '#293774',
-  },
   scrollAsig: {
     width: '90%',
   },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    paddingStart: 20,
-    width: "80%",
-    marginTop:20,
-    borderRadius: 10,
-  },
-  btnContiner:{
-    width: '35%',  
-    marginTop: 15,
-    marginBottom: 10,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-  },
-  btnsContiner:{
-    width: '75%',
-    backgroundColor: 'transparent',
-    flexDirection: "row",
-  },
-  productContainer: {
-    width: "80%",
-    padding: 10,
-    backgroundColor: '#fff',
-    margin: 15,
-    borderRadius: 10,
-},
-  title: {
-      fontSize: 18,
-  }
 });
