@@ -80,7 +80,7 @@ const RegistroAsignaturasDocenteScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-          <ScrollView style = {styles.scrollForm} 
+          <ScrollView style = {style.scrollForm} 
             refreshControl={
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
             } 
@@ -125,10 +125,3 @@ const RegistroAsignaturasDocenteScreen = () => {
   );
 };
 export default RegistroAsignaturasDocenteScreen;
-
-const styles = StyleSheet.create({
-  scrollForm: {
-    textAlign: "center",
-    marginTop: 100,
-  },
-});

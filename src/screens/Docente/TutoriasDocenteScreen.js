@@ -90,7 +90,7 @@ const TutoriasDocenteScreen = () => {
           <Text style={style.textTitle}>
             MIS TUTORIAS
           </Text>
-            <ScrollView style={styles.scrollAsig}
+            <ScrollView style={style.scrollContent}
               refreshControl={
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
               } 
@@ -103,9 +103,3 @@ const TutoriasDocenteScreen = () => {
   );
 };
 export default TutoriasDocenteScreen;
-
-const styles = StyleSheet.create({
-  scrollAsig: {
-    width: '90%',
-  },
-});

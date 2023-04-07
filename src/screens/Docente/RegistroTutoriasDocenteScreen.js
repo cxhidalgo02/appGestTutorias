@@ -10,7 +10,6 @@ import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, Scro
 import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 
-
 const RegistroTutoriasDocenteScreen = () => { 
 
   const navigation = useNavigation();

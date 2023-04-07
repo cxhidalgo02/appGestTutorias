@@ -81,7 +81,7 @@ const DarAltaEstudiantesScreen = () => {
             VALIDAR ACCESO
           </Text>
           
-            <ScrollView style={styles.scrollAsig}
+            <ScrollView style={style.scrollContent}
               refreshControl={
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
               } 
@@ -94,9 +94,3 @@ const DarAltaEstudiantesScreen = () => {
   );
 };
 export default DarAltaEstudiantesScreen;
-
-const styles = StyleSheet.create({
-  scrollAsig: {
-    width: '90%',
-  },
-});

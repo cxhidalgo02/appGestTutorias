@@ -74,7 +74,7 @@ return (
             VALIDAR ASISTENCIA
           </Text>
           
-            <ScrollView style={styles.scrollAsig}
+            <ScrollView style={style.scrollContent}
               refreshControl={
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
               } 
@@ -87,9 +87,3 @@ return (
   );
 };
 export default ValidarAsistenciaScreen;
-
-const styles = StyleSheet.create({
-  scrollAsig: {
-    width: '90%',
-  },
-});
