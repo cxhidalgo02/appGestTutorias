@@ -59,4 +59,11 @@ export const style = StyleSheet.create({
   textbuttonThree: {
     color: myColors.navyblue,
   },
+  scrollContent: {
+    width: '90%',
+  },
+  scrollForm: {
+    textAlign: "center",
+    marginTop: 100,
+  },
   });
