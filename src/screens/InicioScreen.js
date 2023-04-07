@@ -9,6 +9,7 @@ import { Select, CheckIcon, } from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 import { NativeBaseProvider } from "native-base";
+import { style } from '../styles/styles';
 
 LogBox.ignoreAllLogs();
 
@@ -79,22 +80,22 @@ const InicioScreen = ({ navigation })=> {
 
   return ( 
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container} >
+      <View style={style.container} >
         <ScrollView style = {styles.scrollForm} 
           refreshControl={
              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
           } 
         >
-        <Text style={styles.textTitle}>
+        <Text style={style.textTitle}>
             ACCEDER A SU CUENTA
           </Text>
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
               id="Email"
               placeholder="Correo"
               textContentType="emailAddress"
               autoCapitalize='none'
               onChangeText={(text) => setCorreo(text)}/>
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
               id="Pass"
               placeholder="Contraseña"
               textContentType="password"
@@ -120,8 +121,8 @@ const InicioScreen = ({ navigation })=> {
               </Select>
             </NativeBaseProvider>
 
-              <TouchableOpacity style={styles.button} onPress={handleSingIn}>
-                <Text style={styles.textbutton}>INICIO SESIÓN</Text>
+              <TouchableOpacity style={style.button} onPress={handleSingIn}>
+                <Text style={style.textbutton}>INICIO SESIÓN</Text>
               </TouchableOpacity>
 
             <TouchableOpacity style={styles.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
@@ -135,30 +136,9 @@ const InicioScreen = ({ navigation })=> {
 export default InicioScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    padding: 16,
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
   scrollForm: {
     textAlign: "center",
     marginTop: 120,
-  },
-  textTitle: {
-    fontSize: 20, 
-    textAlign: 'center', 
-    marginBottom: 16, 
-    color: '#293774',
-  },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    paddingStart: 20,
-    marginTop:20,
-    borderRadius: 10,
   },
   textSelect:{
     borderWidth: 1,
@@ -169,16 +149,6 @@ const styles = StyleSheet.create({
     width: "80%",
     marginTop:20,
     borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#293774',
-    padding: 10,
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
   },
   buttonTwo: {
     alignItems: 'center',

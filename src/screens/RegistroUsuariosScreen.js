@@ -8,6 +8,7 @@ import { initializeApp} from "firebase/app";
 import { firebaseConfig } from '../../firebase-config';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { ALERT_TYPE, Dialog} from 'react-native-alert-notification';
+import { style } from '../styles/styles';
 
 const RegistroUsuariosScreen = () => {
 
@@ -76,38 +77,38 @@ const RegistroUsuariosScreen = () => {
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container} >
+      <View style={style.container} >
           <ScrollView style = {styles.scrollForm}
             refreshControl={
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
             } 
           >
-          <Text style={styles.textTitle}>
+          <Text style={style.textTitle}>
             FORMULARIO
           </Text>
             <TextInput
-              style = {styles.textInput}
+              style = {style.textInput}
               placeholder="Cedula"
               keyboardType="numeric"
               onChangeText={(text) => setCedula(text)}
             />
             <TextInput
-              style = {styles.textInput}
+              style = {style.textInput}
               placeholder="Nombres"
               onChangeText={(text) => setNombres(text)}
             />
             <TextInput
               placeholder="Apellidos"
-              style = {styles.textInput}
+              style = {style.textInput}
               onChangeText={(text) => setApellidos(text)}
             />
             <TextInput 
-              style = {styles.textInput}
+              style = {style.textInput}
               placeholder="Correo"
               onChangeText={(text) => setCorreo(text)}
             />
             <TextInput 
-              style = {styles.textInput}
+              style = {style.textInput}
               placeholder="Contraseña"
               secureTextEntry
               onChangeText={(text) => setClave(text)}
@@ -128,9 +129,9 @@ const RegistroUsuariosScreen = () => {
               </Select>
             </NativeBaseProvider>
             <TouchableOpacity
-              style={styles.button}
+              style={style.button}
               onPress={onSend}>
-              <Text style={styles.textbutton}>REGISTRAR</Text>
+              <Text style={style.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
       </View>
@@ -139,34 +140,9 @@ const RegistroUsuariosScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1, 
-    padding: 16,
-    alignItems: 'center', 
-    justifyContent: 'center',
-  },
-  textTitle: {
-    fontSize: 22, 
-    textAlign: 'center', 
-    marginBottom: 16, 
-    color: '#293774',
-  },
   scrollForm: {
     textAlign: "center",
     marginTop: 50,
-  },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    paddingStart: 20,
-    marginTop:20,
-    borderRadius: 10,
   },
   selectOptions:{
     borderWidth: 1,
@@ -177,16 +153,6 @@ const styles = StyleSheet.create({
     width: "80%",
     marginTop:20,
     borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#293774',
-    padding: 10,
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
   },
 });
 export default RegistroUsuariosScreen;

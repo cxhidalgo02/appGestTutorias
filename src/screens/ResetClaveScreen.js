@@ -4,6 +4,7 @@ import { initializeApp} from "firebase/app";
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, Alert,} from 'react-native';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { style } from '../styles/styles';
 
 const resetClave = ({ navigation })=> {
 
@@ -54,23 +55,23 @@ const resetClave = ({ navigation })=> {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       
-        <View style={styles.container}>  
+        <View style={style.container}>  
           <View style={styles.subcontainer}> 
 
-            <Text style={styles.textTitle}>
+            <Text style={style.textTitle}>
                 INGRESAR CORREO
             </Text>
             
-            <TextInput style = {styles.textInput}
+            <TextInput style = {style.textInput}
               id="Email"
               placeholder="Correo"
               textContentType="emailAddress"
               autoCapitalize='none'
               onChangeText={(text) => setEmail(text)}/>
 
-              <TouchableOpacity style={styles.button} 
+              <TouchableOpacity style={style.button} 
                   onPress={ resetPass }>
-                <Text style={styles.textbutton}>ENVIAR</Text>
+                <Text style={style.textbutton}>ENVIAR</Text>
               </TouchableOpacity>
               
               <View style={styles.subcontainerText}>
@@ -91,21 +92,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16, 
-  },
   subcontainer: {
     width: '80%',
-  },
-  textTitle: {
-    fontSize: 22, 
-    textAlign: 'center', 
-    marginTop: 15,
-    marginBottom: 15, 
-    color: '#293774',
   },
   textContent: {
     fontSize: 16, 
@@ -114,25 +102,6 @@ const styles = StyleSheet.create({
   },
   subcontainerText: {
     marginTop: 50,
-  },
-  textInput:{
-    borderWidth: 1,
-    borderColor: "#2E86C1",
-    backgroundColor:"#fff",
-    padding:10,
-    paddingStart: 20,
-    marginTop:20,
-    borderRadius: 10,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#293774',
-    padding: 10,
-    marginTop: 40,
-    borderRadius:10,
-  },
-  textbutton: {
-    color: "#F2F3F4",
   },
   buttonTwo: {
     alignItems: 'center',
