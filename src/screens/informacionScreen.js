@@ -21,7 +21,7 @@ function MySkeleton() {
   );
 }
 
-const informacionScreen = ({ route, navigation })  => {
+const informacionScreen = ()  => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
