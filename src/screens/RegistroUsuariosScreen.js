@@ -138,6 +138,7 @@ const RegistroUsuariosScreen = () => {
     </SafeAreaView>
   );
 };
+export default RegistroUsuariosScreen;
 
 const styles = StyleSheet.create({
   scrollForm: {
@@ -155,4 +156,3 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-export default RegistroUsuariosScreen;
