@@ -86,6 +86,7 @@ const resetClave = ({ navigation })=> {
     </SafeAreaView>
   );
 };
+export default resetClave;
 
 const styles = StyleSheet.create({
   subcontainer: {
@@ -95,4 +96,3 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
 });
-export default resetClave;
