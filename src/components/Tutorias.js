@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import * as rn from 'react-native';
+import { styleComp } from '../styles/stylesComp';
+import { styleModal } from '../styles/styleModal';
 import { database } from '../../config/firebaseConfig';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons'; 
@@ -9,16 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
 import { doc, deleteDoc} from 'firebase/firestore';
 
-export default function Tutorias(
-    {
-        id,
-        tema,
-        descripcion,
-        aula,
-        hora,
-        semana,
-    }
-) {
+export default function Tutorias({
+        id, tema, descripcion, aula, hora, semana,
+    }) 
+{
 
     // Id del usuario que inicia sesion
     const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
@@ -44,22 +40,21 @@ export default function Tutorias(
             onPress={() => setIsDeleteActive(false)}
             activeOpacity={0.8}
         >
-            <rn.View style={styles.productContainer}>
-                <rn.Text style={styles.title}> {tema} </rn.Text>
-                <rn.Text style={styles.subtitle}> {id} </rn.Text>
-                <rn.Text style={styles.descrip}>
+            <rn.View style={styleComp.productContainer}>
+                <rn.Text style={styleComp.texttitle}> {tema} </rn.Text>
+                <rn.Text style={styleComp.textsubtitle}> {id} </rn.Text>
+                <rn.Text style={styleComp.descrip}>
                     <MaterialCommunityIcons name="watermark" size={18} color="black" /> - {descripcion} </rn.Text>
-                <rn.Text style={styles.information}> 
+                <rn.Text style={styleComp.information}> 
                     <Entypo name="chevron-right" size={18} color="black" /> Aula: {aula} 
                  </rn.Text>
-                <rn.Text style={styles.information}> 
+                <rn.Text style={styleComp.information}> 
                     <Entypo name="chevron-right" size={18} color="black" /> Hora: {hora} 
                 </rn.Text>
-                <rn.Text style={styles.information}>
+                <rn.Text style={styleComp.information}>
                     <Entypo name="chevron-right" size={18} color="black" /> {semana} 
                 </rn.Text>
-
-                    <rn.View style={styles.btnsContiner}>
+                <rn.View style={styles.btnsContiner}>
                     <rn.Pressable 
                         onPress={() => navigation.navigate('validarAsistenciaScreen')}
                         style={styles.btnContiner}>
@@ -74,71 +69,40 @@ export default function Tutorias(
                 </rn.View>
             </rn.View>
             {isDeleteActive && (
-                <rn.Pressable onPress={onDelete} style={styles.deleteButton}>
+                <rn.Pressable onPress={onDelete} style={styleComp.deleteButton}>
                 <AntDesign name="delete" size={24} color="white" />
                 </rn.Pressable>
             )}
 
-            <rn.View style={styles.centeredView}>
+            <rn.View style={styleModal.centeredView}>
                 <rn.Modal
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
                     onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                     }}>
-                    <rn.View style={styles.centeredView}>
-                    <rn.View style={styles.modalView}>
-                        <rn.Text style={styles.modalTextTitle}>INFORMACIÓN!</rn.Text>
-                        <rn.Text style={styles.modalText}>Estudiantes inscritos:</rn.Text>
-                        <rn.Text style={styles.modalText}>Tutorias validadas:</rn.Text>
+                    <rn.View style={styleModal.centeredView}>
+                    <rn.View style={styleModal.modalView}>
+                        <rn.Text style={styleModal.modalTextTitle}>INFORMACIÓN!</rn.Text>
+                        <rn.Text style={styleModal.modalText}>Estudiantes inscritos:</rn.Text>
+                        <rn.Text style={styleModal.modalText}>Tutorias validadas:</rn.Text>
 
                         <rn.Pressable
-                        style={styles.buttonClose}
+                        style={styleModal.buttonClose}
                         onPress={() => setModalVisible(!modalVisible)}>
-                        <rn.Text style={styles.textButtonClose}>CERRAR</rn.Text>
+                        <rn.Text style={styleModal.textButtonClose}>CERRAR</rn.Text>
                         </rn.Pressable>
 
                     </rn.View>
                     </rn.View>
                 </rn.Modal>
             </rn.View>
-
         </rn.TouchableOpacity>
     )
 }
 
 const styles = rn.StyleSheet.create({
-    productContainer: {
-        width: "85%",
-        padding: 10,
-        margin: 15,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: "#2E86C1",
-        backgroundColor:"#fff",
-        elevation: 5,
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: '#293774',
-    },
-    subtitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: '#D4AC0D',
-    },
-    descrip: {
-        fontSize: 16,
-    },
-    information: {
-        color: 'black',
-        fontSize: 16,
-    },
     btnsContiner:{
         width: '100%',
         backgroundColor: 'transparent',
@@ -151,61 +115,4 @@ const styles = rn.StyleSheet.create({
         backgroundColor: 'transparent',
         alignItems: 'center',
     },
-    deleteButton: {
-        position: "absolute",
-        right: 8,
-        top: 0,
-        width: 40,
-        height: 40,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#293774",
-        borderRadius: 8,
-      },
-//VENTANA MODAL
-      centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        width: '100%',
-        height: '80%',
-      },
-      modalView: {
-        margin: 20,
-        backgroundColor: '#FDFEFE',
-        borderRadius: 10,
-        padding: 40,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-      },
-      buttonClose: {
-        marginTop: 20,
-        borderRadius: 8,
-        padding: 10,
-        elevation: 2,
-        backgroundColor: '#D4AC0D',
-      },
-      textButtonClose: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-      },
-      modalTextTitle: {
-        marginBottom: 15,
-        color: '#293774',
-        fontWeight: 'bold',
-        textAlign: 'center',
-      },
-      modalText: {
-        fontSize: 16,
-        color: '#293774',
-        textAlign: 'center',
-        padding: 8,
-      },
 });
