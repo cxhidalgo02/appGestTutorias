@@ -56,7 +56,7 @@ export default function TutoriasEstudiante({
 
             <rn.View style={styles.btnsContiner}>
                 {isValidateActive && (
-                    <rn.Pressable onPress={onInscribirse} style={styleComp.validateButton}>
+                    <rn.Pressable onPress={onInscribirse} style={styleComp.validateAstButton}>
                         <AntDesign name="checksquareo" size={24} color="white" />
                     </rn.Pressable>
                 )}
