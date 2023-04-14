@@ -3,8 +3,7 @@ import { firebaseConfig } from '../../firebase-config';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, 
-          TextInput, ScrollView, LogBox, RefreshControl} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, LogBox, RefreshControl} from 'react-native';
 import { Select, CheckIcon, } from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';

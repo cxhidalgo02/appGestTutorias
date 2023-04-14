@@ -2,7 +2,7 @@ import * as React from 'react';
 import { firebaseConfig } from '../../firebase-config';
 import { initializeApp} from "firebase/app";
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, Alert,} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput } from 'react-native';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { style } from '../styles/styles';
 

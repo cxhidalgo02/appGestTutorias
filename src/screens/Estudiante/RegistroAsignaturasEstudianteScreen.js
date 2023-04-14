@@ -3,8 +3,7 @@ import { setDoc, doc } from 'firebase/firestore';
 import { database } from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, 
-  TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { style } from '../../styles/styles'; 
 import { myColors } from '../../styles/colors';
 

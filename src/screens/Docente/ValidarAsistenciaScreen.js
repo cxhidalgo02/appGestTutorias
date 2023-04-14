@@ -4,7 +4,7 @@ import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where, } from 'firebase/firestore';
 import ValidarAsistencia from '../../components/ValidarAsistencia';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, RefreshControl } from 'react-native';
+import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Skeleton } from 'moti/skeleton'; 
 import { MotiView } from 'moti';

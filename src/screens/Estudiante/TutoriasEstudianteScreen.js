@@ -2,7 +2,7 @@ import * as React from 'react';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import TutoriasEstudiante from '../../components/TutoriasEstudiante';
-import { StyleSheet, View, Text, SafeAreaView, RefreshControl } from 'react-native';
+import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
 import { Skeleton } from 'moti/skeleton'; 

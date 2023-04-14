@@ -6,7 +6,7 @@ import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import Asignaturas from '../../components/Asignaturas';
-import { StyleSheet, View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
+import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
 import { Skeleton } from 'moti/skeleton'; 

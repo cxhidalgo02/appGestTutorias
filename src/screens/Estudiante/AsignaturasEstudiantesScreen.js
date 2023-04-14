@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import AsignaturasEstudiantes from '../../components/AsignaturasEstudiantes';
-import { StyleSheet, View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
+import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';

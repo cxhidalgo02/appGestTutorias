@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, 
-  SafeAreaView, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
 import { Select, CheckIcon,  NativeBaseProvider} from 'native-base';
