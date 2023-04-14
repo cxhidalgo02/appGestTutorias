@@ -69,4 +69,16 @@ export const styleComp = StyleSheet.create({
         borderRadius: 8,
         elevation: 5,
     },
+    validateAstButton: {
+        position: "absolute",
+        right: -35,
+        top: -50,
+        width: 40,
+        height: 40,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: myColors.mustard,
+        borderRadius: 8,
+        elevation: 5,
+    },
   });
