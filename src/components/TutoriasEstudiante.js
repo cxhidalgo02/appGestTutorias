@@ -19,7 +19,7 @@ export default function TutoriasEstudiante({
     const pathCodTutEst = localStorage.setItem("keyCodTutEst", id);
 
     const pathTutoria = `gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`;
-    console.log('E Inscripcion Tutoria - pathTutoria => ',pathTutoria);
+    //console.log('E Inscripcion Tutoria - pathTutoria => ',pathTutoria);
 
      const onInscribirse = () => {
         const docRef = doc(database, `/gestionUsuarios/${pathIdEst}/asignaturas/${pathCodAsigEst}/tutorias/${id}`);
