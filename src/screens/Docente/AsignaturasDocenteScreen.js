@@ -14,8 +14,9 @@ import { MotiView } from 'moti';
 
 
 const AsignaturasDocenteScreen = () => {
-  const [asignatura, setNuevaAsignatura] = React.useState([]);
   const navigation = useNavigation();
+
+  const [asignatura, setNuevaAsignatura] = React.useState([]);
 
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
