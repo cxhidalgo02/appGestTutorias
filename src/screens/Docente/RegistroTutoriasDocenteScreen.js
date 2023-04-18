@@ -11,10 +11,9 @@ import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
 
 const RegistroTutoriasDocenteScreen = () => { 
-
   const navigation = useNavigation();
-  const app = initializeApp(firebaseConfig);
-  const firestore = getFirestore(app);
+  //const app = initializeApp(firebaseConfig);
+  //const firestore = getFirestore(app);
 
   const [nuevaTutoria, setnuevaTutoria] = React.useState({
     codigo: '',
