@@ -13,9 +13,9 @@ import { MotiView } from 'moti';
 
 
 const TutoriasDocenteScreen = () => {
+  const navigation = useNavigation();
 
   const [tutoria, setNuevaTutoria] = React.useState([]);
-  const navigation = useNavigation();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
