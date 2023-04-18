@@ -11,21 +11,19 @@ import localStorage from 'react-native-expo-localstorage';
 import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
 
 const RegistroAsignaturasDocenteScreen = () => { 
-  
   const navigation = useNavigation();
-  const app = initializeApp(firebaseConfig);
-  const firestore = getFirestore(app);
+ // const app = initializeApp(firebaseConfig);
+  //const firestore = getFirestore(app);
 
   const [nombre, setNombreAsignatura] = React.useState('')
   const [codigo, setCodigoAsignatura] = React.useState('')
   const [tipo, setTipo] = React.useState("")
   const [createdAt, setCreatedAt] = React.useState(new Date())
 
-  //  Id del usuario que inicia sesion - nnLosuPGVMRnFcthuMH9p40mkr43
+  // Id del usuario que inicia sesion
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
   const pathUrl = `gestionUsuarios/${pathIdDoc}/asignaturas/`;
-  const navigations = useNavigation();
   const onSend = async () => {
     try {
       const docu = {
