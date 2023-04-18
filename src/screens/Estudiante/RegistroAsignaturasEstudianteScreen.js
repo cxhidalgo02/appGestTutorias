@@ -8,13 +8,13 @@ import { style } from '../../styles/styles';
 import { myColors } from '../../styles/colors';
 
 const RegistroAsignaturasEstudianteScreen = () => { 
-  
+  const navigation = useNavigation();
+
   //UID del estudiante que inicia sesion
   const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
   //pat path con el UID del estudiante que inica sesion y crea el documento y coleccion
   const pathUrl = `gestionUsuarios/${pathIdEst}/asignaturas/`;
 
-  const navigations = useNavigation();
   const [codigo, setCodigoAsignatura] = React.useState('')
   const onSend = async () => {
     try {
@@ -28,7 +28,7 @@ const RegistroAsignaturasEstudianteScreen = () => {
       const docRef = doc(database, pathUrl, docu.codigo);
       await setDoc(docRef, (docu) );
       alertRecordAsignatura();
-      navigations.goBack();
+      navigation.goBack();
       
     } catch (error) {
       alertErrorAsignatura();
