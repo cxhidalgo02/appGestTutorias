@@ -34,11 +34,12 @@ export default function DarAltaEstudiante({
         querySnapshot.forEach((doc) => {
           setIsDataN(doc.data().nombre);
           setIsDataT(doc.data().tipo);
-          //console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
+          console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
         })
       } catch (error) {
         console.log('ERROR A =>', error);
       }
+      console.log('DATA => ', isDataN, isDataT,' <=');
     }
 
     const [idData, setIdData] = React.useState('')
