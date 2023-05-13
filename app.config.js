@@ -4,7 +4,7 @@ export default {
     "slug": "appgestiontutorias",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/favicon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -22,9 +22,10 @@ export default {
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon_android.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.example.project"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,7 +36,10 @@ export default {
       projectId: process.env.PROJECT_ID,
       storageBucket: process.env.STORAGE_BUCKET,
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
-      appId: process.env.APP_ID
+      appId: process.env.APP_ID,
+      "eas": {
+        "projectId": "62e0cf09-735d-4795-a1b9-5d2c54c85039"
+      }
     }
   }
 }
