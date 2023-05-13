@@ -21,7 +21,7 @@
     "localStorage": "^1.0.4",
     "moti": "^0.24.2",
     "native-base": "^3.4.26",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-native": "^0.71.7",
     "react-native-alert-notification": "^0.3.4",
     "react-native-expo-localstorage": "^1.0.3",
