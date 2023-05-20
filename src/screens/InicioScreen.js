@@ -4,11 +4,9 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, LogBox, RefreshControl} from 'react-native';
-import { Select, CheckIcon, } from 'native-base';
 import localStorage from 'react-native-expo-localstorage';
-import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
-import { NativeBaseProvider } from "native-base";
 import { style } from '../styles/styles';
+import { Picker } from '@react-native-picker/picker';
 
 LogBox.ignoreAllLogs();
 
@@ -23,17 +21,6 @@ const InicioScreen = ({ navigation })=> {
   const [shown, setShown] = React.useState(false);
   const switchShown = () => setShown(!shown);
 
-  const alertErrorInicio = () => {
-    try {
-      Dialog.show({
-        type: ALERT_TYPE.DANGER,
-        title: 'Error de inicio de sesión',
-        textBody: 'Ingrese nuevamente su usuario y constraseña',
-      })
-    } catch (error) {
-      console.log("No pudo mostrar el Error:  ", error);
-    }
-  }
 
  const handleSingIn = () =>{
     signInWithEmailAndPassword(auth, correo, clave)
@@ -59,13 +46,15 @@ const InicioScreen = ({ navigation })=> {
             navigation.navigate('asignaturasEstudiantesScreen');
             localStorage.setItem("keyUserEst", userUid);
              break;
+          case "Tipo":
+            console.log('Debe seleccionar un tipo!');
+            break;
         }
        }
       );    
     })
     .catch( (error) => {
       console.log(" * ERROR * ",error)
-      alertErrorInicio();
     });
   }
 
@@ -80,54 +69,48 @@ const InicioScreen = ({ navigation })=> {
   return ( 
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-        <ScrollView style = {styles.scrollForm} 
-          refreshControl={
-             <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-          } 
-        >
-        <Text style={style.textTitle}>
-            ACCEDER A SU CUENTA
-          </Text>
-            <TextInput style = {style.textInput}
-              id="Email"
-              placeholder="Correo"
-              textContentType="emailAddress"
-              autoCapitalize='none'
-              onChangeText={(text) => setCorreo(text)}/>
-            <TextInput style = {style.textInput}
-              id="Pass"
-              placeholder="Contraseña"
-              textContentType="password"
-              secureTextEntry
-              autoCapitalize='none'
-              type={shown ? 'text' : 'password'}
-              onChangeText={(text) => setClave(text)}/> 
+        <View style={style.subcontainer} >
+          <ScrollView style = {styles.scrollForm} 
+            refreshControl={
+              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+            } 
+          >
+          <Text style={style.textTitle}>
+              ACCEDER A SU CUENTA
+            </Text>
+              <TextInput style = {style.textInput}
+                id="Email"
+                placeholder="Correo"
+                textContentType="emailAddress"
+                autoCapitalize='none'
+                onChangeText={(text) => setCorreo(text)}/>
+              <TextInput style = {style.textInput}
+                id="Pass"
+                placeholder="Contraseña"
+                textContentType="password"
+                secureTextEntry
+                autoCapitalize='none'
+                type={shown ? 'text' : 'password'}
+                onChangeText={(text) => setClave(text)}/> 
+              <Picker
+                  style = {style.select}
+                  selectedValue={tipo}
+                  onValueChange={(itemValue) => setTipo(itemValue)}
+                >
+                  <Picker.Item label="Tipo" value="Tipo" />
+                  <Picker.Item label="Docente" value="Docente" />
+                  <Picker.Item label="Estudiante" value="Estudiante" />
+                </Picker>
 
-            <NativeBaseProvider>
-              <Select 
-                  id="tipoUsuario"
-                  selectedValue={tipo} 
-                  minWidth={280} paddingTop={3}
-                  marginTop={6}
-                  borderColor="#2E86C1" backgroundColor="#fff" borderRadius={9} borderWidth={1} 
-                  accessibilityLabel="Seleccionar" 
-                  placeholder="Seleccionar" 
-                  onValueChange={itemValue => setTipo(itemValue)} _selectedItem={{
-                  endIcon: <CheckIcon size={6} />
-                }}>
-                <Select.Item label="Docente" value="Docente" />
-                <Select.Item label="Estudiante" value="Estudiante" />
-              </Select>
-            </NativeBaseProvider>
+                <TouchableOpacity style={style.button} onPress={handleSingIn}>
+                  <Text style={style.textbutton}>INICIO SESIÓN</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity style={style.button} onPress={handleSingIn}>
-                <Text style={style.textbutton}>INICIO SESIÓN</Text>
+              <TouchableOpacity style={style.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
+                <Text style={style.textbuttonTwo}>Olvidaste tu contraseña?</Text>
               </TouchableOpacity>
-
-            <TouchableOpacity style={style.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
-              <Text style={style.textbuttonTwo}>Olvidaste tu contraseña?</Text>
-            </TouchableOpacity>
-        </ScrollView> 
+          </ScrollView> 
+        </View>
       </View>
     </SafeAreaView>
   );
