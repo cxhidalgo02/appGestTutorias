@@ -2,12 +2,11 @@ import * as React from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
-import { Select, CheckIcon,  NativeBaseProvider} from 'native-base';
 import { initializeApp} from "firebase/app";
 import { firebaseConfig } from '../../firebase-config';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import { ALERT_TYPE, Dialog} from 'react-native-alert-notification';
 import { style } from '../styles/styles';
+import { Picker } from '@react-native-picker/picker';
 
 const RegistroUsuariosScreen = () => {
 
@@ -16,55 +15,32 @@ const RegistroUsuariosScreen = () => {
   const auth = getAuth(app);
   const firestore = getFirestore(app);
   
-  const [cedula, setCedula] = React.useState('')
-  const [nombres, setNombres] = React.useState('')
-  const [apellidos, setApellidos] = React.useState('')
-  const [correo, setCorreo] = React.useState('')
-  const [clave, setClave] = React.useState('')
-  const [tipo, setTipo] = React.useState("")
-  const [createdAt, setCreatedAt] = React.useState(new Date())
+  const [cedula, newUsuarioCedula] = React.useState('')
+  const [nombres, newUsuarioNombres] = React.useState('')
+  const [apellidos, newUsuarioApellidos] = React.useState('')
+  const [correo, newUsuarioCorreo] = React.useState('')
+  const [clave, newUsuarioClave] = React.useState('')
+  const [tipo, newUsuarioTipo] = React.useState("")
+  const [createdAt, newUsuarioCreatedAt] = React.useState(new Date())
 
-    const onSend = async () => {
-      const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave
-        ).then((userCredential) => {
-          const user = userCredential.user;
-          const docRef = doc(firestore, `gestionUsuarios/${user.uid}`);
-          setDoc(docRef, {
-            cedula: cedula, 
-            nombres: nombres, 
-            apellidos: apellidos, 
-            correo: correo,
-            clave: clave,
-            tipo: tipo,
-            createdAt: createdAt
-          });
-          return userCredential;
+  const onSend = async () => {
+    const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave
+      ).then((userCredential) => {
+        const user = userCredential.user;
+        const docRef = doc(firestore, `gestionUsuarios/${user.uid}`);
+        setDoc(docRef, {
+          cedula: cedula, 
+          nombres: nombres, 
+          apellidos: apellidos, 
+          correo: correo,
+          clave: clave,
+          tipo: tipo,
+          createdAt: createdAt
         });
-        alertRecordUsuario();
-        navigation.goBack();
-    }
-
-    const alertRecordUsuario = () => {
-      try {
-        Dialog.show({
-          type: ALERT_TYPE.SUCCESS,
-          title: 'Usuario Registrado Correctamente',
-        })
-      } catch (error) {
-        console.log("No pudo mostrar el Error:  ", error);
-      }
-    }
-
-    const alertErrorUsuario = () => {
-      try {
-        Dialog.show({
-          type: ALERT_TYPE.DANGER,
-          title: 'Error al Registrar el Usuario',
-        })
-      } catch (error) {
-        console.log("No pudo mostrar el Error:  ", error);
-      }
-    }
+        return userCredential;
+      });
+      navigation.goBack();
+  }
 
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
@@ -77,6 +53,7 @@ const RegistroUsuariosScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
+      <View style={style.subcontainer} >
           <ScrollView style = {styles.scrollForm}
             refreshControl={
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
@@ -89,50 +66,46 @@ const RegistroUsuariosScreen = () => {
               style = {style.textInput}
               placeholder="Cedula"
               keyboardType="numeric"
-              onChangeText={(text) => setCedula(text)}
+              onChangeText={(text) => newUsuarioCedula(text)}
             />
             <TextInput
               style = {style.textInput}
               placeholder="Nombres"
-              onChangeText={(text) => setNombres(text)}
+              onChangeText={(text) => newUsuarioNombres(text)}
             />
             <TextInput
               placeholder="Apellidos"
               style = {style.textInput}
-              onChangeText={(text) => setApellidos(text)}
+              onChangeText={(text) => newUsuarioApellidos(text)}
             />
             <TextInput 
               style = {style.textInput}
               placeholder="Correo"
-              onChangeText={(text) => setCorreo(text)}
+              onChangeText={(text) => newUsuarioCorreo(text)}
             />
             <TextInput 
               style = {style.textInput}
               placeholder="Contraseña"
               secureTextEntry
-              onChangeText={(text) => setClave(text)}
+              onChangeText={(text) => newUsuarioClave(text)}
             />
-            <NativeBaseProvider>
-              <Select 
-                  selectedValue={tipo} 
-                  minWidth={280} paddingTop={3}
-                  marginTop={6}
-                  borderColor="#2E86C1" backgroundColor="#fff" borderRadius={9} borderWidth={1} 
-                  accessibilityLabel="Seleccionar" 
-                  placeholder="Seleccionar" 
-                  onValueChange={itemValue => setTipo(itemValue)}
-                  _selectedItem={{endIcon: <CheckIcon size={6} />
-                }}>
-                <Select.Item label="Docente" value="Docente" />
-                <Select.Item label="Estudiante" value="Estudiante" />
-              </Select>
-            </NativeBaseProvider>
+            <Picker
+              style = {style.select}
+              selectedValue={tipo}
+              onValueChange={(itemValue) => newUsuarioTipo(itemValue)}
+              >
+                <Picker.Item label="Tipo" value="Tipo" />
+                <Picker.Item label="Docente" value="Docente" />
+                <Picker.Item label="Estudiante" value="Estudiante" />
+            </Picker>
+
             <TouchableOpacity
               style={style.button}
               onPress={onSend}>
               <Text style={style.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
