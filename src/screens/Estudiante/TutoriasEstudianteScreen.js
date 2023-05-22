@@ -5,8 +5,6 @@ import TutoriasEstudiante from '../../components/TutoriasEstudiante';
 import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
-import { Skeleton } from 'moti/skeleton'; 
-import { MotiView } from 'moti';
 import { style } from '../../styles/styles';
 
 const TutoriasDocenteScreen = () => {
@@ -50,25 +48,9 @@ const TutoriasDocenteScreen = () => {
       }, 2000);
     }, []);
 
-    const Spacer =  ({height = 30}) => <MotiView style={{height}}/>
-    function MySkeleton() {
-      return (
-        <>
-          <Skeleton width={'60%'} height={40} colorMode={'light'} />
-          <Spacer/>
-          <Skeleton width={'80%'} height={175} colorMode={'light'} />
-          <Spacer/>
-          <Skeleton width={'80%'} height={175} colorMode={'light'} />
-          <Spacer/>
-          <Skeleton width={'80%'} height={175} colorMode={'light'} />
-        </>
-      );
-    }
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-        <React.Suspense fallback={<MySkeleton />}>
           <Text style={style.textTitle}>
             MIS TUTORIAS
           </Text>
@@ -79,7 +61,6 @@ const TutoriasDocenteScreen = () => {
           >
             {tutoria.map(tutoria => <TutoriasEstudiante key={tutoria.id} {...tutoria}/>)}
           </ScrollView>
-        </React.Suspense>
       </View>
     </SafeAreaView>
   );
