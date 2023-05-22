@@ -1,37 +1,22 @@
 import * as React from 'react';
 import { style } from '../../styles/styles';
-import { firebaseConfig } from '../../../firebase-config';
 import { database } from '../../../config/firebaseConfig';
-import { initializeApp} from "firebase/app";
 import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
-import { Select, CheckIcon, NativeBaseProvider} from 'native-base';
-import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
+import { Picker } from '@react-native-picker/picker';
 
 const RegistroTutoriasDocenteScreen = () => { 
   const navigation = useNavigation();
-  //const app = initializeApp(firebaseConfig);
-  //const firestore = getFirestore(app);
 
-  const [nuevaTutoria, setnuevaTutoria] = React.useState({
-    codigo: '',
-    tema: '', 
-    descripcion: '',
-    aula: '',
-    hora: '',
-    semana: '',
-    createdAt: new Date(),
-  })
-
-  const [codigo, setCodigo] = React.useState('')
-  const [tema, setTema] = React.useState('')
-  const [descripcion, setDescripcion] = React.useState('')
-  const [aula, setAula] = React.useState('')
-  const [hora, setHora] = React.useState('')
-  const [semana, setSemana] = React.useState("")
-  const [createdAt, setCreatedAt] = React.useState('')
+  const [codigoTutoria, setCodigoTutoria] = React.useState('')
+  const [temaTutoria, setTemaTutoria] = React.useState('')
+  const [descripcionTutoria, setDescripcionTutoria] = React.useState('')
+  const [aulaTutoria, setAulaTutoria] = React.useState('')
+  const [horaTutoria, setHoraTutoria] = React.useState('')
+  const [semanaTutoria, setSemanaTutoria] = React.useState("")
+  const [createdAt, setCreatedAt] = React.useState(new Date())
 
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el usuario
@@ -41,44 +26,20 @@ const RegistroTutoriasDocenteScreen = () => {
   const pathUrlDoc  = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsig}/tutorias/`;
   const onSend = async () => {
     try {
-      const docu = {
-        codigo: codigo,
-        tema: tema, 
-        descripcion: descripcion,
-        aula: aula,
-        hora: hora,
-        semana: semana,
-        createdAt: new Date()
+      const registroTutoria = {
+        codigo: codigoTutoria,
+        tema: temaTutoria, 
+        descripcion: descripcionTutoria,
+        aula: aulaTutoria,
+        hora: horaTutoria,
+        semana: semanaTutoria,
+        createdAt: createdAt
       };
-      const docRef = doc(database, pathUrlDoc, docu.codigo);
-      await setDoc(docRef, (docu) );
-      alertRecordTutoria();
+      const docRef = doc(database, pathUrlDoc, registroTutoria.codigo);
+      await setDoc(docRef, (registroTutoria) );
       navigation.goBack();
     } catch (error) {
-      alertErrorTutoria();
       console.log('ERROR => ',error);
-    }
-  }
-  
-  const alertRecordTutoria = () => {
-    try {
-      Dialog.show({
-        type: ALERT_TYPE.SUCCESS,
-        title: 'Tutoria registrada',
-      })
-    } catch (error) {
-      console.log("No pudo mostrar el Error:  ", error);
-    }
-  }
-
-  const alertErrorTutoria = () => {
-    try {
-      Dialog.show({
-        type: ALERT_TYPE.DANGER,
-        title: 'Error al registrar la tutoria',
-      })
-    } catch (error) {
-      console.log("No pudo mostrar el Error:  ", error);
     }
   }
 
@@ -93,6 +54,7 @@ const RegistroTutoriasDocenteScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
+        <View style={style.subcontainer} >
           <ScrollView style = {styles.scrollForm}
             refreshControl={
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
@@ -102,61 +64,55 @@ const RegistroTutoriasDocenteScreen = () => {
             FORMULARIO
           </Text>
             <TextInput style = {style.textInput}
-              onChangeText={(text) => setCodigo(text)}
+              onChangeText={(text) => setCodigoTutoria(text)}
               placeholder="Codigo"
             />
             <TextInput style = {style.textInput}
-              onChangeText={(text) => setTema(text)}
+              onChangeText={(text) => setTemaTutoria(text)}
               placeholder="Tema"
             />
             <TextInput style = {style.textInput}
-            onChangeText={(text) => setDescripcion(text)}
+            onChangeText={(text) => setDescripcionTutoria(text)}
               placeholder="Descripción"
             />
             <TextInput style = {style.textInput}
-            onChangeText={(text) => setAula(text)}
+            onChangeText={(text) => setAulaTutoria(text)}
               placeholder="Aula"
             />  
             <TextInput style = {style.textInput}
-            onChangeText={(text) => setHora(text)}
+            onChangeText={(text) => setHoraTutoria(text)}
               placeholder="Hora"
             /> 
-            <NativeBaseProvider>
-              <Select 
-                  id="tipo"
-                  selectedValue={semana} 
-                  minWidth={280} paddingTop={3}
-                  marginTop={6}
-                  borderColor="#2E86C1" backgroundColor="#fff" borderRadius={9} borderWidth={1} 
-                  accessibilityLabel="Seleccionar" 
-                  placeholder="Seleccionar" 
-                  onValueChange={itemValue => setSemana(itemValue)} 
-                  _selectedItem={{endIcon: <CheckIcon size={6} />
-                }}>
-                <Select.Item label="Semana 1" value="Semana 1" />
-                <Select.Item label="Semana 2" value="Semana 2" />
-                <Select.Item label="Semana 3" value="Semana 3" />
-                <Select.Item label="Semana 4" value="Semana 4" />
-                <Select.Item label="Semana 5" value="Semana 5" />
-                <Select.Item label="Semana 6" value="Semana 6" />
-                <Select.Item label="Semana 7" value="Semana 7" />
-                <Select.Item label="Semana 8" value="Semana 8" />
-                <Select.Item label="Semana 9" value="Semana 9" />
-                <Select.Item label="Semana 10" value="Semana 10" />
-                <Select.Item label="Semana 11" value="Semana 11" />
-                <Select.Item label="Semana 12" value="Semana 12" />
-                <Select.Item label="Semana 13" value="Semana 13" />
-                <Select.Item label="Semana 14" value="Semana 14" />
-                <Select.Item label="Semana 15" value="Semana 15" />
-                <Select.Item label="Semana 16" value="Semana 16" />
-              </Select>
-            </NativeBaseProvider>
-          
+            <Picker
+                style = {style.select}
+                selectedValue={semanaTutoria}
+                onValueChange={(itemValue) => setSemanaTutoria(itemValue)}
+                >
+                <Picker.Item label="Semana 1" value="1" />
+                <Picker.Item label="Semana 2" value="2"/>
+                <Picker.Item label="Semana 3" value="3"/>
+                <Picker.Item label="Semana 4" value="4"/>
+                <Picker.Item label="Semana 5" value="5"/>
+                <Picker.Item label="Semana 6" value="6"/>
+                <Picker.Item label="Semana 7" value="7"/>
+                <Picker.Item label="Semana 8" value="8"/>
+                <Picker.Item label="Semana 9" value="9"/>
+                <Picker.Item label="Semana 10" value="10"/>
+                <Picker.Item label="Semana 11" value="11"/>
+                <Picker.Item label="Semana 12" value="12"/>
+                <Picker.Item label="Semana 13" value="13"/>
+                <Picker.Item label="Semana 14" value="14"/>
+                <Picker.Item label="Semana 15" value="15"/>
+                <Picker.Item label="Semana 16" value="16"/>
+                <Picker.Item label="Semana 17" value="17"/>
+                <Picker.Item label="Semana 18" value="18"/>
+              </Picker>
             <TouchableOpacity style={style.button} onPress={onSend} >
               <Text style={style.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
+      </View>
     </SafeAreaView>
   );
 };

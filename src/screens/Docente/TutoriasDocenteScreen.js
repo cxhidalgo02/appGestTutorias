@@ -8,9 +8,6 @@ import localStorage from 'react-native-expo-localstorage';
 import Tutorias from '../../components/Tutorias';
 import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Skeleton } from 'moti/skeleton'; 
-import { MotiView } from 'moti';
-
 
 const TutoriasDocenteScreen = () => {
   const navigation = useNavigation();
@@ -39,7 +36,6 @@ const TutoriasDocenteScreen = () => {
     const collectionRef = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsigDoc}/tutorias`);
     const q = query(collectionRef, orderBy('createdAt', 'desc'));
     const setDocTutorias = onSnapshot(q, querySnapshot => {
-        //console.log('querySnapshot dejo los datos de tutorias');
         setNuevaTutoria(
             querySnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -68,25 +64,9 @@ const TutoriasDocenteScreen = () => {
       }, 2000);
     }, []);
 
-    const Spacer =  ({height = 30}) => <MotiView style={{height}}/>
-    function MySkeleton() {
-      return (
-        <>
-          <Skeleton width={'60%'} height={40} colorMode={'light'} />
-          <Spacer/>
-          <Skeleton width={'80%'} height={175} colorMode={'light'} />
-          <Spacer/>
-          <Skeleton width={'80%'} height={175} colorMode={'light'} />
-          <Spacer/>
-          <Skeleton width={'80%'} height={175} colorMode={'light'} />
-        </>
-      );
-    }
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-        <React.Suspense fallback={<MySkeleton />}>
           <Text style={style.textTitle}>
             MIS TUTORIAS
           </Text>
@@ -97,7 +77,6 @@ const TutoriasDocenteScreen = () => {
             >
               {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
             </ScrollView>
-        </React.Suspense>
       </View>
     </SafeAreaView>
   );
