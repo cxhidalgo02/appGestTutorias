@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as rn from 'react-native';
 import { styleComp } from '../styles/stylesComp';
-import { styleModal } from '../styles/styleModal';
 import { database } from '../../config/firebaseConfig';
 import { doc, updateDoc,} from 'firebase/firestore';
 import { AntDesign } from '@expo/vector-icons'; 
@@ -33,7 +32,6 @@ export default function TutoriasEstudiante({
             onPress={() => setIsValidateActive(false)}
             activeOpacity={0.8}
         >
-            
             <rn.Text style={styleComp.texttitle}> {tema} </rn.Text>
             <rn.Text style={styleComp.textsubtitle}> {id} </rn.Text>
             <rn.Text style={styleComp.descrip}>
@@ -46,14 +44,13 @@ export default function TutoriasEstudiante({
                 <AntDesign name="right" size={16} color="black" /> Hora: {hora} 
             </rn.Text>
             <rn.Text style={styleComp.information}>
-                <AntDesign name="right" size={16} color="black" /> {semana} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Semana: {semana} </rn.Text>
             <rn.Text style={styles.information}>
                 <AntDesign name="right" size={16} color="black" /> Inscrito: {inscripcion} 
             </rn.Text>
             <rn.Text style={styleComp.information}>
                 <AntDesign name="right" size={16} color="black" /> Validada: {validada} 
             </rn.Text>
-
             <rn.View style={styles.btnsContiner}>
                 {isValidateActive && (
                     <rn.Pressable onPress={onInscribirse} style={styleComp.validateAstButton}>
