@@ -6,8 +6,6 @@ import ValidarAsistencia from '../../components/ValidarAsistencia';
 import localStorage from 'react-native-expo-localstorage';
 import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Skeleton } from 'moti/skeleton'; 
-import { MotiView } from 'moti';
 
 
 const ValidarAsistenciaScreen = () => {
@@ -46,25 +44,6 @@ const onRefresh = React.useCallback(() => {
     setRefreshing(false);
   }, 2000);
 }, []);
-
-const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
-function MySkeleton() {
-  return (
-    <>
-        <Skeleton width={'60%'} height={40} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-    </>
-  );
-}
 
 return (
     <SafeAreaView style={{ flex: 1 }}>
