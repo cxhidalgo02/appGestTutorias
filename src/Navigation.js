@@ -30,18 +30,6 @@ import TutoriasEstudianteScreen from "./screens/Estudiante/TutoriasEstudianteScr
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
-import { useState, useEffect, useRef } from 'react';
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
-
 function MyStack( ) {
 
   const app = initializeApp(firebaseConfig);
@@ -75,77 +63,6 @@ function MyStack( ) {
 
 function BottomTabNavigator({ navigation })  {
 
-    //inicio notificaciones
-    const [expoPushToken, setExpoPushToken] = useState('');
-    const [notification, setNotification] = useState(false);
-    const notificationListener = useRef();
-    const responseListener = useRef();  
-  
-    useEffect(() => {
-      registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-      notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-        setNotification(notification);
-      });
-      responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        console.log(response);
-      });
-    
-      return () => {
-        Notifications.removeNotificationSubscription(notificationListener.current);
-        Notifications.removeNotificationSubscription(responseListener.current);
-      };
-  
-    }, []);
-  
-    async function registerForPushNotificationsAsync() {
-      let token;
-      if (Constants.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== 'granted') {
-          const { status } = await Notifications.requestPermissionsAsync();
-          finalStatus = status;
-        }
-        if (finalStatus !== 'granted') {
-          alert('No se pudo obtener el token de inserción para la notificación de inserción!');
-          return;
-        }
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-        console.log(token);
-      } else {
-        alert('Debe usar un dispositivo físico para las notificaciones automáticas');
-      }
-    
-      if (Platform.OS === 'android') {
-        Notifications.setNotificationChannelAsync('default', {
-          name: 'default',
-          importance: Notifications.AndroidImportance.MAX,
-          vibrationPattern: [0, 250, 250, 250],
-          lightColor: '#FF231F7C',
-        });
-      }
-    
-      return token;
-    }
-  
-    const sendMesaage = (token) => {
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Accept-encoding': 'gzip, deflate',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: token,
-          title: 'Gestión Tutorias',
-          body: 'Se ha permitido recibir notificaciones',
-          data: { data: 'goes here' },
-          _displayInForeground: true,
-        }),
-      });
-    }
-    //fin notificaciones
 
     return (
         <Tab.Navigator initialRouteName="Feed"
@@ -181,7 +98,7 @@ function BottomTabNavigator({ navigation })  {
                 tabBarIcon: ({ color, size }) => (<AntDesign name="user" size={25} color="#293774" />),
                 headerRight: () => (
                   <Pressable
-                    onPress={() => sendMesaage(expoPushToken)}
+                    
                     style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
                    <Ionicons name="notifications-outline" size={28} color="#293774" style={{ marginRight: 16 }}/>
                   </Pressable>
