@@ -27,34 +27,10 @@ const RegistroAsignaturasEstudianteScreen = () => {
       };
       const docRef = doc(database, pathUrl, docu.codigo);
       await setDoc(docRef, (docu) );
-      alertRecordAsignatura();
       navigation.goBack();
       
     } catch (error) {
-      alertErrorAsignatura();
       console.log('ERROR => ',error);
-    }
-  }
-
-  const alertRecordAsignatura = () => {
-    try {
-      Dialog.show({
-        type: ALERT_TYPE.SUCCESS,
-        title: 'Asignatura registrada',
-      })
-    } catch (error) {
-      console.log("No pudo mostrar el Error:  ", error);
-    }
-  }
-
-  const alertErrorAsignatura = () => {
-    try {
-      Dialog.show({
-        type: ALERT_TYPE.DANGER,
-        title: 'Error al registrar la asignatura',
-      })
-    } catch (error) {
-      console.log("No pudo mostrar el Error:  ", error);
     }
   }
 
@@ -69,7 +45,7 @@ const RegistroAsignaturasEstudianteScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-        <View style={styles.subcontainer}> 
+        <View style={style.subcontainer}> 
           <Text style={style.textTitle}>
             FORMULARIO
           </Text>

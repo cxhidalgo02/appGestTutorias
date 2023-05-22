@@ -7,9 +7,6 @@ import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-nativ
 import { AntDesign } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
-import { ALERT_TYPE, Dialog, } from 'react-native-alert-notification';
-import { Skeleton } from 'moti/skeleton'; 
-import { MotiView } from 'moti';
 import { style } from '../../styles/styles'; 
 
 const AsignaturasEstudiantesScreen = () => {
@@ -48,16 +45,8 @@ const AsignaturasEstudiantesScreen = () => {
     return setDocAsignaturas;
   }
 
-  const alertWelcome = () => {
-    Dialog.show({
-       type: ALERT_TYPE.SUCCESS,
-       title: 'Bienvenido',
-     })
-   }
-
   React.useEffect(() => {
     consultaAsig();
-    alertWelcome(); 
   },[])
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -68,27 +57,9 @@ const AsignaturasEstudiantesScreen = () => {
     }, 2000);
   }, []);
 
-  const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
-  function MySkeleton() {
-    return (
-      <>
-        <Skeleton width={'60%'} height={40} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-      </>
-    );
-  }
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-        <React.Suspense fallback={<MySkeleton />}>
           <Text style={style.textTitle}>
             MIS ASIGNATURAS
           </Text>
@@ -99,7 +70,6 @@ const AsignaturasEstudiantesScreen = () => {
           >
             {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
           </ScrollView>
-        </React.Suspense>
       </View>
     </SafeAreaView>
   );
