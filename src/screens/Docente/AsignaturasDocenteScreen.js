@@ -8,9 +8,6 @@ import localStorage from 'react-native-expo-localstorage';
 import Asignaturas from '../../components/Asignaturas';
 import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ALERT_TYPE, Dialog } from 'react-native-alert-notification';
-import { Skeleton } from 'moti/skeleton'; 
-import { MotiView } from 'moti';
 
 
 const AsignaturasDocenteScreen = () => {
@@ -39,19 +36,8 @@ const AsignaturasDocenteScreen = () => {
     return setDocAsignaturas;
   }   
 
-  const alertWelcome = () => {
-    try {
-      Dialog.show({
-        type: ALERT_TYPE.SUCCESS,
-        title: 'Bienvenido',
-      })
-    } catch (error) {
-      console.log("No pudo mostrar el Error:  ", error);
-    }
-  }
 
   React.useEffect(() => { 
-    alertWelcome();  
     consultaAsig(); 
   },[])
 
@@ -74,27 +60,9 @@ const AsignaturasDocenteScreen = () => {
     }, 2000);
   }, []);
 
-  const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
-  function MySkeleton() {
-    return (
-      <>
-        <Skeleton width={'60%'} height={40} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={135} colorMode={'light'} />
-      </>
-    );
-  }
-
   return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={style.container} >
-          <React.Suspense fallback={<MySkeleton />}>
             <Text style={style.textTitle}>
               MIS ASIGNATURAS
             </Text>
@@ -106,7 +74,6 @@ const AsignaturasDocenteScreen = () => {
             >
               {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
             </ScrollView> 
-          </React.Suspense>
         </View>
       </SafeAreaView>    
   );
