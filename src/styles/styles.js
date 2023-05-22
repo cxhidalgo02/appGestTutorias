@@ -3,10 +3,12 @@ import { myColors } from "./colors";
 
 export const style = StyleSheet.create({
   container: {
-    flex: 1, 
     padding: 16,
     alignItems: 'center', 
     justifyContent: 'center',
+  },
+  subcontainer: {
+    width: '75%',
   },
   textTitle: {
     fontSize: 20, 
@@ -25,13 +27,23 @@ export const style = StyleSheet.create({
     color: myColors.navyblue,
   },
   textInput:{
+    //borderWidth: 1,
+    //borderColor: myColors.skyblue,
+    backgroundColor: myColors.white,
+    padding:15,
+    paddingStart: 20,
+    marginTop:20,
+    //borderRadius: 10,
+    elevation: 5,
+  },
+  select: {
     borderWidth: 1,
     borderColor: myColors.skyblue,
     backgroundColor: myColors.white,
-    padding:10,
-    paddingStart: 20,
-    marginTop:20,
-    borderRadius: 10,
+    padding: 10,
+    marginTop: 25,
+    borderRadius:10,
+    elevation: 5,
   },
   button: {
     alignItems: 'center',
@@ -66,4 +78,4 @@ export const style = StyleSheet.create({
     textAlign: "center",
     marginTop: 100,
   },
-  });
+});
