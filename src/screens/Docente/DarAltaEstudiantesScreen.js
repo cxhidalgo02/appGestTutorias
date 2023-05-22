@@ -6,8 +6,6 @@ import localStorage from 'react-native-expo-localstorage';
 import DarAltaEstudiante from '../../components/DarAltaEstudiante';
 import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Skeleton } from 'moti/skeleton'; 
-import { MotiView } from 'moti';
 
 
 const DarAltaEstudiantesScreen = () => {
@@ -54,29 +52,9 @@ const DarAltaEstudiantesScreen = () => {
     }, 2000);
   }, []);
 
-  const Spacer =  ({height = 25}) => <MotiView style={{height}}/>
-  function MySkeleton() {
-    return (
-      <>
-        <Skeleton width={'60%'} height={40} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-        <Spacer/>
-        <Skeleton width={'80%'} height={105} colorMode={'light'} />
-      </>
-    );
-  }
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-        <React.Suspense fallback={<MySkeleton />}>
           <Text style={style.textTitle}>
             VALIDAR ACCESO
           </Text>
@@ -88,7 +66,6 @@ const DarAltaEstudiantesScreen = () => {
             >
               {estudiante.map(estudiante=> <DarAltaEstudiante key={estudiante.id} {...estudiante}/>)}
             </ScrollView>
-        </React.Suspense>
       </View>
     </SafeAreaView>
   );
