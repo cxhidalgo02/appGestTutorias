@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { style } from '../../styles/styles';
 import { database } from '../../../config/firebaseConfig';
-import { doc, setDoc, getFirestore } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
@@ -16,7 +16,7 @@ const RegistroTutoriasDocenteScreen = () => {
   const [aulaTutoria, setAulaTutoria] = React.useState('')
   const [horaTutoria, setHoraTutoria] = React.useState('')
   const [semanaTutoria, setSemanaTutoria] = React.useState("")
-  const [createdAt, setCreatedAt] = React.useState(new Date())
+  const [createdAt] = React.useState(new Date())
 
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el usuario
