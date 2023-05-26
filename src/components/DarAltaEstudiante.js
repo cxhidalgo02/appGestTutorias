@@ -14,13 +14,13 @@ export default function DarAltaEstudiante({
     }) 
 {
     //Uid del estudiante que encuentre en la base de datos   (id) 
-    const pathIdEstData = localStorage.setItem("keyUserEstData", id); //console.log('UID del estudiante = ', id);
+    //const pathIdEstData = localStorage.setItem("keyUserEstData", id); //console.log('UID del estudiante = ', id);
     //Uid del docente que inicia sesion   (id) 
     const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc); //console.log('UID del docente =', pathIdDoc);
     //codigo de las asignatura de seleccione
     const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
     //path de estudiante con asignaturas y codigo
-    const pathEstudiante=`gestionUsuarios/${id}/asignaturas/${pathIdAsig}`
+    const pathEstudiante=`registroUsuarios/${id}/registroAsignaturas/${pathIdAsig}`
 
     const [isDataN, setIsDataN] = React.useState('');
     const [isDataT, setIsDataT] = React.useState('');
@@ -34,12 +34,11 @@ export default function DarAltaEstudiante({
         querySnapshot.forEach((doc) => {
           setIsDataN(doc.data().nombre);
           setIsDataT(doc.data().tipo);
-          console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
+          //console.log('DATOS ASIGNATURA DEL DOCENTE =>', doc.id, "<= ");
         })
       } catch (error) {
         console.log('ERROR A =>', error);
       }
-      console.log('DATA => ', isDataN, isDataT,' <=');
     }
 
     const [idData, setIdData] = React.useState('')
@@ -80,27 +79,31 @@ export default function DarAltaEstudiante({
   React.useEffect(() => { 
     consultaAsignaturasDocente();
     consultaTutoriasDocente();
+    agregarTutorias();
   },[])
 
     const onValidate = () => {
     const docRef = doc(database, `gestionUsuarios/${id}/asignaturas/${pathIdAsig}`);
             updateDoc(docRef, {nombre: isDataN, tipo: isDataT,  validada: 'true' });
-
-    const pathUrl  = `gestionUsuarios/${id}/asignaturas/${pathIdAsig}/tutorias/`;    
-        const docu = {
-          codigo: pathIdTut,
-          tema: temaData, 
-          descripcion: descripcionData,
-          aula: aulaData,
-          hora: horaData,
-          semana: semanaData,
-          createdAt: new Date(),
-          inscripcion: 'false',
-          validada: 'false'
-        };
-        const docRef2 = doc(database, pathUrl, docu.codigo);
-            setDoc(docRef2, (docu) );
     }    
+
+    const agregarTutorias = () => {
+  
+      const pathUrl  = `gestionUsuarios/${id}/asignaturas/${pathIdAsig}/tutorias/`;    
+          const docu = {
+            codigo: pathIdTut,
+            tema: temaData, 
+            descripcion: descripcionData,
+            aula: aulaData,
+            hora: horaData,
+            semana: semanaData,
+            createdAt: new Date(),
+            inscripcion: 'false',
+            validada: 'false'
+          };
+          const docRef2 = doc(database, pathUrl, docu.codigo);
+              setDoc(docRef2, (docu) );
+      }   
 
     const [isValidateActive, setIsValidateActive] = React.useState(false);
     return(
