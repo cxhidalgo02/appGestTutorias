@@ -52,7 +52,7 @@ export default function Tutorias({
                     <Entypo name="chevron-right" size={18} color="black" /> Hora: {hora} 
                 </rn.Text>
                 <rn.Text style={styleComp.information}>
-                    <Entypo name="chevron-right" size={18} color="black" /> {semana} 
+                    <Entypo name="chevron-right" size={18} color="black" /> Semana: {semana} 
                 </rn.Text>
                 <rn.View style={styles.btnsContiner}>
                     <rn.Pressable 
