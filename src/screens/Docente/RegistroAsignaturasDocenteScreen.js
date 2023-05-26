@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { style } from '../../styles/styles';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { database } from '../../../config/firebaseConfig';
-import { doc, setDoc, getFirestore, } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import { Picker } from '@react-native-picker/picker';
 
@@ -13,7 +13,7 @@ const RegistroAsignaturasDocenteScreen = () => {
   const [nombreAsignatura, setNombreAsignatura] = React.useState('')
   const [codigoAsignatura, setCodigoAsignatura] = React.useState('')
   const [tipoAsignatura, setTipoAsignatura] = React.useState("")
-  const [createdAt, setCreatedAt] = React.useState(new Date())
+  const [createdAt] = React.useState(new Date())
 
   // Id del usuario que inicia sesion
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
