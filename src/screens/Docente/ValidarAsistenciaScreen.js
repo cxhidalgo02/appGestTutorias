@@ -12,9 +12,9 @@ const ValidarAsistenciaScreen = () => {
 
   const [estudiante, setNuevoEstudiante] = React.useState([]);
   // Id del usuario que inicia sesion
-  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  //const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id del estudiante que se trae de dar de alata estudiante screen
-  const pathIdEstData = localStorage.getItem(`keyUserEstData`, pathIdEstData);
+  //const pathIdEstData = localStorage.getItem(`keyUserEstData`, pathIdEstData);
   
   async function consultaEstudiantes() {
     const collectionRef = collection(database, 'gestionUsuarios');
@@ -48,7 +48,6 @@ const onRefresh = React.useCallback(() => {
 return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-        <React.Suspense fallback={<MySkeleton />}>
           <Text style={style.textTitle}>
             VALIDAR ASISTENCIA
           </Text>
@@ -60,7 +59,6 @@ return (
             >
               {estudiante.map(estudiante=> <ValidarAsistencia key={estudiante.id} {...estudiante}/>)}
             </ScrollView>
-        </React.Suspense>
       </View>
     </SafeAreaView>
   );
