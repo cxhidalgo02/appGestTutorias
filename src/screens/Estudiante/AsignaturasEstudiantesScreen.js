@@ -2,53 +2,51 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import AsignaturasEstudiantes from '../../components/AsignaturasEstudiantes';
-import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
-import { ScrollView } from 'react-native-gesture-handler';
 import localStorage from 'react-native-expo-localstorage';
+import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { style } from '../../styles/styles'; 
+import { AntDesign } from '@expo/vector-icons'; 
+import AsignaturasEstudiantes from '../../components/AsignaturasEstudiantes';
 
 const AsignaturasEstudiantesScreen = () => {
-  
-  const [asignaturasEstudiante, setNuevaListaAE] = React.useState([]);
   const navigation = useNavigation();
+
+  //constructor para las asignaturas del estudiante
+  const [asignaturasEstudiante, setNuevaListaAE] = React.useState([]);
+  //UID del usuario estudiante que inicio sesion
+  const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => 
+    headerRight: () => 
       <Pressable title='registroAsignaturasEstudianteScreen'
-          onPress={() => navigation.navigate('registroAsignaturasEstudianteScreen')}
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
-        </Pressable>
+        onPress={() => navigation.navigate('registroAsignaturasEstudianteScreen')}
+        style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
+        <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
+      </Pressable>
   })
   },[navigation])
 
-  const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
-  const consultaAsig = () =>{
-    const collectionRef = collection(database, `gestionUsuarios/${pathIdEst}/asignaturas/`);
-    const q = query(collectionRef, where('validada', '==','true'));
-    const setDocAsignaturas = onSnapshot(q, querySnapshot => {
-        setNuevaListaAE(
-            querySnapshot.docs.map(doc => ({
-              id: doc.id,
-              codigo: doc.data().codigo,
-              nombre: doc.data().nombre,
-              tipo: doc.data().tipo,
-              validada: doc.data().validada,
-              createdAt: doc.data().createdAt,
-            }))
-          );
-        } 
-        );
-    return setDocAsignaturas;
-  }
-
   React.useEffect(() => {
-    consultaAsig();
+    const collectionRef = collection(database, `registroUsuarios/${pathIdEst}/registroAsignaturas/`);
+    const asignaturasEstudianteQuery = query(collectionRef, where('validada', '==','true'));
+    const setDocAsignaturas = onSnapshot(asignaturasEstudianteQuery, querySnapshot => {
+      setNuevaListaAE(
+        querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          codigo: doc.data().codigo,
+          nombre: doc.data().nombre,
+          tipo: doc.data().tipo,
+          validada: doc.data().validada,
+          createdAt: doc.data().createdAt,
+        }))
+      );
+    } );
+    return setDocAsignaturas;
   },[])
 
+  //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -60,16 +58,16 @@ const AsignaturasEstudiantesScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-          <Text style={style.textTitle}>
-            MIS ASIGNATURAS
-          </Text>
-          <ScrollView style={style.scrollContent}
-            refreshControl={
-              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-            } 
-          >
-            {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
-          </ScrollView>
+        <Text style={style.textTitle}>
+          MIS ASIGNATURAS
+        </Text>
+        <ScrollView style={style.scrollContent}
+          refreshControl={
+            <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+          } 
+        >
+          {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
