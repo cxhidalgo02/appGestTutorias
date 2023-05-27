@@ -9,58 +9,54 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 
 const ValidarAsistenciaScreen = () => {
-
+  //constructor del estudiante
   const [estudiante, setNuevoEstudiante] = React.useState([]);
   // Id del usuario que inicia sesion
-  //const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id del estudiante que se trae de dar de alata estudiante screen
-  //const pathIdEstData = localStorage.getItem(`keyUserEstData`, pathIdEstData);
+  const pathIdEstData = localStorage.getItem(`keyUserEstData`, pathIdEstData);
   
-  async function consultaEstudiantes() {
-    const collectionRef = collection(database, 'gestionUsuarios');
+  React.useEffect(() => { 
+    const collectionRef = collection(database, 'registroUsuarios');
     const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
     const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
-        setNuevoEstudiante(
-            querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                cedula: doc.data().cedula,
-                nombres: doc.data().nombres,
-                apellidos: doc.data().apellidos,
-                correo: doc.data().correo,
-            }))
-          );
-        });
+      setNuevoEstudiante(
+        querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          cedula: doc.data().cedula,
+          nombres: doc.data().nombres,
+          apellidos: doc.data().apellidos,
+          correo: doc.data().correo,
+        }))
+      );
+    });
     return unsubscribe2;
-}
+  },[])
 
-React.useEffect(() => { 
-  consultaEstudiantes();
-},[])
-
-const [refreshing, setRefreshing] = React.useState(false);
-const onRefresh = React.useCallback(() => {
-  setRefreshing(true);
-  setTimeout(() => {
-    setRefreshing(false);
-  }, 2000);
-}, []);
+  //estados para refrezcar el screen
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
 return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
-          <Text style={style.textTitle}>
-            VALIDAR ASISTENCIA
-          </Text>
-          
-            <ScrollView style={style.scrollContent}
-              refreshControl={
-                <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-              } 
-            >
-              {estudiante.map(estudiante=> <ValidarAsistencia key={estudiante.id} {...estudiante}/>)}
-            </ScrollView>
-      </View>
-    </SafeAreaView>
-  );
+  <SafeAreaView style={{ flex: 1 }}>
+    <View style={style.container} >
+      <Text style={style.textTitle}>
+        VALIDAR ASISTENCIA
+      </Text>
+      <ScrollView style={style.scrollContent}
+        refreshControl={
+          <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+        } 
+      >
+        {estudiante.map(estudiante=> <ValidarAsistencia key={estudiante.id} {...estudiante}/>)}
+      </ScrollView>
+    </View>
+  </SafeAreaView>
+);
 };
 export default ValidarAsistenciaScreen;
