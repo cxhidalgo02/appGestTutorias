@@ -3,7 +3,7 @@ import { setDoc, doc } from 'firebase/firestore';
 import { database } from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert } from 'react-native';
 import { myColors } from '../../styles/colors';
 import { style } from '../../styles/styles'; 
 
@@ -28,6 +28,9 @@ const RegistroAsignaturasEstudianteScreen = () => {
       };
       const registroAsignaturaEstudiante = doc(database, pathUrl, docu.codigo);
       await setDoc(registroAsignaturaEstudiante, (docu) );
+      Alert.alert('Registro exitoso!', '', [
+        { text: 'Aceptar' },
+      ]);
       navigation.goBack();
     } catch (error) {
       console.log('ERROR => ',error);
