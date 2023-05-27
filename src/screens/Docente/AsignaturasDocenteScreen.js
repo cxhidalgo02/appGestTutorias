@@ -13,13 +13,26 @@ import { ScrollView } from 'react-native-gesture-handler';
 const AsignaturasDocenteScreen = () => {
   const navigation = useNavigation();
 
+  //constructor para la clase asignaturas
   const [asignatura, setNuevaAsignatura] = React.useState([]);
 
+  // UID del usuario que inicia sesion
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
-  const consultaAsig = () =>{
-    
-    const collectionRef = collection(database, `/gestionUsuarios/${pathIdDoc}/asignaturas/`);
+  //Boton para llevar al formulario registro de asignatura
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => 
+      <Pressable title='registroAsignaturasDocenteScreen'
+          onPress={() => navigation.navigate('registroAsignaturasDocenteScreen')}
+          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
+          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
+        </Pressable>
+  })
+  },[navigation])
+
+  React.useEffect(() => { 
+    const collectionRef = collection(database, `/registroUsuarios/${pathIdDoc}/registroAsignaturas/`);
     const q = query(collectionRef, orderBy('nombre', 'desc'));
     const setDocAsignaturas = onSnapshot(q, querySnapshot => {
         setNuevaAsignatura(
@@ -34,24 +47,13 @@ const AsignaturasDocenteScreen = () => {
         }
         ); 
     return setDocAsignaturas;
-  }   
-
-
+  },[])
+/*
   React.useEffect(() => { 
     consultaAsig(); 
-  },[])
+  },[])*/
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => 
-      <Pressable title='registroAsignaturasDocenteScreen'
-          onPress={() => navigation.navigate('registroAsignaturasDocenteScreen')}
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
-        </Pressable>
-  })
-  },[navigation])
-
+  //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -61,21 +63,20 @@ const AsignaturasDocenteScreen = () => {
   }, []);
 
   return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={style.container} >
-            <Text style={style.textTitle}>
-              MIS ASIGNATURAS
-            </Text>
-          
-            <ScrollView style={style.scrollContent}   
-              refreshControl={
-                <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-              } 
-            >
-              {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
-            </ScrollView> 
-        </View>
-      </SafeAreaView>    
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={style.container} >
+        <Text style={style.textTitle}>
+          MIS ASIGNATURAS
+        </Text>
+        <ScrollView style={style.scrollContent}   
+          refreshControl={
+            <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+          } 
+        >
+          {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
+        </ScrollView> 
+      </View>
+    </SafeAreaView>    
   );
 };
 export default AsignaturasDocenteScreen;
