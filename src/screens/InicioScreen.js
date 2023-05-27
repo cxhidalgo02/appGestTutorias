@@ -12,23 +12,24 @@ LogBox.ignoreAllLogs();
 
 const InicioScreen = ({ navigation })=> {
 
+  //atributos de la clase usuario
   const [correo, setCorreo] = React.useState('');
   const [clave, setClave] = React.useState('');
   const [tipo, setTipo] = React.useState("");
+  //inicializacion de firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const firestore = getFirestore(app);
   const [shown, setShown] = React.useState(false);
   const switchShown = () => setShown(!shown);
-
-
+  
  const handleSingIn = () =>{
     signInWithEmailAndPassword(auth, correo, clave)
     .then( (userCredential) => {      
       const user = userCredential.user;
       const userUid = user.uid;
-      const collectionRef = collection(firestore, "gestionUsuarios");
-      const q = query(collectionRef, where("id", "==", userUid));      
+      const collectionRegUsuario = collection(firestore, "registroUsuarios");
+      const q = query(collectionRegUsuario, where("id", "==", userUid));      
       const setUsuario = onSnapshot(q, querySnapshot => {
         setUsuario(querySnapshot.docs.map(doc => ({
           correo: doc.data().correo,
@@ -45,12 +46,12 @@ const InicioScreen = ({ navigation })=> {
           case "Estudiante":
             navigation.navigate('asignaturasEstudiantesScreen');
             localStorage.setItem("keyUserEst", userUid);
-             break;
+            break;
           case "Tipo":
             console.log('Debe seleccionar un tipo!');
             break;
         }
-       }
+      }
       );    
     })
     .catch( (error) => {
@@ -58,6 +59,7 @@ const InicioScreen = ({ navigation })=> {
     });
   }
 
+  //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -122,4 +124,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 120,
   },
+  containerFecha: {
+    width: '100%',
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btnCalendar: {
+    width: "20%",
+    marginTop: 20,
+  },
+  inputCalendar: {
+    width: "80%",
+  }
 });
