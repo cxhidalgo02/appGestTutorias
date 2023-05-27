@@ -3,7 +3,7 @@ import { firebaseConfig } from '../../firebase-config';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, LogBox, RefreshControl} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, LogBox, RefreshControl, Alert} from 'react-native';
 import localStorage from 'react-native-expo-localstorage';
 import { style } from '../styles/styles';
 import { Picker } from '@react-native-picker/picker';
@@ -42,13 +42,21 @@ const InicioScreen = ({ navigation })=> {
           case "Docente":
             navigation.navigate('asignaturasDocenteScreen');
             localStorage.setItem("keyUserDoc", userUid);
+            Alert.alert('Bienvenido', '', [
+              { text: 'Aceptar' },
+            ]);
             break;
           case "Estudiante":
             navigation.navigate('asignaturasEstudiantesScreen');
             localStorage.setItem("keyUserEst", userUid);
+            Alert.alert('Bienvenido', '', [
+              { text: 'Aceptar' },
+            ]);
             break;
           case "Tipo":
-            console.log('Debe seleccionar un tipo!');
+            Alert.alert('Error!', 'Debe seleccionar un tipo', [
+              { text: 'Aceptar' },
+            ]);
             break;
         }
       }
