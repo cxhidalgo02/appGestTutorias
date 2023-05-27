@@ -5,23 +5,23 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query,} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
-import Tutorias from '../../components/Tutorias';
 import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import Tutorias from '../../components/Tutorias';
 
 const TutoriasDocenteScreen = () => {
   const navigation = useNavigation();
-
+  //constructor para las tutorias del estudiante
   const [tutoria, setNuevaTutoria] = React.useState([]);
-
+  //boton para el escreen registro Tutorias del docente
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => 
       <Pressable title='registroTutoriasDocenteScreen'
-          onPress={() => navigation.navigate('registroTutoriasDocenteScreen')}
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
-        </Pressable>
+        onPress={() => navigation.navigate('registroTutoriasDocenteScreen')}
+        style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
+        <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
+      </Pressable>
   })
   },[navigation])
 
@@ -32,51 +32,48 @@ const TutoriasDocenteScreen = () => {
   // Id de la tutoria que seleccionar el docente 
   const pathIdTutDoc = localStorage.getItem(`keyCodTutDoc`, pathIdTutDoc);
 
-  const consultaTutorias = () => {
-    const collectionRef = collection(database, `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsigDoc}/tutorias`);
-    const q = query(collectionRef, orderBy('createdAt', 'desc'));
-    const setDocTutorias = onSnapshot(q, querySnapshot => {
-        setNuevaTutoria(
-            querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                tema: doc.data().tema,
-                descripcion: doc.data().descripcion,
-                aula: doc.data().aula,
-                hora: doc.data().hora,
-                semana: doc.data().semana,
-                createdAt: doc.data().createdAt,
-            }))
-          );
-        }
-        );
-    return setDocTutorias;
-
-  }
   React.useEffect(() => {
-    consultaTutorias();
-    },[])
+    const collectionRef = collection(database, `registroUsuarios/${pathIdDoc}/registroAsignaturas/${pathIdAsigDoc}/registroTutorias`);
+    const asignaturasEstudianteQuery = query(collectionRef, orderBy('createdAt', 'desc'));
+    const setDocTutorias = onSnapshot(asignaturasEstudianteQuery, querySnapshot => {
+      setNuevaTutoria(
+        querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          tema: doc.data().tema,
+          descripcion: doc.data().descripcion,
+          aula: doc.data().aula,
+          fecha: doc.data().fecha,
+          hora: doc.data().hora,
+          semana: doc.data().semana,
+          createdAt: doc.data().createdAt,
+        }))
+      );
+    });
+    return setDocTutorias;
+  },[])
 
-    const [refreshing, setRefreshing] = React.useState(false);
-    const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 2000);
-    }, []);
+  //estados para refrezcar el screen
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-          <Text style={style.textTitle}>
-            MIS TUTORIAS
-          </Text>
-            <ScrollView style={style.scrollContent}
-              refreshControl={
-                <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-              } 
-            >
-              {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
-            </ScrollView>
+        <Text style={style.textTitle}>
+          MIS TUTORIAS
+        </Text>
+        <ScrollView style={style.scrollContent}
+          refreshControl={
+            <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
+          } 
+        >
+          {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
