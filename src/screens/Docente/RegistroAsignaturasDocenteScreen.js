@@ -1,24 +1,26 @@
 import * as React from 'react';
-import { style } from '../../styles/styles';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { database } from '../../../config/firebaseConfig';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
+import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { style } from '../../styles/styles';
 
 const RegistroAsignaturasDocenteScreen = () => { 
   const navigation = useNavigation();
 
+  //atributos de las clase asignatura
   const [nombreAsignatura, setNombreAsignatura] = React.useState('')
   const [codigoAsignatura, setCodigoAsignatura] = React.useState('')
   const [tipoAsignatura, setTipoAsignatura] = React.useState("")
-  const [createdAt] = React.useState(new Date())
+  const [createdAt, setCreatedAt] = React.useState(new Date())
 
   // Id del usuario que inicia sesion
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
-  const pathUrl = `gestionUsuarios/${pathIdDoc}/asignaturas/`;
+  //pat path con el UID del docente que inica sesion, crea el documento y coleccion
+  const pathUrl = `registroUsuarios/${pathIdDoc}/registroAsignaturas/`;
   const onSend = async () => {
     try {
       const registroAsignatura = {
@@ -31,12 +33,11 @@ const RegistroAsignaturasDocenteScreen = () => {
       const docRef = doc(database, pathUrl, registroAsignatura.codigo);
       await setDoc(docRef, (registroAsignatura) );
       navigation.goBack();
-      
     } catch (error) {
       console.log('ERROR =>', error);
     }
   }
-
+  //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -54,9 +55,9 @@ const RegistroAsignaturasDocenteScreen = () => {
                 <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
               } 
             >
-              <Text style={style.textTitle}>
-                FORMULARIO
-              </Text>
+            <Text style={style.textTitle}>
+              FORMULARIO
+            </Text>
               <TextInput style = {style.textInput}
                 onChangeText={(text) => setNombreAsignatura(text)}
                 placeholder="Nombre de la asignatura"
@@ -69,7 +70,7 @@ const RegistroAsignaturasDocenteScreen = () => {
                 style = {style.select}
                 selectedValue={tipoAsignatura}
                 onValueChange={(itemValue) => setTipoAsignatura(itemValue)}
-                >
+              >
                 <Picker.Item label="Tipo" value="Tipo" />
                 <Picker.Item label="Troncal" value="Troncal"/>
                 <Picker.Item label="Genérica" value="Genérica"/>
@@ -77,7 +78,6 @@ const RegistroAsignaturasDocenteScreen = () => {
                 <Picker.Item label="Libre configuración" value="Libre configuración"/>
                 <Picker.Item label="Formación Básica" value="Formación Básica"/>
               </Picker>
-            
               <TouchableOpacity style={style.button} onPress={onSend} >
                 <Text style={style.textbutton}>REGISTRAR</Text>
               </TouchableOpacity>
