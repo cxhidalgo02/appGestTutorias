@@ -4,7 +4,7 @@ import { database } from '../../../config/firebaseConfig';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Pressable, RefreshControl } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Pressable, RefreshControl, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -45,6 +45,9 @@ const RegistroTutoriasDocenteScreen = () => {
       };
       const docRef = doc(database, pathUrlDoc, registroTutoria.codigo);
       await setDoc(docRef, (registroTutoria) );
+      Alert.alert('Registro exitoso!', '', [
+        { text: 'Aceptar' },
+      ]);
       navigation.goBack();
     } catch (error) {
       console.log('ERROR => ',error);
