@@ -1,63 +1,60 @@
 import * as React from 'react';
+import { firebaseConfig } from '../../firebase-config';
+import { initializeApp} from "firebase/app";
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
-import { initializeApp} from "firebase/app";
-import { firebaseConfig } from '../../firebase-config';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { style } from '../styles/styles';
 import { Picker } from '@react-native-picker/picker';
 
 const RegistroUsuariosScreen = () => {
-
   const navigation = useNavigation();
+   //inicializacion de firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const firestore = getFirestore(app);
-  
+  //atrubutos de las clase usuarios
   const [cedula, newUsuarioCedula] = React.useState('')
   const [nombres, newUsuarioNombres] = React.useState('')
   const [apellidos, newUsuarioApellidos] = React.useState('')
   const [correo, newUsuarioCorreo] = React.useState('')
   const [clave, newUsuarioClave] = React.useState('')
   const [tipo, newUsuarioTipo] = React.useState("")
-  const [createdAt, newUsuarioCreatedAt] = React.useState(new Date())
+  const [fehcaRegistro, newFechaRegitroUsuario] = React.useState(new Date()) //fecha de registro - sistema
 
   const onSend = async () => {
-    const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave
-      ).then((userCredential) => {
-        const user = userCredential.user;
-        const docRef = doc(firestore, `gestionUsuarios/${user.uid}`);
-        setDoc(docRef, {
-          cedula: cedula, 
-          nombres: nombres, 
-          apellidos: apellidos, 
-          correo: correo,
-          clave: clave,
-          tipo: tipo,
-          createdAt: createdAt
-        });
-        return userCredential;
+    const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave).then((userCredential) => {
+      const user = userCredential.user;
+      const registroUsuario = doc(firestore, `registroUsuarios/${user.uid}`);
+      setDoc( registroUsuario, {  
+        cedula: cedula, 
+        nombres: nombres, 
+        apellidos: apellidos, 
+        correo: correo,
+        clave: clave,
+        tipo: tipo,
+        fechaRegistro: fehcaRegistro
       });
-      navigation.goBack();
+      return userCredential;
+    });
+    navigation.goBack();
   }
-
-    const [refreshing, setRefreshing] = React.useState(false);
-    const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 2000);
-    }, []);
+  //estados para refrezcar el screen
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={style.container} >
-      <View style={style.subcontainer} >
+        <View style={style.subcontainer} >
           <ScrollView style = {styles.scrollForm}
-            refreshControl={
-              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-            } 
+            refreshControl={ <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/> } 
           >
           <Text style={style.textTitle}>
             FORMULARIO
@@ -93,12 +90,11 @@ const RegistroUsuariosScreen = () => {
               style = {style.select}
               selectedValue={tipo}
               onValueChange={(itemValue) => newUsuarioTipo(itemValue)}
-              >
-                <Picker.Item label="Tipo" value="Tipo" />
-                <Picker.Item label="Docente" value="Docente" />
-                <Picker.Item label="Estudiante" value="Estudiante" />
+            >
+              <Picker.Item label="Tipo" value="Tipo" />
+              <Picker.Item label="Docente" value="Docente" />
+              <Picker.Item label="Estudiante" value="Estudiante" />
             </Picker>
-
             <TouchableOpacity
               style={style.button}
               onPress={onSend}>
