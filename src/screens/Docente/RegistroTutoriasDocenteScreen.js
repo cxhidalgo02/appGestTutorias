@@ -1,29 +1,36 @@
 import * as React from 'react';
-import { style } from '../../styles/styles';
+import  { useState } from 'react';
 import { database } from '../../../config/firebaseConfig';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Pressable, RefreshControl } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import moment from 'moment';
+import { style } from '../../styles/styles';
+import { Ionicons } from '@expo/vector-icons'; 
 
 const RegistroTutoriasDocenteScreen = () => { 
   const navigation = useNavigation();
 
+  //atributos de las clase tutoria
   const [codigoTutoria, setCodigoTutoria] = React.useState('')
   const [temaTutoria, setTemaTutoria] = React.useState('')
   const [descripcionTutoria, setDescripcionTutoria] = React.useState('')
   const [aulaTutoria, setAulaTutoria] = React.useState('')
+  const [fechaTutoria, setFechaTutoria] = React.useState('')
   const [horaTutoria, setHoraTutoria] = React.useState('')
-  const [semanaTutoria, setSemanaTutoria] = React.useState("")
-  const [createdAt] = React.useState(new Date())
+  const [semanaTutoria, setSemanaTutoria] = React.useState('')
+  const [createdAt, setCreatedAt] = React.useState(new Date())
 
-  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el usuario
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  // id del codigo que selecciona en la tutoria
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
- // id del codigo que selecciona en la tutoria
- 
-  const pathUrlDoc  = `gestionUsuarios/${pathIdDoc}/asignaturas/${pathIdAsig}/tutorias/`;
+
+  //pat path con el UID del docente que inica sesion, crea el documento y coleccion
+  const pathUrlDoc  = `registroUsuarios/${pathIdDoc}/registroAsignaturas/${pathIdAsig}/registroTutorias/`;
   const onSend = async () => {
     try {
       const registroTutoria = {
@@ -31,6 +38,7 @@ const RegistroTutoriasDocenteScreen = () => {
         tema: temaTutoria, 
         descripcion: descripcionTutoria,
         aula: aulaTutoria,
+        fecha: fechaTutoria,
         hora: horaTutoria,
         semana: semanaTutoria,
         createdAt: createdAt
@@ -43,6 +51,7 @@ const RegistroTutoriasDocenteScreen = () => {
     }
   }
 
+  //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -50,6 +59,34 @@ const RegistroTutoriasDocenteScreen = () => {
       setRefreshing(false);
     }, 2000);
   }, []);
+
+  //atributos y metodos para seleccion de la fecha
+  const [selectedDate, setSelectedDate] = useState();
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+  const handleConfirmDate = (Date) => {
+    setSelectedDate(Date);
+    hideDatePicker();
+  };
+
+  //atributos y metodos para seleccion de la hora
+  const [selectedTime, setSelectedTime] = useState();
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+  const handleConfirmTime = (Time) => {
+    setSelectedTime(Time);
+    hideTimePicker();
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -79,15 +116,53 @@ const RegistroTutoriasDocenteScreen = () => {
             onChangeText={(text) => setAulaTutoria(text)}
               placeholder="Aula"
             />  
-            <TextInput style = {style.textInput}
-            onChangeText={(text) => setHoraTutoria(text)}
-              placeholder="Hora"
-            /> 
+            <View style = {styles.containerFecha}>
+              <View style = {styles.btnCalendar}>
+                <Pressable onPress={showDatePicker} style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}>
+                  <Ionicons name="calendar-outline" size={31} color="#293774" />
+                  </Pressable>
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleConfirmDate}
+                    onCancel={hideDatePicker}
+                  />
+                </View>
+                <View style = {styles.inputCalendar}>
+                  <TextInput style = {style.textInput}
+                    editable={true}
+                    onChangeText={(text) => setFechaTutoria(text)}
+                    placeholder="Fecha"> 
+                    {`${selectedDate ? moment(selectedDate).format("DD-MM-YYYY").toString() : "Fecha"}`}
+                  </TextInput>
+                </View>
+              </View>
+              <View style = {styles.containerFecha}>
+              <View style = {styles.btnCalendar}>
+                <Pressable onPress={showTimePicker} style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}>
+                  <Ionicons name="md-time-outline" size={31} color="#293774" />
+                  </Pressable>
+                  <DateTimePickerModal
+                    isVisible={isTimePickerVisible}
+                    mode="time"
+                    onConfirm={handleConfirmTime}
+                    onCancel={hideTimePicker}
+                  />
+                </View>
+                <View style = {styles.inputCalendar}>
+                  <TextInput style = {style.textInput}
+                    editable={true}
+                    onChangeText={(text) => setHoraTutoria(text)}
+                    placeholder="Hora"> 
+                    {`${selectedTime ? moment(selectedTime).format("HH:mm").toString() : "Hora"}`}
+                  </TextInput>
+                </View>
+              </View>
             <Picker
-                style = {style.select}
-                selectedValue={semanaTutoria}
-                onValueChange={(itemValue) => setSemanaTutoria(itemValue)}
-                >
+              style = {style.select}
+              selectedValue={semanaTutoria}
+              onValueChange={(itemValue) => setSemanaTutoria(itemValue)}
+            >
                 <Picker.Item label="Semana 1" value="1" />
                 <Picker.Item label="Semana 2" value="2"/>
                 <Picker.Item label="Semana 3" value="3"/>
@@ -106,7 +181,7 @@ const RegistroTutoriasDocenteScreen = () => {
                 <Picker.Item label="Semana 16" value="16"/>
                 <Picker.Item label="Semana 17" value="17"/>
                 <Picker.Item label="Semana 18" value="18"/>
-              </Picker>
+            </Picker>
             <TouchableOpacity style={style.button} onPress={onSend} >
               <Text style={style.textbutton}>REGISTRAR</Text>
             </TouchableOpacity>
@@ -123,4 +198,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 80,
   },
+  containerFecha: {
+    width: '100%',
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btnCalendar: {
+    width: "20%",
+    marginTop: 20,
+  },
+  inputCalendar: {
+    width: "80%",
+  }
 });
