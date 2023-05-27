@@ -2,7 +2,7 @@ import * as React from 'react';
 import { firebaseConfig } from '../../firebase-config';
 import { initializeApp} from "firebase/app";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, Alert } from 'react-native';
 import { style } from '../styles/styles';
 
 const resetClave = ({ navigation })=> {
@@ -21,6 +21,10 @@ const resetClave = ({ navigation })=> {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
+      Alert.alert('Correo enviado!', 'Revisar su bandeja de entrada o spam', [
+        { text: 'Aceptar' },
+      ]);
+      navigation.goBack();
     } catch (error) {
     console.log('Se produjo un error:', error);
     }
