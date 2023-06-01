@@ -20,13 +20,13 @@ const RegistroUsuariosScreen = () => {
   const [apellidos, newUsuarioApellidos] = React.useState('')
   const [correo, newUsuarioCorreo] = React.useState('')
   const [clave, newUsuarioClave] = React.useState('')
-  const [tipo, newUsuarioTipo] = React.useState("")
+  const [tipo, newUsuarioTipo] = React.useState('')
   const [fehcaRegistro, newFechaRegitroUsuario] = React.useState(new Date()) //fecha de registro - sistema
 
   const onSend = async () => {
     const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave).then((userCredential) => {
       const user = userCredential.user;
-      const registroUsuario = doc(firestore, `registroUsuarios/${user.uid}`);
+      const registroUsuario = doc(firestore, `Usuarios/${user.uid}`);
       setDoc( registroUsuario, {  
         cedula: cedula, 
         nombres: nombres, 

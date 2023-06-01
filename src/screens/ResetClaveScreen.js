@@ -26,7 +26,7 @@ const resetClave = ({ navigation })=> {
       ]);
       navigation.goBack();
     } catch (error) {
-    console.log('Se produjo un error:', error);
+      console.log('* ERROR:', error);
     }
 }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { firebaseConfig } from '../../firebase-config';
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, onSnapshot } from "firebase/firestore"
+import { getFirestore, collection, query, where, onSnapshot} from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, LogBox, RefreshControl, Alert} from 'react-native';
 import localStorage from 'react-native-expo-localstorage';
@@ -15,7 +15,7 @@ const InicioScreen = ({ navigation })=> {
   //atributos de la clase usuario
   const [correo, setCorreo] = React.useState('');
   const [clave, setClave] = React.useState('');
-  const [tipo, setTipo] = React.useState("");
+  const [tipo, setTipo] = React.useState('');
   //inicializacion de firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -23,12 +23,10 @@ const InicioScreen = ({ navigation })=> {
   const [shown, setShown] = React.useState(false);
   const switchShown = () => setShown(!shown);
   
- const handleSingIn = () =>{
-    signInWithEmailAndPassword(auth, correo, clave)
-    .then( (userCredential) => {      
+ const handleSingIn = () =>{ signInWithEmailAndPassword(auth, correo, clave).then( (userCredential) => {      
       const user = userCredential.user;
       const userUid = user.uid;
-      const collectionRegUsuario = collection(firestore, "registroUsuarios");
+      const collectionRegUsuario = collection(firestore, "Usuarios");
       const q = query(collectionRegUsuario, where("id", "==", userUid));      
       const setUsuario = onSnapshot(q, querySnapshot => {
         setUsuario(querySnapshot.docs.map(doc => ({
@@ -40,15 +38,15 @@ const InicioScreen = ({ navigation })=> {
         );
         switch(tipo){
           case "Docente":
-            navigation.navigate('asignaturasDocenteScreen');
             localStorage.setItem("keyUserDoc", userUid);
+            navigation.navigate('asignaturasDocenteScreen');
             Alert.alert('Bienvenido', '', [
               { text: 'Aceptar' },
             ]);
             break;
           case "Estudiante":
-            navigation.navigate('asignaturasEstudiantesScreen');
             localStorage.setItem("keyUserEst", userUid);
+            navigation.navigate('asignaturasEstudiantesScreen');
             Alert.alert('Bienvenido', '', [
               { text: 'Aceptar' },
             ]);
@@ -58,15 +56,13 @@ const InicioScreen = ({ navigation })=> {
               { text: 'Aceptar' },
             ]);
             break;
-        }
-      }
-      );    
+        } 
+      });    
     })
     .catch( (error) => {
-      console.log(" * ERROR * ",error)
+      console.log(' * ERROR: ', error)
     });
   }
-
   //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
@@ -111,11 +107,9 @@ const InicioScreen = ({ navigation })=> {
                   <Picker.Item label="Docente" value="Docente" />
                   <Picker.Item label="Estudiante" value="Estudiante" />
                 </Picker>
-
                 <TouchableOpacity style={style.button} onPress={handleSingIn}>
                   <Text style={style.textbutton}>INICIO SESIÓN</Text>
                 </TouchableOpacity>
-
               <TouchableOpacity style={style.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
                 <Text style={style.textbuttonTwo}>Olvidaste tu contraseña?</Text>
               </TouchableOpacity>
