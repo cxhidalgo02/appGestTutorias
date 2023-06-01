@@ -14,23 +14,21 @@ import { Ionicons } from '@expo/vector-icons';
 const RegistroTutoriasDocenteScreen = () => { 
   const navigation = useNavigation();
 
-  //atributos de las clase tutoria
   const [codigoTutoria, setCodigoTutoria] = React.useState('')
   const [temaTutoria, setTemaTutoria] = React.useState('')
   const [descripcionTutoria, setDescripcionTutoria] = React.useState('')
   const [aulaTutoria, setAulaTutoria] = React.useState('')
   const [fechaTutoria, setFechaTutoria] = React.useState('')
   const [horaTutoria, setHoraTutoria] = React.useState('')
-  const [semanaTutoria, setSemanaTutoria] = React.useState('')
-  const [createdAt, setCreatedAt] = React.useState(new Date())
+  const [semanaTutoria, setSemanaTutoria] = React.useState("")
+  const [fechaRegTuto, setCreatedAt] = React.useState(new Date())
 
-  // Id de la asignatura que seleccionar el usuario
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
-  // id del codigo que selecciona en la tutoria
+  // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
-
-  //pat path con el UID del docente que inica sesion, crea el documento y coleccion
-  const pathUrlDoc  = `registroUsuarios/${pathIdDoc}/registroAsignaturas/${pathIdAsig}/registroTutorias/`;
+ // id del codigo que selecciona en la tutoria
+ 
+  const pathUrlDoc  = `Usuarios/${pathIdDoc}/Asignaturas/${pathIdAsig}/Tutorias/`;
   const onSend = async () => {
     try {
       const registroTutoria = {
@@ -41,19 +39,15 @@ const RegistroTutoriasDocenteScreen = () => {
         fecha: fechaTutoria,
         hora: horaTutoria,
         semana: semanaTutoria,
-        createdAt: createdAt
+        fechaRegTuto: fechaRegTuto
       };
       const docRef = doc(database, pathUrlDoc, registroTutoria.codigo);
       await setDoc(docRef, (registroTutoria) );
-      Alert.alert('Registro exitoso!', '', [
-        { text: 'Aceptar' },
-      ]);
       navigation.goBack();
     } catch (error) {
       console.log('ERROR => ',error);
     }
   }
-
   //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
@@ -62,7 +56,6 @@ const RegistroTutoriasDocenteScreen = () => {
       setRefreshing(false);
     }, 2000);
   }, []);
-
   //atributos y metodos para seleccion de la fecha
   const [selectedDate, setSelectedDate] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -93,8 +86,8 @@ const RegistroTutoriasDocenteScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
-        <View style={style.subcontainer} >
+      <View style={styles.container} >
+        <View style={styles.subcontainer} >
           <ScrollView style = {styles.scrollForm}
             refreshControl={
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
@@ -116,6 +109,7 @@ const RegistroTutoriasDocenteScreen = () => {
               placeholder="Descripción"
             />
             <TextInput style = {style.textInput}
+            keyboardType="numeric"
             onChangeText={(text) => setAulaTutoria(text)}
               placeholder="Aula"
             />  
@@ -130,17 +124,17 @@ const RegistroTutoriasDocenteScreen = () => {
                     onConfirm={handleConfirmDate}
                     onCancel={hideDatePicker}
                   />
-                </View>
-                <View style = {styles.inputCalendar}>
+              </View>
+              <View style = {styles.inputCalendar}>
                   <TextInput style = {style.textInput}
                     editable={true}
                     onChangeText={(text) => setFechaTutoria(text)}
                     placeholder="Fecha"> 
                     {`${selectedDate ? moment(selectedDate).format("DD-MM-YYYY").toString() : "Fecha"}`}
                   </TextInput>
-                </View>
               </View>
-              <View style = {styles.containerFecha}>
+            </View>
+            <View style = {styles.containerFecha}>
               <View style = {styles.btnCalendar}>
                 <Pressable onPress={showTimePicker} style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}>
                   <Ionicons name="md-time-outline" size={31} color="#293774" />
@@ -151,21 +145,21 @@ const RegistroTutoriasDocenteScreen = () => {
                     onConfirm={handleConfirmTime}
                     onCancel={hideTimePicker}
                   />
-                </View>
-                <View style = {styles.inputCalendar}>
+              </View>
+              <View style = {styles.inputCalendar}>
                   <TextInput style = {style.textInput}
                     editable={true}
                     onChangeText={(text) => setHoraTutoria(text)}
                     placeholder="Hora"> 
                     {`${selectedTime ? moment(selectedTime).format("HH:mm").toString() : "Hora"}`}
                   </TextInput>
-                </View>
               </View>
+            </View>
             <Picker
-              style = {style.select}
-              selectedValue={semanaTutoria}
-              onValueChange={(itemValue) => setSemanaTutoria(itemValue)}
-            >
+                style = {style.select}
+                selectedValue={semanaTutoria}
+                onValueChange={(itemValue) => setSemanaTutoria(itemValue)}
+                >
                 <Picker.Item label="Semana 1" value="1" />
                 <Picker.Item label="Semana 2" value="2"/>
                 <Picker.Item label="Semana 3" value="3"/>
@@ -197,9 +191,17 @@ const RegistroTutoriasDocenteScreen = () => {
 export default RegistroTutoriasDocenteScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 0,
+    alignItems: 'center', 
+    justifyContent: 'center',
+  },
+  subcontainer: {
+    width: '75%',
+  },
   scrollForm: {
     textAlign: "center",
-    marginTop: 80,
+    marginTop: 18,
   },
   containerFecha: {
     width: '100%',

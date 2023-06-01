@@ -7,7 +7,7 @@ import { collection, onSnapshot, orderBy, query,} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Tutorias from '../../components/Tutorias';
+import Tutorias from '../../components/Docente/Tutorias';
 
 const TutoriasDocenteScreen = () => {
   const navigation = useNavigation();
@@ -33,8 +33,8 @@ const TutoriasDocenteScreen = () => {
   const pathIdTutDoc = localStorage.getItem(`keyCodTutDoc`, pathIdTutDoc);
 
   React.useEffect(() => {
-    const collectionRef = collection(database, `registroUsuarios/${pathIdDoc}/registroAsignaturas/${pathIdAsigDoc}/registroTutorias`);
-    const asignaturasEstudianteQuery = query(collectionRef, orderBy('createdAt', 'desc'));
+    const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/${pathIdAsigDoc}/Tutorias`);
+    const asignaturasEstudianteQuery = query(collectionRef, orderBy('semana', 'desc'));
     const setDocTutorias = onSnapshot(asignaturasEstudianteQuery, querySnapshot => {
       setNuevaTutoria(
         querySnapshot.docs.map(doc => ({
@@ -51,7 +51,10 @@ const TutoriasDocenteScreen = () => {
     });
     return setDocTutorias;
   },[])
-
+  /*
+  React.useEffect(() => {
+    consultaTutorias();
+    },[])*/
   //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {

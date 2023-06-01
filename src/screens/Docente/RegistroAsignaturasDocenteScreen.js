@@ -7,6 +7,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Refr
 import { Picker } from '@react-native-picker/picker';
 import { style } from '../../styles/styles';
 
+
 const RegistroAsignaturasDocenteScreen = () => { 
   const navigation = useNavigation();
 
@@ -20,7 +21,7 @@ const RegistroAsignaturasDocenteScreen = () => {
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
   //pat path con el UID del docente que inica sesion, crea el documento y coleccion
-  const pathUrl = `registroUsuarios/${pathIdDoc}/registroAsignaturas/`;
+  const pathUrl = `Usuarios/${pathIdDoc}/Asignaturas/`;
   const onSend = async () => {
     try {
       const registroAsignatura = {
