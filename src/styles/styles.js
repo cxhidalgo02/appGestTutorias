@@ -26,6 +26,12 @@ export const style = StyleSheet.create({
     textAlign: 'center', 
     color: myColors.navyblue,
   },
+  textFooter: {
+    marginTop: 5, 
+    fontSize: 15,
+    textAlign: 'center',
+    color: myColors.navyblue,
+  },
   textInput:{
     //borderWidth: 1,
     //borderColor: myColors.skyblue,
@@ -78,4 +84,4 @@ export const style = StyleSheet.create({
     textAlign: "center",
     marginTop: 100,
   },
-});
+  });
