@@ -18,11 +18,13 @@
     "expo-status-bar": "~1.4.4",
     "firebase": "^9.17.1",
     "localStorage": "^1.0.4",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-native": "^0.71.8",
     "react-native-alert-notification": "^0.3.4",
     "react-native-expo-localstorage": "^1.0.3",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-modal-datetime-picker": "^15.0.1",
     "react-native-reanimated": "^2.14.4",
     "react-native-svg": "13.4.0"
   },
@@ -30,5 +32,4 @@
     "@babel/core": "^7.20.0"
   },
   "private": true
-
 }
