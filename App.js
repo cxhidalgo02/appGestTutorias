@@ -4,7 +4,7 @@ import { AlertNotificationRoot } from 'react-native-alert-notification';
 export default function App() {
   return (
     <AlertNotificationRoot>
-       <Navigation />
+      <Navigation />
     </AlertNotificationRoot>
   );
 }

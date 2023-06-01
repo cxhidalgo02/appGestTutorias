@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AppGestionTutorias",
-    "slug": "AppGestionTutorias",
+    "name": "app_gestiontutorias",
+    "slug": "app_gestiontutorias",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
