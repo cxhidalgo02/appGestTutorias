@@ -5,7 +5,7 @@ import localStorage from 'react-native-expo-localstorage';
 import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { style } from '../../styles/styles';
-import TutoriasEstudiante from '../../components/TutoriasEstudiante';
+import TutoriasEstudiante from '../../components/Estudiante/TutoriasEstudiante';
 
 const TutoriasDocenteScreen = () => {
   //constructor para las tutorias del estudiante
@@ -19,8 +19,8 @@ const TutoriasDocenteScreen = () => {
   const pathCodTutEst = localStorage.getItem(`keyCodTutEst`, pathCodTutEst);
 
   React.useEffect(() => {
-    const collectionRef = collection(database, `registroUsuarios/${pathIdEst}/registroAsignaturas/${pathCodAsigEst}/registroTutorias`);
-    const tutoriasEstudianteQuery = query(collectionRef, orderBy('createdAt', 'desc'));
+    const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${pathCodAsigEst}/TutoriasEstudiante`);
+    const tutoriasEstudianteQuery = query(collectionRef, orderBy('semana', 'desc'));
     const unsubscribe = onSnapshot(tutoriasEstudianteQuery, querySnapshot => {
       setNuevaTutoria(
         querySnapshot.docs.map(doc => ({

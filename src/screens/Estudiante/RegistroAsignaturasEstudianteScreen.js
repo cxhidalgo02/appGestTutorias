@@ -16,7 +16,7 @@ const RegistroAsignaturasEstudianteScreen = () => {
   const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
 
   //pat path con el UID del estudiante que inica sesion, crea el documento y coleccion
-  const pathUrl = `registroUsuarios/${pathIdEst}/registroAsignaturas/`;
+  const pathUrl = `Usuarios/${pathIdEst}/AsignaturasEstudiante/`;
   const onSend = async () => {
     try {
       const docu = {

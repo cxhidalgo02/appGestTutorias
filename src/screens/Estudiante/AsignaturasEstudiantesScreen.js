@@ -7,7 +7,7 @@ import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-nativ
 import { ScrollView } from 'react-native-gesture-handler';
 import { style } from '../../styles/styles'; 
 import { AntDesign } from '@expo/vector-icons'; 
-import AsignaturasEstudiantes from '../../components/AsignaturasEstudiantes';
+import AsignaturasEstudiantes from '../../components/Estudiante/AsignaturasEstudiantes';
 
 const AsignaturasEstudiantesScreen = () => {
   const navigation = useNavigation();
@@ -15,7 +15,7 @@ const AsignaturasEstudiantesScreen = () => {
   //constructor para las asignaturas del estudiante
   const [asignaturasEstudiante, setNuevaListaAE] = React.useState([]);
   //UID del usuario estudiante que inicio sesion
-  const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
+  //const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -29,7 +29,8 @@ const AsignaturasEstudiantesScreen = () => {
   },[navigation])
 
   React.useEffect(() => {
-    const collectionRef = collection(database, `registroUsuarios/${pathIdEst}/registroAsignaturas/`);
+    const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
+    const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/`);
     const asignaturasEstudianteQuery = query(collectionRef, where('validada', '==','true'));
     const setDocAsignaturas = onSnapshot(asignaturasEstudianteQuery, querySnapshot => {
       setNuevaListaAE(
@@ -43,6 +44,7 @@ const AsignaturasEstudiantesScreen = () => {
         }))
       );
     } );
+    console.log('Asignatura EstScreen=>',asignaturasEstudianteQuery);
     return setDocAsignaturas;
   },[])
 
