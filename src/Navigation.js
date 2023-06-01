@@ -6,11 +6,10 @@ import { initializeApp} from "firebase/app";
 import { getFirestore } from "firebase/firestore"
 import { getAuth } from 'firebase/auth'; 
 import { myColors } from "./styles/colors"; 
-//iconos
+//ICONOS
 import { Pressable } from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons'; 
-
+import { AntDesign } from '@expo/vector-icons';
+//SCREEN DE INICIO
 import InicioScreen from "./screens/InicioScreen";
 import RegistroUsuariosScreen from "./screens/RegistroUsuariosScreen";
 import InformacionScreen from "./screens/informacionScreen";
@@ -20,7 +19,7 @@ import AsignaturasDocenteScreen from "./screens/Docente/AsignaturasDocenteScreen
 import RegistroAsignaturasDocenteScreen from "./screens/Docente/RegistroAsignaturasDocenteScreen";
 import TutoriasDocenteScreen from "./screens/Docente//TutoriasDocenteScreen";
 import RegistroTutoriasDocenteScreen from "./screens/Docente/RegistroTutoriasDocenteScreen";
-import DarAltaEstudiantesScreen from "./screens/Docente/DarAltaEstudiantesScreen";
+import AltaEstudiantesScreen from "./screens/Docente/AltaEstudiantesScreen";
 import ValidarAsistenciaScreen from "./screens/Docente/ValidarAsistenciaScreen";
 // SCREEN DE ESTUDIANTES
 import AsignaturasEstudiantesScreen from "./screens/Estudiante/AsignaturasEstudiantesScreen";
@@ -51,7 +50,7 @@ function MyStack( ) {
       <Stack.Screen name="registroAsignaturasDocenteScreen" component={RegistroAsignaturasDocenteScreen} options={{title:'Agregar asignatura',}} />
       <Stack.Screen name="tutoriasDocenteScreen" component={TutoriasDocenteScreen} options={{title:'Lista tutorias',}} />
       <Stack.Screen name="registroTutoriasDocenteScreen" component={RegistroTutoriasDocenteScreen} options={{title:'Agregar tutoria',}} />
-      <Stack.Screen name="darAltaEstudiantesScreen" component={DarAltaEstudiantesScreen} options={{title:'Lista estudiantes',}} />
+      <Stack.Screen name="altaEstudiantesScreen" component={AltaEstudiantesScreen} options={{title:'Lista estudiantes',}} />
       <Stack.Screen name="validarAsistenciaScreen" component={ValidarAsistenciaScreen} options={{title:'Lista estudiantes',}} />
 
       <Stack.Screen name="asignaturasEstudiantesScreen" component={AsignaturasEstudiantesScreen} options={{title:'Lista asignaturas',}} />
@@ -60,10 +59,7 @@ function MyStack( ) {
     </Stack.Navigator>       
   )
 }
-
 function BottomTabNavigator({ navigation })  {
-
-
     return (
         <Tab.Navigator initialRouteName="Feed"
           screenOptions={{
@@ -96,19 +92,11 @@ function BottomTabNavigator({ navigation })  {
                 tabBarActiveTintColor: myColors.mustard, 
                 tabBarInactiveTintColor: myColors.navyblue,
                 tabBarIcon: ({ color, size }) => (<AntDesign name="user" size={25} color="#293774" />),
-                headerRight: () => (
-                  <Pressable
-                    
-                    style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-                   <Ionicons name="notifications-outline" size={28} color="#293774" style={{ marginRight: 16 }}/>
-                  </Pressable>
-              )
               }}
             />
         </Tab.Navigator>
       );
 }
-
 export default function Navigation() {
     return (
         <NavigationContainer>
