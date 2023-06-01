@@ -4,15 +4,11 @@ import { styleComp } from '../styles/stylesComp';
 import { Ionicons } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
-import { useState } from 'react';
 
 export default function Usuarios({
         id, cedula, nombres, apellidos, tipo, correo, clave, validado, createdAt,
     }) 
 {
-
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     return( 
         <rn.View style={styleComp.productContainer}>
