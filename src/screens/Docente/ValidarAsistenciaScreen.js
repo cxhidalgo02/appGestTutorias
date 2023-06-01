@@ -2,7 +2,8 @@ import * as React from 'react';
 import { style } from '../../styles/styles';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where, } from 'firebase/firestore';
-import ValidarAsistencia from '../../components/ValidarAsistencia';
+
+import ValidarAsistencia from '../../components/Docente/ValidarAsistencia';
 import localStorage from 'react-native-expo-localstorage';
 import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -17,7 +18,7 @@ const ValidarAsistenciaScreen = () => {
   const pathIdEstData = localStorage.getItem(`keyUserEstData`, pathIdEstData);
   
   React.useEffect(() => { 
-    const collectionRef = collection(database, 'registroUsuarios');
+    const collectionRef = collection(database, 'Usuarios');
     const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
     const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
       setNuevoEstudiante(
@@ -32,7 +33,10 @@ const ValidarAsistenciaScreen = () => {
     });
     return unsubscribe2;
   },[])
-
+/*
+React.useEffect(() => { 
+  consultaEstudiantes();
+},[])*/
   //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
