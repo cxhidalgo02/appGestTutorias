@@ -12,7 +12,7 @@ import localStorage from 'react-native-expo-localstorage';
 
 export default function Asignaturas ({
         id, codigo, nombre, tipo, fechaReg,
-        idAsig, codigoAsig, nombreAsig, tipoAsig, fechaRegAsig
+        //idAsig, codigoAsig, nombreAsig, tipoAsig, fechaRegAsig
     }) 
 {
 
