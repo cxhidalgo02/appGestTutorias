@@ -59,7 +59,10 @@ function MyStack( ) {
     </Stack.Navigator>       
   )
 }
+
 function BottomTabNavigator({ navigation })  {
+
+
     return (
         <Tab.Navigator initialRouteName="Feed"
           screenOptions={{
@@ -97,6 +100,7 @@ function BottomTabNavigator({ navigation })  {
         </Tab.Navigator>
       );
 }
+
 export default function Navigation() {
     return (
         <NavigationContainer>
