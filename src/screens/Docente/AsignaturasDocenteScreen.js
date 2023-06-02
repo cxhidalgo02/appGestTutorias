@@ -13,20 +13,20 @@ const AsignaturasDocenteScreen = () => {
   const navigation = useNavigation();
 
   const [asignatura, setNuevaAsignatura] = React.useState([]);
-  //const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
   React.useEffect(() => { 
     const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
     const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/`);
-    const q = query(collectionRef, orderBy('nombre', 'desc'));
-    const setDocAsignaturas = onSnapshot(q, querySnapshot => {
+    const asignaturaEstQuery = query(collectionRef, orderBy('nombre', 'desc'));
+    const setDocAsignaturas = onSnapshot(asignaturaEstQuery, querySnapshot => {
         setNuevaAsignatura(
             querySnapshot.docs.map(doc => ({
               id: doc.id,
               codigo: doc.data().codigo,
               nombre: doc.data().nombre,
               tipo: doc.data().tipo,
-              createdAt: doc.data().createdAt,  
+              fechaRegAsig: doc.data().fechaRegAsig,  
             }))   
           );
         }

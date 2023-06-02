@@ -7,15 +7,14 @@ import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Refr
 import { Picker } from '@react-native-picker/picker';
 import { style } from '../../styles/styles';
 
-
 const RegistroAsignaturasDocenteScreen = () => { 
   const navigation = useNavigation();
 
   //atributos de las clase asignatura
-  const [nombreAsignatura, setNombreAsignatura] = React.useState('')
-  const [codigoAsignatura, setCodigoAsignatura] = React.useState('')
-  const [tipoAsignatura, setTipoAsignatura] = React.useState("")
-  const [createdAt, setCreatedAt] = React.useState(new Date())
+  const [nombreAsig, setNombreAsig] = React.useState('')
+  const [codigoAsig, setCodigoAsig] = React.useState('')
+  const [tipoAsig, setTipoAsig] = React.useState('')
+  const [fechaRegAsig, setFechaRegAsig] = React.useState(new Date())
 
   // Id del usuario que inicia sesion
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
@@ -25,11 +24,11 @@ const RegistroAsignaturasDocenteScreen = () => {
   const onSend = async () => {
     try {
       const registroAsignatura = {
-        id: codigoAsignatura,
-        nombre: nombreAsignatura,
-        codigo: codigoAsignatura,
-        tipo: tipoAsignatura,
-        createdAt: createdAt
+        id: codigoAsig,
+        nombre: nombreAsig,
+        codigo: codigoAsig,
+        tipo: tipoAsig,
+        fechaRegAsig: fechaRegAsig,
       };
       const docRef = doc(database, pathUrl, registroAsignatura.codigo);
       await setDoc(docRef, (registroAsignatura) );
@@ -63,17 +62,17 @@ const RegistroAsignaturasDocenteScreen = () => {
               FORMULARIO
             </Text>
               <TextInput style = {style.textInput}
-                onChangeText={(text) => setNombreAsignatura(text)}
+                onChangeText={(text) => setNombreAsig(text)}
                 placeholder="Nombre de la asignatura"
               />
               <TextInput style = {style.textInput}
-                onChangeText={(text) => setCodigoAsignatura(text)}
+                onChangeText={(text) => setCodigoAsig(text)}
                 placeholder="Codigo de la asignatura"
               />
               <Picker
                 style = {style.select}
                 selectedValue={tipoAsignatura}
-                onValueChange={(itemValue) => setTipoAsignatura(itemValue)}
+                onValueChange={(itemValue) => setTipoAsig(itemValue)}
               >
                 <Picker.Item label="Tipo" value="Tipo" />
                 <Picker.Item label="Troncal" value="Troncal"/>
