@@ -10,7 +10,7 @@ import { doc, updateDoc,} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 
 export default function ValidarAsistencia({
-        id, cedula, nombres, apellidos, correo,
+        id, cedula, nombres, apellidos, correo
     }) 
 {
 
