@@ -1,7 +1,7 @@
 export default {
   "expo": {
-    "name": "app_gestiontutorias",
-    "slug": "app_gestiontutorias",
+    "name": "appgestiontutorias",
+    "slug": "appgestiontutorias",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/favicon.png",
