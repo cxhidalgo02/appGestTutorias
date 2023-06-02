@@ -11,7 +11,7 @@ import Tutorias from '../../components/Docente/Tutorias';
 
 const TutoriasDocenteScreen = () => {
   const navigation = useNavigation();
-  //constructor para las tutorias del estudiante
+
   const [tutoria, setNuevaTutoria] = React.useState([]);
   //boton para el escreen registro Tutorias del docente
   React.useLayoutEffect(() => {
@@ -34,8 +34,8 @@ const TutoriasDocenteScreen = () => {
 
   React.useEffect(() => {
     const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/${pathIdAsigDoc}/Tutorias`);
-    const asignaturasEstudianteQuery = query(collectionRef, orderBy('semana', 'desc'));
-    const setDocTutorias = onSnapshot(asignaturasEstudianteQuery, querySnapshot => {
+    const tutoriasEstQuery = query(collectionRef, orderBy('semana', 'desc'));
+    const setDocTutorias = onSnapshot(tutoriasEstQuery, querySnapshot => {
       setNuevaTutoria(
         querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -45,16 +45,13 @@ const TutoriasDocenteScreen = () => {
           fecha: doc.data().fecha,
           hora: doc.data().hora,
           semana: doc.data().semana,
-          createdAt: doc.data().createdAt,
+          fechaRegTuto: doc.data().fechaRegTuto,
         }))
       );
     });
     return setDocTutorias;
   },[])
-  /*
-  React.useEffect(() => {
-    consultaTutorias();
-    },[])*/
+
   //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {

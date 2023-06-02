@@ -14,13 +14,13 @@ import { Ionicons } from '@expo/vector-icons';
 const RegistroTutoriasDocenteScreen = () => { 
   const navigation = useNavigation();
 
-  const [codigoTutoria, setCodigoTutoria] = React.useState('')
-  const [temaTutoria, setTemaTutoria] = React.useState('')
-  const [descripcionTutoria, setDescripcionTutoria] = React.useState('')
-  const [aulaTutoria, setAulaTutoria] = React.useState('')
-  const [fechaTutoria, setFechaTutoria] = React.useState('')
-  const [horaTutoria, setHoraTutoria] = React.useState('')
-  const [semanaTutoria, setSemanaTutoria] = React.useState("")
+  const [codigoTuto, setCodigoTuto] = React.useState('')
+  const [temaTuto, setTemaTuto] = React.useState('')
+  const [descripcionTuto, setDescripcionTuto] = React.useState('')
+  const [aulaTuto, setAulaTuto] = React.useState('')
+  const [fechaTuto, setFechaTuto] = React.useState('')
+  const [horaTuto, setHoraTuto] = React.useState('')
+  const [semanaTuto, setSemanaTuto] = React.useState('')
   const [fechaRegTuto, setCreatedAt] = React.useState(new Date())
 
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
@@ -32,13 +32,13 @@ const RegistroTutoriasDocenteScreen = () => {
   const onSend = async () => {
     try {
       const registroTutoria = {
-        codigo: codigoTutoria,
-        tema: temaTutoria, 
-        descripcion: descripcionTutoria,
-        aula: aulaTutoria,
-        fecha: fechaTutoria,
-        hora: horaTutoria,
-        semana: semanaTutoria,
+        codigo: codigoTuto,
+        tema: temaTuto, 
+        descripcion: descripcionTuto,
+        aula: aulaTuto,
+        fecha: fechaTuto,
+        hora: horaTuto,
+        semana: semanaTuto,
         fechaRegTuto: fechaRegTuto
       };
       const docRef = doc(database, pathUrlDoc, registroTutoria.codigo);
@@ -97,20 +97,20 @@ const RegistroTutoriasDocenteScreen = () => {
             FORMULARIO
           </Text>
             <TextInput style = {style.textInput}
-              onChangeText={(text) => setCodigoTutoria(text)}
+              onChangeText={(text) => setCodigoTuto(text)}
               placeholder="Codigo"
             />
             <TextInput style = {style.textInput}
-              onChangeText={(text) => setTemaTutoria(text)}
+              onChangeText={(text) => setTemaTuto(text)}
               placeholder="Tema"
             />
             <TextInput style = {style.textInput}
-            onChangeText={(text) => setDescripcionTutoria(text)}
+            onChangeText={(text) => setDescripcionTuto(text)}
               placeholder="Descripción"
             />
             <TextInput style = {style.textInput}
             keyboardType="numeric"
-            onChangeText={(text) => setAulaTutoria(text)}
+            onChangeText={(text) => setAulaTuto(text)}
               placeholder="Aula"
             />  
             <View style = {styles.containerFecha}>
@@ -128,7 +128,7 @@ const RegistroTutoriasDocenteScreen = () => {
               <View style = {styles.inputCalendar}>
                   <TextInput style = {style.textInput}
                     editable={true}
-                    onChangeText={(text) => setFechaTutoria(text)}
+                    onChangeText={(text) => setFechaTuto(text)}
                     placeholder="Fecha"> 
                     {`${selectedDate ? moment(selectedDate).format("DD-MM-YYYY").toString() : "Fecha"}`}
                   </TextInput>
@@ -149,7 +149,7 @@ const RegistroTutoriasDocenteScreen = () => {
               <View style = {styles.inputCalendar}>
                   <TextInput style = {style.textInput}
                     editable={true}
-                    onChangeText={(text) => setHoraTutoria(text)}
+                    onChangeText={(text) => setHoraTuto(text)}
                     placeholder="Hora"> 
                     {`${selectedTime ? moment(selectedTime).format("HH:mm").toString() : "Hora"}`}
                   </TextInput>
@@ -158,7 +158,7 @@ const RegistroTutoriasDocenteScreen = () => {
             <Picker
                 style = {style.select}
                 selectedValue={semanaTutoria}
-                onValueChange={(itemValue) => setSemanaTutoria(itemValue)}
+                onValueChange={(itemValue) => setSemanaTuto(itemValue)}
                 >
                 <Picker.Item label="Semana 1" value="1" />
                 <Picker.Item label="Semana 2" value="2"/>
