@@ -31,20 +31,18 @@ const AsignaturasEstudiantesScreen = () => {
   React.useEffect(() => {
     const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
     const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/`);
-    const asignaturasEstudianteQuery = query(collectionRef, where('validada', '==','true'));
+    const asignaturasEstudianteQuery = query(collectionRef, where('altaAsigEst', '==','true'));
     const setDocAsignaturas = onSnapshot(asignaturasEstudianteQuery, querySnapshot => {
       setNuevaListaAE(
         querySnapshot.docs.map(doc => ({
           id: doc.id,
-          codigo: doc.data().codigo,
-          nombre: doc.data().nombre,
-          tipo: doc.data().tipo,
-          validada: doc.data().validada,
-          createdAt: doc.data().createdAt,
+          codigoAsig: doc.data().codigoAsig,
+          nombreAsig: doc.data().nombreAsig,
+          tipoAsig: doc.data().tipoAsig,
+          altaAsigEst: doc.data().altaAsigEst,
         }))
       );
     } );
-    console.log('Asignatura EstScreen=>',asignaturasEstudianteQuery);
     return setDocAsignaturas;
   },[])
 
