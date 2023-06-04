@@ -11,10 +11,7 @@ import localStorage from 'react-native-expo-localstorage';
 import { collection, query, where, getCountFromServer, doc, deleteDoc } from 'firebase/firestore';
 
 export default function AsignaturasEstudiantes({
-        id, codigo, nombre, tipo, validada, fechaReg,
-        
-        uidEstudiante, idAsig, altaAsigEst,
-        codigoAsig, tipoAsig, fechaRegAsig
+        id, idAsig, nombreAsig, codigoAsig, tipoAsig, fechaRegAsig, uidEstudiante, altaAsigEst,
     }) 
 {
 
@@ -30,17 +27,16 @@ export default function AsignaturasEstudiantes({
     }
 
     //Path para consultas de estudiante
-    const pathAsig = `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigo}`
+    const pathAsig = `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}`
 
     const [numTutorias, setNumTutorias] = React.useState([]);
     async function numTutoriasData() {
         try {
-            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigo}/TutoriasEstudiante/`);
+            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
             const q = query(collectionRef);
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             setNumTutorias(result);
-            //console.log('# Tutorias => ', result);
         } catch (error) {
         console.log('Se produjo un error:', error);
         }
@@ -49,8 +45,8 @@ export default function AsignaturasEstudiantes({
     const [numTutoriasInscritas, setNumTutoriasInscritas] = React.useState([]);
     async function tutoriasInscritasData() {
         try {
-            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigo}/TutoriasEstudiante/`);
-            const q = query(collectionRef, where('inscripcion', '==', 'true'));
+            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+            const q = query(collectionRef, where('inscripcionTutoEst', '==', 'true'));
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             setNumTutoriasInscritas(result);
@@ -62,8 +58,8 @@ export default function AsignaturasEstudiantes({
     const [numTutoriasValidadas, setNumTutoriasValidadas] = React.useState([]);
     async function tutoriasValidadasData() {
         try {
-            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigo}/TutoriasEstudiante/`);
-            const q = query(collectionRef, where('validada', '==', 'true'));
+            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+            const q = query(collectionRef, where('validadaTutoEst', '==', 'true'));
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
             setNumTutoriasValidadas(result);
@@ -88,9 +84,9 @@ export default function AsignaturasEstudiantes({
             activeOpacity={0.8}
         >
             <RN.View style={styleComp.productContainer} >     
-                <RN.Text style={styleComp.texttitle}>{ nombre }</RN.Text>
-                <RN.Text style={styleComp.textsubtitle}>{ codigo}</RN.Text>
-                <RN.Text style={styleComp.textContent}>Tipo: { tipo }</RN.Text>
+                <RN.Text style={styleComp.texttitle}>{ nombreAsig }</RN.Text>
+                <RN.Text style={styleComp.textsubtitle}>{ codigoAsig }</RN.Text>
+                <RN.Text style={styleComp.textContent}>Tipo: { tipoAsig }</RN.Text>
                 <RN.View style={styles.btnsContiner}>
                     <RN.Pressable title='tutoriasEstudianteScreen'
                         onPress={() => navigation.navigate('tutoriasEstudianteScreen')}
