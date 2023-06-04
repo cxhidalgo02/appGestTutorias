@@ -33,10 +33,7 @@ const ValidarAsistenciaScreen = () => {
     });
     return unsubscribe2;
   },[])
-/*
-React.useEffect(() => { 
-  consultaEstudiantes();
-},[])*/
+
   //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
