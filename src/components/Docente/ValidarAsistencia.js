@@ -10,7 +10,7 @@ import { doc, updateDoc,} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 
 export default function ValidarAsistencia({
-        id, cedula, nombres, apellidos, correo
+        id, cedula, nombres, apellidos, correo, fechaRegistro
     }) 
 {
 
@@ -24,7 +24,7 @@ export default function ValidarAsistencia({
     //funcion para mostar el boton de eliminar
     const onValidate = () => {
         const docRef = doc(database, `Usuarios/${id}/AsignaturasEstudiante/${pathIdAsigDoc}/TutoriasEstudiante/${pathCodTutDoc}`);
-        updateDoc(docRef, {validada: 'true' });
+        updateDoc(docRef, {validadaTutoEst: 'true' });
     }   
     //estado para boton de  validar
     const [isValidateActive, setIsValidateActive] = React.useState(false);
