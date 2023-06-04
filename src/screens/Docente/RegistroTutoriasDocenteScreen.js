@@ -32,17 +32,20 @@ const RegistroTutoriasDocenteScreen = () => {
   const onSend = async () => {
     try {
       const registroTutoria = {
-        codigo: codigoTuto,
-        tema: temaTuto, 
-        descripcion: descripcionTuto,
-        aula: aulaTuto,
-        fecha: fechaTuto,
-        hora: horaTuto,
-        semana: semanaTuto,
+        codigoTuto: codigoTuto,
+        temaTuto: temaTuto, 
+        descripcionTuto: descripcionTuto,
+        aulaTuto: aulaTuto,
+        fechaTuto: fechaTuto,
+        horaTuto: horaTuto,
+        semanaTuto: semanaTuto,
         fechaRegTuto: fechaRegTuto
       };
-      const docRef = doc(database, pathUrlDoc, registroTutoria.codigo);
+      const docRef = doc(database, pathUrlDoc, registroTutoria.codigoTuto );
       await setDoc(docRef, (registroTutoria) );
+      Alert.alert('Registro exitoso!', '', [
+        { text: 'Aceptar' },
+      ]);
       navigation.goBack();
     } catch (error) {
       console.log('ERROR => ',error);
@@ -157,7 +160,7 @@ const RegistroTutoriasDocenteScreen = () => {
             </View>
             <Picker
                 style = {style.select}
-                selectedValue={semanaTutoria}
+                selectedValue={semanaTuto}
                 onValueChange={(itemValue) => setSemanaTuto(itemValue)}
                 >
                 <Picker.Item label="Semana 1" value="1" />
