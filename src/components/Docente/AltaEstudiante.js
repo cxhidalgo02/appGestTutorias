@@ -10,7 +10,7 @@ import { doc, updateDoc, collection, query, where, getDocs, setDoc } from 'fireb
 import localStorage from 'react-native-expo-localstorage';
 
 export default function DarAltaEstudiante({
-        id, cedula, nombres, apellidos, correo,
+        id, cedula, nombres, apellidos, correo, ferchaRegistro
     }) 
 {
   //Uid del estudiante que encuentre en la base de datos   (id) 
@@ -33,11 +33,11 @@ export default function DarAltaEstudiante({
       try {
         //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
         const collectionRef1 = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/`);
-        const q = query(collectionRef1, where('codigo','==',`${pathIdAsig}`) );
+        const q = query(collectionRef1, where('codigoAsig','==',`${pathIdAsig}`) );
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-          setIsDataN(doc.data().nombre);
-          setIsDataT(doc.data().tipo);
+          setIsDataN(doc.data().nombreAsig);
+          setIsDataT(doc.data().tipoAsig);
         })
       } catch (error) {
         console.log('ERROR', error);
@@ -51,24 +51,24 @@ export default function DarAltaEstudiante({
   const [fechaData, setFechaData] = React.useState('')
   const [aulaData, setAulaData] = React.useState('')
   const [horaData, setHoraData] = React.useState('')
-  const [semanaData, setSemanaData] = React.useState("")
+  const [semanaData, setSemanaData] = React.useState('')
   const [createdAtData, setCreatedAtData] = React.useState('')
   async function consultaTutoriasDocente() {
     try {
       //consulta de asignaturas con path Estudiante del componente DarAltaEstudiante
       const collectionRef1 = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/${pathIdAsig}/Tutorias/`);
-      const consultaTutoriasDoc = query(collectionRef1, where('codigo', '==', `${pathIdTut}`) ); //`${pathIdTut}`
+      const consultaTutoriasDoc = query(collectionRef1, where('codigoTuto', '==', `${pathIdTut}`) ); //`${pathIdTut}`
       const querySnapshot = await getDocs(consultaTutoriasDoc);
         querySnapshot.forEach((doc) => {
           setIdData(doc.id);
-          setCodigoData(doc.data().codigo);
-          setAulaData(doc.data().aula);
-          setDescripcionData(doc.data().descripcion);
-          setFechaData(doc.data().fecha);
-          setHoraData(doc.data().hora);
-          setSemanaData(doc.data().semana);
-          setTemaData(doc.data().tema);
-          setCreatedAtData(doc.data().createdAt);
+          setCodigoData(doc.data().codigoTuto);
+          setAulaData(doc.data().aulaTuto);
+          setDescripcionData(doc.data().descripcionTuto);
+          setFechaData(doc.data().fechaTuto);
+          setHoraData(doc.data().horaTuto);
+          setSemanaData(doc.data().semanaTuto);
+          setTemaData(doc.data().temaTuto);
+          setCreatedAtData(doc.data().fechaRegTuto);
         })
       } catch (error) {
         console.log('ERROR T =>', error);
@@ -79,18 +79,18 @@ export default function DarAltaEstudiante({
     try {
       const pathUrl  = `Usuarios/${id}/AsignaturasEstudiante/${pathIdAsig}/TutoriasEstudiante/`;    
         const docu = {
-          codigo: pathIdTut,
-          tema: temaData, 
-          descripcion: descripcionData,
-          aula: aulaData,
-          fecha: fechaData,
-          hora: horaData,
-          semana: semanaData,
-          createdAt: new Date(),
-          inscripcion: 'false',
-          validada: 'false'
+          codigoTutoEst: pathIdTut,
+          temaTutoEst: temaData, 
+          descripcionTutoEst: descripcionData,
+          aulaTutoEst: aulaData,
+          fechaTutoEst: fechaData,
+          horaTutoEst: horaData,
+          semanaTutoEst: semanaData,
+          fechaRegistroTutoEst: new Date(),
+          inscripcionTutoEst: 'false',
+          validadaTutoEst: 'false'
         };
-        const agregarTutoriasEstudiante = doc(database, pathUrl, docu.codigo);
+        const agregarTutoriasEstudiante = doc(database, pathUrl, docu.codigoTutoEst);
         setDoc(agregarTutoriasEstudiante, (docu) );
       
     } catch (error) {
@@ -106,7 +106,7 @@ export default function DarAltaEstudiante({
   //funcion para mostar el boton de validar al mantener presionado
   const onValidate = () => {
     const docRef = doc(database, `Usuarios/${id}/AsignaturasEstudiante/${pathIdAsig}`);
-    updateDoc(docRef, {nombre: isDataN, tipo: isDataT,  validada: 'true' });
+    updateDoc(docRef, {nombreAsig: isDataN, tipoAsig: isDataT, altaAsigEst: 'true' });
   }    
 
   //estado para mostar el boton de validar al mantener presionado
