@@ -16,16 +16,16 @@ const AsignaturasDocenteScreen = () => {
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
   React.useEffect(() => { 
-    const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+
     const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/`);
-    const asignaturaEstQuery = query(collectionRef, orderBy('nombre', 'desc'));
+    const asignaturaEstQuery = query(collectionRef, orderBy('nombreAsig', 'desc'));
     const setDocAsignaturas = onSnapshot(asignaturaEstQuery, querySnapshot => {
         setNuevaAsignatura(
             querySnapshot.docs.map(doc => ({
               id: doc.id,
-              codigo: doc.data().codigo,
-              nombre: doc.data().nombre,
-              tipo: doc.data().tipo,
+              codigoAsig: doc.data().codigoAsig,
+              nombreAsig: doc.data().nombreAsig,
+              tipoAsig: doc.data().tipoAsig,
               fechaRegAsig: doc.data().fechaRegAsig,  
             }))   
           );
