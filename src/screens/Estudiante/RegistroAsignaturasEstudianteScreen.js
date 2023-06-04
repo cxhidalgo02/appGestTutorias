@@ -11,7 +11,7 @@ const RegistroAsignaturasEstudianteScreen = () => {
   const navigation = useNavigation();
 
   //atrubito de la clase tutorias
-  const [codigo, setCodigoAsignatura] = React.useState('')
+  const [codigoAsig, setCodigoAsignatura] = React.useState('')
   //UID del estudiante que inicia sesion
   const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
 
@@ -20,13 +20,13 @@ const RegistroAsignaturasEstudianteScreen = () => {
   const onSend = async () => {
     try {
       const docu = {
-        codigo: codigo,
-        createdAt: new Date(),
-        nombre: '',
-        tipo: '',
-        validada: 'false',
+        codigoAsig: codigoAsig,
+        nombreAsig: '',
+        tipoAsig: '',
+        altaAsigEst: 'false',
+        fechaRegEst: new Date(),
       };
-      const registroAsignaturaEstudiante = doc(database, pathUrl, docu.codigo);
+      const registroAsignaturaEstudiante = doc(database, pathUrl, docu.codigoAsig);
       await setDoc(registroAsignaturaEstudiante, (docu) );
       Alert.alert('Registro exitoso!', '', [
         { text: 'Aceptar' },
