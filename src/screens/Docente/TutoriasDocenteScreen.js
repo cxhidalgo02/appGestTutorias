@@ -34,17 +34,17 @@ const TutoriasDocenteScreen = () => {
 
   React.useEffect(() => {
     const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/${pathIdAsigDoc}/Tutorias`);
-    const tutoriasEstQuery = query(collectionRef, orderBy('semana', 'desc'));
+    const tutoriasEstQuery = query(collectionRef, orderBy('semanaTuto', 'desc'));
     const setDocTutorias = onSnapshot(tutoriasEstQuery, querySnapshot => {
       setNuevaTutoria(
         querySnapshot.docs.map(doc => ({
           id: doc.id,
-          tema: doc.data().tema,
-          descripcion: doc.data().descripcion,
-          aula: doc.data().aula,
-          fecha: doc.data().fecha,
-          hora: doc.data().hora,
-          semana: doc.data().semana,
+          temaTuto: doc.data().temaTuto,
+          descripcionTuto: doc.data().descripcionTuto,
+          aulaTuto: doc.data().aulaTuto,
+          fechaTuto: doc.data().fechaTuto,
+          horaTuto: doc.data().horaTuto,
+          semanaTuto: doc.data().semanaTuto,
           fechaRegTuto: doc.data().fechaRegTuto,
         }))
       );
