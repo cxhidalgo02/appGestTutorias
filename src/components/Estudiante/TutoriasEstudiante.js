@@ -7,10 +7,8 @@ import { AntDesign } from '@expo/vector-icons';
 import localStorage from 'react-native-expo-localstorage';
 
 export default function TutoriasEstudiante({
-        id, codigo, tema, descripcion, aula, fecha, hora, semana, inscripcion, validada, fechaReg,
-
-        idAltEst, inscripcionTutEst, validarAsitenciaTutEst, fechaRegTutEst,
-        idTuto, codigoTuto, temaTuto, descripcionTuto, aulaTuto, fechaTuto, horaTuto, semanaTuto
+        id, codigoTutoEst, temaTutoEst, descripcionTutoEst, aulaTutoEst, fechaTutoEst, horaTutoEst, semanaTutoEst,
+        idAltEst, inscripcionTutoEst, validadaTutoEst, fechaRegTutEst,
     })
 {    
     // Id del usuario que inicia sesion
@@ -25,7 +23,7 @@ export default function TutoriasEstudiante({
 
      const onInscribirse = () => {
         const docRef = doc(database, `/Usuarios/${pathIdEst}/AsignaturasEstudiante/${pathCodAsigEst}/TutoriasEstudiante/${id}`);
-                updateDoc(docRef, {inscripcion: 'true', });
+            updateDoc(docRef, {inscripcionTutoEst: 'true', });
     } 
 
     const [isValidateActive, setIsValidateActive] = React.useState(false);
@@ -35,24 +33,27 @@ export default function TutoriasEstudiante({
             onPress={() => setIsValidateActive(false)}
             activeOpacity={0.8}
         >
-            <rn.Text style={styleComp.texttitle}> {tema} </rn.Text>
+            <rn.Text style={styleComp.texttitle}> {temaTutoEst} </rn.Text>
             <rn.Text style={styleComp.textsubtitle}> {id} </rn.Text>
             <rn.Text style={styleComp.descrip}>
-                <AntDesign name="tag" size={18} color="black" /> - {descripcion} 
+                <AntDesign name="tag" size={18} color="black" /> - {descripcionTutoEst} 
             </rn.Text>
             <rn.Text style={styleComp.information}> 
-                <AntDesign name="right" size={16} color="black" /> Aula: {aula} 
+                <AntDesign name="right" size={16} color="black" /> Aula: {aulaTutoEst} 
             </rn.Text>
             <rn.Text style={styleComp.information}> 
-                <AntDesign name="right" size={16} color="black" /> Hora: {hora} 
+                <AntDesign name="right" size={16} color="black" /> Fecha: {fechaTutoEst} 
+            </rn.Text>
+            <rn.Text style={styleComp.information}> 
+                <AntDesign name="right" size={16} color="black" /> Hora: {horaTutoEst} 
             </rn.Text>
             <rn.Text style={styleComp.information}>
-                <AntDesign name="right" size={16} color="black" /> Semana: {semana} </rn.Text>
+                <AntDesign name="right" size={16} color="black" /> Semana: {semanaTutoEst} </rn.Text>
             <rn.Text style={styles.information}>
-                <AntDesign name="right" size={16} color="black" /> Inscrito: {inscripcion} 
+                <AntDesign name="right" size={16} color="black" /> Inscrito: {inscripcionTutoEst} 
             </rn.Text>
             <rn.Text style={styleComp.information}>
-                <AntDesign name="right" size={16} color="black" /> Validada: {validada} 
+                <AntDesign name="right" size={16} color="black" /> Validada: {validadaTutoEst} 
             </rn.Text>
             <rn.View style={styles.btnsContiner}>
                 {isValidateActive && (
