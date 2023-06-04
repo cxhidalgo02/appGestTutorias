@@ -11,11 +11,9 @@ import { collection, query,  getCountFromServer } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 
 export default function Asignaturas ({
-        id, codigo, nombre, tipo, fechaReg,
-        //idAsig, codigoAsig, nombreAsig, tipoAsig, fechaRegAsig
+        id, idAsig, codigoAsig, nombreAsig, tipoAsig, fechaRegAsig
     }) 
 {
-
     // Id del usuario que inicia sesion
     const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
@@ -25,14 +23,14 @@ export default function Asignaturas ({
     }
 
     //path usuario  con asignaturas 
-    const pathAsig=`Usuarios/${pathIdDoc}/Asignaturas/${codigo}`
+    const pathAsig=`Usuarios/${pathIdDoc}/Asignaturas/${codigoAsig}`
     //guardo el codigo de asignatura para enviar a Dar de alta
-    const pathIdAsigDoc = localStorage.setItem("keyCodAsigDoc", codigo);
+    const pathIdAsigDoc = localStorage.setItem("keyCodAsigDoc", codigoAsig);
 
     const [numTutorias, setNumTutorias] = React.useState([]);
     async function numTutoriasData() {
         try {
-            const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/${codigo}/Tutorias/`);
+            const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/${codigoAsig}/Tutorias/`);
             const q = query(collectionRef);
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
@@ -56,9 +54,9 @@ export default function Asignaturas ({
             activeOpacity={0.8}
         >
             <RN.View style={styleComp.productContainer}>     
-                <RN.Text style={styleComp.texttitle}>{nombre}</RN.Text>
-                <RN.Text style={styleComp.textsubtitle}>{codigo}</RN.Text>
-                <RN.Text style={styleComp.textContent}> Tipo: {tipo}</RN.Text> 
+                <RN.Text style={styleComp.texttitle}>{nombreAsig}</RN.Text>
+                <RN.Text style={styleComp.textsubtitle}>{codigoAsig}</RN.Text>
+                <RN.Text style={styleComp.textContent}> Tipo: {tipoAsig}</RN.Text> 
                 <RN.View style={styles.btnsContiner}>
                     <RN.Pressable title='altaEstudiantesScreen'
                         onPress={() => navigation.navigate('altaEstudiantesScreen')}
@@ -83,7 +81,6 @@ export default function Asignaturas ({
                 <AntDesign name="delete" size={24} color="white" />
                 </RN.Pressable>
             )}    
-
             <RN.View style={styleModal.centeredView}>
                 <RN.Modal
                     animationType="slide"
