@@ -11,8 +11,8 @@ const RegistroAsignaturasDocenteScreen = () => {
   const navigation = useNavigation();
 
   //atributos de las clase asignatura
-  const [nombreAsig, setNombreAsig] = React.useState('')
   const [codigoAsig, setCodigoAsig] = React.useState('')
+  const [nombreAsig, setNombreAsig] = React.useState('')
   const [tipoAsig, setTipoAsig] = React.useState('')
   const [fechaRegAsig, setFechaRegAsig] = React.useState(new Date())
 
@@ -24,13 +24,13 @@ const RegistroAsignaturasDocenteScreen = () => {
   const onSend = async () => {
     try {
       const registroAsignatura = {
-        id: codigoAsig,
-        nombre: nombreAsig,
-        codigo: codigoAsig,
-        tipo: tipoAsig,
+        idAsig: codigoAsig,
+        codigoAsig: codigoAsig,
+        nombreAsig: nombreAsig,
+        tipoAsig: tipoAsig,
         fechaRegAsig: fechaRegAsig,
       };
-      const docRef = doc(database, pathUrl, registroAsignatura.codigo);
+      const docRef = doc(database, pathUrl, registroAsignatura.codigoAsig);
       await setDoc(docRef, (registroAsignatura) );
       Alert.alert('Registro exitoso!', '', [
         { text: 'Aceptar' },
@@ -71,7 +71,7 @@ const RegistroAsignaturasDocenteScreen = () => {
               />
               <Picker
                 style = {style.select}
-                selectedValue={tipoAsignatura}
+                selectedValue={tipoAsig}
                 onValueChange={(itemValue) => setTipoAsig(itemValue)}
               >
                 <Picker.Item label="Tipo" value="Tipo" />
