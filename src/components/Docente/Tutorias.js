@@ -12,8 +12,8 @@ import localStorage from 'react-native-expo-localstorage';
 import { doc, deleteDoc} from 'firebase/firestore';
 
 export default function Tutorias({
-        id, codigo, tema, descripcion, aula, fecha, hora, semana,
-        //idTuto, codigoTuto, temaTuto, descripcionTuto, aulaTuto, fechaTuto, horaTuto, semanaTuto, fechaRegTuto
+        //id, codigo, tema, descripcion, aula, fecha, hora, semana,
+        id, codigoTuto, temaTuto, descripcionTuto, aulaTuto, fechaTuto, horaTuto, semanaTuto, fechaRegTuto
     }) 
 {
 
@@ -41,21 +41,21 @@ export default function Tutorias({
             activeOpacity={0.8}
         >
             <rn.View style={styleComp.productContainer}>
-                <rn.Text style={styleComp.texttitle}> {tema} </rn.Text>
+                <rn.Text style={styleComp.texttitle}> {temaTuto} </rn.Text>
                 <rn.Text style={styleComp.textsubtitle}> {id} </rn.Text>
                 <rn.Text style={styleComp.descrip}>
-                    <MaterialCommunityIcons name="watermark" size={18} color="black" /> - {descripcion} </rn.Text>
+                    <MaterialCommunityIcons name="watermark" size={18} color="black" /> - {descripcionTuto} </rn.Text>
                 <rn.Text style={styleComp.information}> 
-                    <Entypo name="chevron-right" size={18} color="black" /> Aula: {aula} 
+                    <Entypo name="chevron-right" size={18} color="black" /> Aula: {aulaTuto} 
                 </rn.Text>
                 <rn.Text style={styleComp.information}> 
-                    <Entypo name="chevron-right" size={18} color="black" /> Fecha: {fecha} 
+                    <Entypo name="chevron-right" size={18} color="black" /> Fecha: {fechaTuto} 
                 </rn.Text>
                 <rn.Text style={styleComp.information}> 
-                    <Entypo name="chevron-right" size={18} color="black" /> Hora: {hora} 
+                    <Entypo name="chevron-right" size={18} color="black" /> Hora: {horaTuto} 
                 </rn.Text>
                 <rn.Text style={styleComp.information}>
-                    <Entypo name="chevron-right" size={18} color="black" /> Semana: {semana} 
+                    <Entypo name="chevron-right" size={18} color="black" /> Semana: {semanaTuto} 
                 </rn.Text>
                 <rn.View style={styles.btnsContiner}>
                     <rn.Pressable 
