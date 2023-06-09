@@ -4,7 +4,7 @@ import { database } from '../../../config/firebaseConfig';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Pressable, RefreshControl, Alert } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Pressable, RefreshControl, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -21,13 +21,12 @@ const RegistroTutoriasDocenteScreen = () => {
   const [fechaTuto, setFechaTuto] = React.useState('')
   const [horaTuto, setHoraTuto] = React.useState('')
   const [semanaTuto, setSemanaTuto] = React.useState('')
-  const [fechaRegTuto, setCreatedAt] = React.useState(new Date())
+  const [fechaRegTuto] = React.useState(new Date())
 
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
  // id del codigo que selecciona en la tutoria
- 
   const pathUrlDoc  = `Usuarios/${pathIdDoc}/Asignaturas/${pathIdAsig}/Tutorias/`;
   const onSend = async () => {
     try {
@@ -49,6 +48,9 @@ const RegistroTutoriasDocenteScreen = () => {
       navigation.goBack();
     } catch (error) {
       console.log('ERROR => ',error);
+      Alert.alert('Error al registrar!', '', [
+        { text: 'Aceptar' },
+      ]);
     }
   }
   //estados para refrezcar el screen
@@ -99,19 +101,19 @@ const RegistroTutoriasDocenteScreen = () => {
           <Text style={style.textTitle}>
             FORMULARIO
           </Text>
-            <TextInput style = {style.textInput}
+            <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
               onChangeText={(text) => setCodigoTuto(text)}
               placeholder="Codigo"
             />
-            <TextInput style = {style.textInput}
+            <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
               onChangeText={(text) => setTemaTuto(text)}
               placeholder="Tema"
             />
-            <TextInput style = {style.textInput}
+            <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
             onChangeText={(text) => setDescripcionTuto(text)}
               placeholder="Descripción"
             />
-            <TextInput style = {style.textInput}
+            <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
             keyboardType="numeric"
             onChangeText={(text) => setAulaTuto(text)}
               placeholder="Aula"
@@ -129,7 +131,7 @@ const RegistroTutoriasDocenteScreen = () => {
                   />
               </View>
               <View style = {styles.inputCalendar}>
-                  <TextInput style = {style.textInput}
+                  <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
                     editable={true}
                     onChangeText={(text) => setFechaTuto(text)}
                     placeholder="Fecha"> 
@@ -150,7 +152,7 @@ const RegistroTutoriasDocenteScreen = () => {
                   />
               </View>
               <View style = {styles.inputCalendar}>
-                  <TextInput style = {style.textInput}
+                  <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
                     editable={true}
                     onChangeText={(text) => setHoraTuto(text)}
                     placeholder="Hora"> 
