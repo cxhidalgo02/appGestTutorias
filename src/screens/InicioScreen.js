@@ -9,7 +9,6 @@ import { style } from '../styles/styles';
 import { Picker } from '@react-native-picker/picker';
 
 LogBox.ignoreAllLogs();
-
 const InicioScreen = ({ navigation })=> {
 
   //atributos de la clase usuario
@@ -61,6 +60,9 @@ const InicioScreen = ({ navigation })=> {
     })
     .catch( (error) => {
       console.log(' * ERROR: ', error)
+      Alert.alert('Error!', 'Verifique su correo o contraseña', [
+        { text: 'Aceptar' },
+      ]);
     });
   }
   //estados para refrezcar el screen
@@ -84,20 +86,19 @@ const InicioScreen = ({ navigation })=> {
           <Text style={style.textTitle}>
               ACCEDER A SU CUENTA
             </Text>
-              <TextInput style = {style.textInput}
+              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
                 id="Email"
                 placeholder="Correo"
                 textContentType="emailAddress"
                 autoCapitalize='none'
                 onChangeText={(text) => setCorreo(text)}/>
-              <TextInput style = {style.textInput}
+              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
                 id="Pass"
                 placeholder="Contraseña"
                 textContentType="password"
                 secureTextEntry
                 autoCapitalize='none'
-                type={shown ? 'text' : 'password'}
-                onChangeText={(text) => setClave(text)}/> 
+                onChangeText={(text) => setClave(text)}/>              
               <Picker
                   style = {style.select}
                   selectedValue={tipo}
@@ -124,7 +125,7 @@ export default InicioScreen;
 const styles = StyleSheet.create({
   scrollForm: {
     textAlign: "center",
-    marginTop: 120,
+    marginTop: 60, //para ios 60 y android 120
   },
   containerFecha: {
     width: '100%',
@@ -139,5 +140,5 @@ const styles = StyleSheet.create({
   },
   inputCalendar: {
     width: "80%",
-  }
+  },
 });
