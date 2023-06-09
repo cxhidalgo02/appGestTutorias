@@ -3,7 +3,7 @@ import { firebaseConfig } from '../../firebase-config';
 import { initializeApp} from "firebase/app";
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, RefreshControl, Alert } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { style } from '../styles/styles';
 import { Picker } from '@react-native-picker/picker';
@@ -21,7 +21,7 @@ const RegistroUsuariosScreen = () => {
   const [correo, newUsuarioCorreo] = React.useState('')
   const [clave, newUsuarioClave] = React.useState('')
   const [tipo, newUsuarioTipo] = React.useState('')
-  const [fehcaRegistro, newFechaRegitroUsuario] = React.useState(new Date()) //fecha de registro - sistema
+  const [fehcaRegistro] = React.useState(new Date())
 
   const onSend = async () => {
     const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave).then((userCredential) => {
@@ -63,28 +63,28 @@ const RegistroUsuariosScreen = () => {
             FORMULARIO
           </Text>
             <TextInput
-              style = {style.textInput}
+              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
               placeholder="Cedula"
               keyboardType="numeric"
               onChangeText={(text) => newUsuarioCedula(text)}
             />
             <TextInput
-              style = {style.textInput}
+              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
               placeholder="Nombres"
               onChangeText={(text) => newUsuarioNombres(text)}
             />
             <TextInput
               placeholder="Apellidos"
-              style = {style.textInput}
+              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
               onChangeText={(text) => newUsuarioApellidos(text)}
             />
             <TextInput 
-              style = {style.textInput}
+              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
               placeholder="Correo"
               onChangeText={(text) => newUsuarioCorreo(text)}
             />
             <TextInput 
-              style = {style.textInput}
+              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
               placeholder="Contraseña"
               secureTextEntry
               onChangeText={(text) => newUsuarioClave(text)}
