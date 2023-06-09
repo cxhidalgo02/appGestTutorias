@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { doc, setDoc} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
-import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { style } from '../../styles/styles';
 
@@ -14,11 +14,10 @@ const RegistroAsignaturasDocenteScreen = () => {
   const [codigoAsig, setCodigoAsig] = React.useState('')
   const [nombreAsig, setNombreAsig] = React.useState('')
   const [tipoAsig, setTipoAsig] = React.useState('')
-  const [fechaRegAsig, setFechaRegAsig] = React.useState(new Date())
+  const [fechaRegAsig] = React.useState(new Date())
 
   // Id del usuario que inicia sesion
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
-
   //pat path con el UID del docente que inica sesion, crea el documento y coleccion
   const pathUrl = `Usuarios/${pathIdDoc}/Asignaturas/`;
   const onSend = async () => {
@@ -38,8 +37,12 @@ const RegistroAsignaturasDocenteScreen = () => {
       navigation.goBack();
     } catch (error) {
       console.log('ERROR =>', error);
+      Alert.alert('Error al registrar!', '', [
+        { text: 'Aceptar' },
+      ]);
     }
   }
+
   //estados para refrezcar el screen
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
@@ -61,11 +64,11 @@ const RegistroAsignaturasDocenteScreen = () => {
             <Text style={style.textTitle}>
               FORMULARIO
             </Text>
-              <TextInput style = {style.textInput}
+              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
                 onChangeText={(text) => setNombreAsig(text)}
                 placeholder="Nombre de la asignatura"
               />
-              <TextInput style = {style.textInput}
+              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
                 onChangeText={(text) => setCodigoAsig(text)}
                 placeholder="Codigo de la asignatura"
               />
