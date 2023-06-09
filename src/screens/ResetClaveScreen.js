@@ -27,6 +27,9 @@ const resetClave = ({ navigation })=> {
       navigation.goBack();
     } catch (error) {
       console.log('* ERROR:', error);
+      Alert.alert('Error!', 'Revisar su correo o registrese', [
+        { text: 'Aceptar' },
+      ]);
     }
 }
 
