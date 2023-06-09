@@ -4,7 +4,7 @@ export default {
     "slug": "appgestiontutorias",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/favicon.png",
+    "icon": "./assets/launcher.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -22,7 +22,7 @@ export default {
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon_android.png",
+        "foregroundImage": "./assets/launcher.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.example.project"
