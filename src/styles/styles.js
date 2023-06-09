@@ -42,11 +42,30 @@ export const style = StyleSheet.create({
     //borderRadius: 10,
     elevation: 5,
   },
-  select: {
+  iOS_textInput:{
     borderWidth: 1,
     borderColor: myColors.skyblue,
     backgroundColor: myColors.white,
-    padding: 10,
+    padding:15,
+    paddingStart: 20,
+    marginTop:20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  select: { //diseño de ios
+    borderWidth: 1,
+    borderColor: myColors.skyblue,
+    backgroundColor: myColors.white,
+    padding: 10, 
+    marginTop: 25,
+    borderRadius:10,
+    elevation: 5,
+  },
+  iOS_select: {
+    borderWidth: 1,
+    borderColor: myColors.skyblue,
+    backgroundColor: myColors.white,
+    //padding: 10, //ios sin padding
     marginTop: 25,
     borderRadius:10,
     elevation: 5,
