@@ -3,7 +3,7 @@ import { setDoc, doc } from 'firebase/firestore';
 import { database } from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
 import { myColors } from '../../styles/colors';
 import { style } from '../../styles/styles'; 
 
@@ -12,9 +12,9 @@ const RegistroAsignaturasEstudianteScreen = () => {
 
   //atrubito de la clase tutorias
   const [codigoAsig, setCodigoAsignatura] = React.useState('')
+  
   //UID del estudiante que inicia sesion
   const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
-
   //pat path con el UID del estudiante que inica sesion, crea el documento y coleccion
   const pathUrl = `Usuarios/${pathIdEst}/AsignaturasEstudiante/`;
   const onSend = async () => {
@@ -34,6 +34,9 @@ const RegistroAsignaturasEstudianteScreen = () => {
       navigation.goBack();
     } catch (error) {
       console.log('ERROR => ',error);
+      Alert.alert('Error al registrar!', '', [
+        { text: 'Aceptar' },
+      ]);
     }
   }
 
@@ -61,7 +64,7 @@ const RegistroAsignaturasEstudianteScreen = () => {
               <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
             } 
           >
-          <TextInput style = {style.textInput}
+          <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
             onChangeText={(text) => setCodigoAsignatura(text)}
             placeholder="Ingrese el codigo"
           />
