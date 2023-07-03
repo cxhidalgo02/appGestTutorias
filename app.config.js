@@ -1,7 +1,7 @@
 export default {
   "expo": {
-    "name": "appgestiontutorias",
-    "slug": "appgestiontutorias",
+    "name": "apptutorias",
+    "slug": "apptutorias",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/launcher.png",
@@ -10,9 +10,6 @@ export default {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,7 +22,7 @@ export default {
         "foregroundImage": "./assets/launcher.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.example.project"
+      "package": "com.apptutorias.utpl"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,7 +35,7 @@ export default {
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       appId: process.env.APP_ID,
       "eas": {
-        "projectId": "62e0cf09-735d-4795-a1b9-5d2c54c85039"
+        "projectId": "907367b5-3033-48d5-95bf-175e2023d1b9"
       }
     }
   }
