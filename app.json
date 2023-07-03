@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "appgestiontutorias",
-    "slug": "appgestiontutorias",
+    "name": "apptutorias",
+    "slug": "apptutorias",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/launcher.png",
