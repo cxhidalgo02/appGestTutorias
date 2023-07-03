@@ -8,12 +8,18 @@
       "distribution": "internal"
     },
     "preview": {
+      "extends": "production",
+      "distribution": "internal",
+      "env": {
+        "API_URL": "https://staging.company.com/api"
+      },
       "ios": {
         "simulator": true
-      }, 
+      },
       "android": {
         "buildType": "apk"
-      }
+      },
+      "channel": "preview"
     },
     "preview2": {
       "android": {
@@ -23,10 +29,14 @@
     "preview3": {
       "developmentClient": true
     },
-    "production": {}
+    "production": {
+      "node": "18.16.1",
+      "env": {
+        "API_URL": "https://company.com/api"
+      }
+    }
   },
   "submit": {
     "production": {}
   }
-
 }
