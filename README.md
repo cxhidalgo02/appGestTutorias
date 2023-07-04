@@ -34,3 +34,10 @@ El docente validará la asistencia de todos los estudiantes que se inscribieron 
 
 ### VISUALIZAR REPORTE DE ASISTENCIA A TUTORIAS
 El docente o estudiante podra generar un reporte de asistencias a las tutorias, vuzualizar a cuantas tutorias se inscribieron, cuantas fueron validadas, número total de tutorias, etc.
+
+## NOTA
+El proceso de funcionamiento de la aplicacion para el rol de Docente o Estudiante, se puede obaservar detalladamente en el manual de usuario.
+
+## INFORMACIÓN
+Dev: Carlos Hidalgo | UTPL
+Mail: cxhidalgo02@gmail.com | cxhidalgo@utpl.edu.ec
