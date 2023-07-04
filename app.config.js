@@ -1,6 +1,6 @@
 export default {
   "expo": {
-    "name": "apptutorias",
+    "name": "App Tutorias",
     "slug": "apptutorias",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,14 +15,18 @@ export default {
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "targetName": "AppTutorias",
+      "bundleIdentifier": "com.appgtutorias.extension",
+      "entitlements": {
+        "com.apple.apptutorias": "entitlement value"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/launcher.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.apptutorias.utpl"
+      "package": "com.apptutoriasu.utpl"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -40,3 +44,5 @@ export default {
     }
   }
 }
+
+
