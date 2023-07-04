@@ -1,12 +1,10 @@
 # Aplicación para Gestión de Tutorias
 
-
-
 ![](https://github.com/cxhidalgo02/appGestTutorias/blob/master/assets/play_store/funciones.png)
 
-La aplicación multiplataforma esta desarrollada en React Native conjuntamente con JavaScript utilizando algunos servicios que nos ofrece Firbase, como es autenticacion, una base de datos NoSQL, notificaciones, etc.
+La aplicación multiplataforma ha sido desarrollada utilizando React Native y JavaScript. React Native es un framework que permite crear aplicaciones móviles para diferentes plataformas, como iOS y Android, para aprovechar algunas funcionalidades adicionales, se ha utilizado Firebase, una plataforma de desarrollo de aplicaciones móviles de Google, donde nos proporciona una variedad de servicios, como autenticación y gestión de usuarios, una base de datos NoSQL en tiempo real, notificaciones push, entre otros.
 
-Esta aplicación esta desarrollada para los docentes y estudiantes de la universidad, la misma permitirá el control y gestión de las tutorias presenciales de manera mas eficiente. 
+Tiene como objetivo mejorar la eficiencia en el control y gestión de las tutorías presenciales para docentes y estudiantes universitarios, brindando funcionalidades como registro,validación, inscripción, entre otros.
 
 ## MÓDULOS DE LA APLICACIÓN
 
@@ -34,5 +32,5 @@ El eestudiante una vez que visualice las tutorias podrá inscribirse o confirmar
 ### VALIDAR ASISTENCIA DE TUTORIAS
 El docente validará la asistencia de todos los estudiantes que se inscribieron y asistieron a las tutorias de la asignatura.
 
-### GENERAR REPORTE DE ASISTENCIA A TUTORIAS
+### VISUALIZAR REPORTE DE ASISTENCIA A TUTORIAS
 El docente o estudiante podra generar un reporte de asistencias a las tutorias, vuzualizar a cuantas tutorias se inscribieron, cuantas fueron validadas, número total de tutorias, etc.
