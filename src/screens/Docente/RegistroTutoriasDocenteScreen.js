@@ -159,6 +159,7 @@ const RegistroTutoriasDocenteScreen = () => {
           selectedValue={semanaTuto}
           onValueChange={(itemValue) => setSemanaTuto(itemValue)}
           >
+          <Picker.Item label="Seleccionar semana" value="0" />
           <Picker.Item label="Semana 1" value="1" />
           <Picker.Item label="Semana 2" value="2"/>
           <Picker.Item label="Semana 3" value="3"/>
