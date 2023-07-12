@@ -88,8 +88,8 @@ export default function Tutorias({
                     <rn.View style={styleModal.centeredView}>
                     <rn.View style={styleModal.modalView}>
                         <rn.Text style={styleModal.modalTextTitle}>INFORMACIÓN!</rn.Text>
-                        <rn.Text style={styleModal.modalText}>Estudiantes inscritos:</rn.Text>
-                        <rn.Text style={styleModal.modalText}>Tutorias validadas:</rn.Text>
+                        <rn.Text style={styleModal.modalText}>Estudiantes inscritos: 11</rn.Text>
+                        <rn.Text style={styleModal.modalText}>Tutorias validadas:9 </rn.Text>
 
                         <rn.Pressable
                         style={styleModal.buttonClose}
