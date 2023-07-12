@@ -87,7 +87,8 @@ const InicioScreen = ({ navigation })=> {
           autoCapitalize='none'
           onChangeText={(text) => setClave(text)}/>
         <Picker
-            style={style.select}
+            //style={style.select}
+            style={[style.select, Platform.OS === 'ios' && style.iOS_select]}
             selectedValue={tipo}
             onValueChange={(itemValue) => setTipo(itemValue)}
           >
