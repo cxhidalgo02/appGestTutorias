@@ -78,7 +78,8 @@ const RegistroUsuariosScreen = () => {
         onChangeText={(text) => newUsuarioClave(text)}
       />
       <Picker
-        style = {style.select}
+        //style = {style.select}
+        style={[style.select, Platform.OS === 'ios' && style.iOS_select]}
         selectedValue={tipo}
         onValueChange={(itemValue) => newUsuarioTipo(itemValue)}
       >
