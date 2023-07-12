@@ -48,7 +48,7 @@ export const styleComp = StyleSheet.create({
     },
     deleteButton: {
         position: "absolute",
-        right: 8,
+        right: 0,
         top: 0,
         width: 40,
         height: 40,
@@ -57,7 +57,7 @@ export const styleComp = StyleSheet.create({
         backgroundColor: myColors.navyblue,
         borderRadius: 8,
         elevation: 5,
-      },
+    },
     validateButton: {
         position: "absolute",
         right: 8,

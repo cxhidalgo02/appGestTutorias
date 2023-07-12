@@ -8,7 +8,7 @@ export const style = StyleSheet.create({
     flex: 1,
   },
   subcontainer: {
-    width: '75%',
+    width: '80%',
     flex: 1,
     height: '100%',
   },
