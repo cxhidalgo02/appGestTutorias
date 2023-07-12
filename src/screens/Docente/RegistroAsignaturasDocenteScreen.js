@@ -6,8 +6,9 @@ import localStorage from 'react-native-expo-localstorage';
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { style } from '../../styles/styles';
+import Layout from '../../components/layout/Layout';
 
-const RegistroAsignaturasDocenteScreen = () => { 
+const RegistroAsignaturasDocenteScreen = () => {
   const navigation = useNavigation();
 
   //atributos de las clase asignatura
@@ -51,46 +52,36 @@ const RegistroAsignaturasDocenteScreen = () => {
       setRefreshing(false);
     }, 2000);
   }, []);
-  
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
-        <View style={style.subcontainer} >
-            <ScrollView style = {style.scrollForm} 
-              refreshControl={
-                <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-              } 
-            >
-            <Text style={style.textTitle}>
-              FORMULARIO
-            </Text>
-              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-                onChangeText={(text) => setNombreAsig(text)}
-                placeholder="Nombre de la asignatura"
-              />
-              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-                onChangeText={(text) => setCodigoAsig(text)}
-                placeholder="Codigo de la asignatura"
-              />
-              <Picker
-                style = {style.select}
-                selectedValue={tipoAsig}
-                onValueChange={(itemValue) => setTipoAsig(itemValue)}
-              >
-                <Picker.Item label="Tipo" value="Tipo" />
-                <Picker.Item label="Troncal" value="Troncal"/>
-                <Picker.Item label="Genérica" value="Genérica"/>
-                <Picker.Item label="Complementaria" value="Complementaria"/>
-                <Picker.Item label="Libre configuración" value="Libre configuración"/>
-                <Picker.Item label="Formación Básica" value="Formación Básica"/>
-              </Picker>
-              <TouchableOpacity style={style.button} onPress={onSend} >
-                <Text style={style.textbutton}>REGISTRAR</Text>
-              </TouchableOpacity>
-            </ScrollView>
-        </View>
-      </View>
-    </SafeAreaView>
+    <Layout>
+      <Text style={style.textTitle}>
+        FORMULARIO
+      </Text>
+        <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+          onChangeText={(text) => setNombreAsig(text)}
+          placeholder="Nombre de la asignatura"
+        />
+        <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+          onChangeText={(text) => setCodigoAsig(text)}
+          placeholder="Codigo de la asignatura"
+        />
+        <Picker
+          style = {style.select}
+          selectedValue={tipoAsig}
+          onValueChange={(itemValue) => setTipoAsig(itemValue)}
+        >
+          <Picker.Item label="Tipo" value="Tipo" />
+          <Picker.Item label="Troncal" value="Troncal"/>
+          <Picker.Item label="Genérica" value="Genérica"/>
+          <Picker.Item label="Complementaria" value="Complementaria"/>
+          <Picker.Item label="Libre configuración" value="Libre configuración"/>
+          <Picker.Item label="Formación Básica" value="Formación Básica"/>
+        </Picker>
+        <TouchableOpacity style={style.button} onPress={onSend} >
+          <Text style={style.textbutton}>REGISTRAR</Text>
+        </TouchableOpacity>
+    </Layout>
   );
 };
 export default RegistroAsignaturasDocenteScreen;

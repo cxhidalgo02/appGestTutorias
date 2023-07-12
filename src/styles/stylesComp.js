@@ -40,7 +40,7 @@ export const styleComp = StyleSheet.create({
         flexDirection: "row",
     },
     btnContiner:{
-        width: '50%',  
+        width: '50%',
         marginTop: 15,
         marginBottom: 10,
         backgroundColor: 'transparent',
@@ -57,7 +57,7 @@ export const styleComp = StyleSheet.create({
         backgroundColor: myColors.navyblue,
         borderRadius: 8,
         elevation: 5,
-      }, 
+      },
     validateButton: {
         position: "absolute",
         right: 8,

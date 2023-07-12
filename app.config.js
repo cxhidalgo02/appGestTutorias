@@ -2,7 +2,7 @@ export default {
   "expo": {
     "name": "App Tutorias",
     "slug": "apptutorias",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/launcher.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,8 @@ export default {
       "bundleIdentifier": "com.appgtutorias.extension",
       "entitlements": {
         "com.apple.apptutorias": "entitlement value"
-      }
+      },
+      "supportsTablet": true,
     },
     "android": {
       "adaptiveIcon": {
@@ -44,5 +45,3 @@ export default {
     }
   }
 }
-
-

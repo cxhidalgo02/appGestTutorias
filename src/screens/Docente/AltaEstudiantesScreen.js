@@ -6,6 +6,7 @@ import localStorage from 'react-native-expo-localstorage';
 import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AltaEstudiante from '../../components/Docente/AltaEstudiante';
+import Layout from '../../components/layout/Layout';
 
 const AltaEstudiantesScreen = () => {
 
@@ -18,11 +19,11 @@ const AltaEstudiantesScreen = () => {
   // Id de la asignatura que seleccionar el usuario
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
 
-  React.useEffect(() => { 
+  React.useEffect(() => {
     try {
       const collectionRef = collection(database, 'Usuarios');
       const qOne = query(collectionRef, where("tipo", "==", "Estudiante") );
-      const unsubscribe2 = onSnapshot(qOne, querySnapshot => { 
+      const unsubscribe2 = onSnapshot(qOne, querySnapshot => {
           setNuevoEstudiante(
               querySnapshot.docs.map(doc => ({
                   id: doc.id,
@@ -49,20 +50,12 @@ const AltaEstudiantesScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
-        <Text style={style.textTitle}>
-          VALIDAR ACCESO
-        </Text>  
-        <ScrollView style={style.scrollContent}
-          refreshControl={
-            <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-          } 
-        >
-          {estudiante.map(estudiante=> <AltaEstudiante key={estudiante.id} {...estudiante}/>)}
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+    <Layout>
+      <Text style={style.textTitle}>
+        VALIDAR ACCESO
+      </Text>
+        {estudiante.map(estudiante=> <AltaEstudiante key={estudiante.id} {...estudiante}/>)}
+    </Layout>
   );
 };
 export default AltaEstudiantesScreen;

@@ -5,9 +5,10 @@ import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { style } from '../../styles/styles'; 
-import { AntDesign } from '@expo/vector-icons'; 
+import { style } from '../../styles/styles';
+import { AntDesign } from '@expo/vector-icons';
 import AsignaturasEstudiantes from '../../components/Estudiante/AsignaturasEstudiantes';
+import Layout from '../../components/layout/Layout';
 
 const AsignaturasEstudiantesScreen = () => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ const AsignaturasEstudiantesScreen = () => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-    headerRight: () => 
+    headerRight: () =>
       <Pressable title='registroAsignaturasEstudianteScreen'
         onPress={() => navigation.navigate('registroAsignaturasEstudianteScreen')}
         style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
@@ -56,20 +57,12 @@ const AsignaturasEstudiantesScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
-        <Text style={style.textTitle}>
-          MIS ASIGNATURAS
-        </Text>
-        <ScrollView style={style.scrollContent}
-          refreshControl={
-            <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-          } 
-        >
-          {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+    <Layout>
+      <Text style={style.textTitle}>
+        MIS ASIGNATURAS
+      </Text>
+      {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
+    </Layout>
   );
 };
 export default AsignaturasEstudiantesScreen;

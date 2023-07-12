@@ -6,6 +6,7 @@ import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { style } from '../../styles/styles';
 import TutoriasEstudiante from '../../components/Estudiante/TutoriasEstudiante';
+import Layout from '../../components/layout/Layout';
 
 const TutoriasDocenteScreen = () => {
   //constructor para las tutorias del estudiante
@@ -15,7 +16,7 @@ const TutoriasDocenteScreen = () => {
   const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
   // UID de la asignatura que seleccionar el usuario
   const pathCodAsigEst = localStorage.getItem(`keyCodAsigEst`, pathCodAsigEst);
-  // UID de la tutoria que seleccionar el usuario  
+  // UID de la tutoria que seleccionar el usuario
   const pathCodTutEst = localStorage.getItem(`keyCodTutEst`, pathCodTutEst);
 
   React.useEffect(() => {
@@ -50,20 +51,15 @@ const TutoriasDocenteScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
+    <Layout>
+      <View style={style.titleContainer}>
         <Text style={style.textTitle}>
           MIS TUTORIAS
         </Text>
-        <ScrollView style={style.scrollContent}
-          refreshControl={
-            <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-          } 
-        >
-          {tutoria.map(tutoria => <TutoriasEstudiante key={tutoria.id} {...tutoria}/>)}
-        </ScrollView>
       </View>
-    </SafeAreaView>
+      {tutoria.map(tutoria => <TutoriasEstudiante key={tutoria.id} {...tutoria}/>)}
+    </Layout>
+
   );
 };
 export default TutoriasDocenteScreen;

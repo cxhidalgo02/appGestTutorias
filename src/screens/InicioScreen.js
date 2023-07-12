@@ -2,11 +2,12 @@ import * as React from 'react';
 import { firebaseConfig } from '../../firebase-config';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot} from "firebase/firestore"
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; 
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, LogBox, RefreshControl, Alert} from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { TouchableOpacity, StyleSheet, Text, TextInput, LogBox, Alert, KeyboardAvoidingView} from 'react-native';
 import localStorage from 'react-native-expo-localstorage';
 import { style } from '../styles/styles';
 import { Picker } from '@react-native-picker/picker';
+import Layout from '../components/layout/Layout';
 
 LogBox.ignoreAllLogs();
 const InicioScreen = ({ navigation })=> {
@@ -21,12 +22,12 @@ const InicioScreen = ({ navigation })=> {
   const firestore = getFirestore(app);
   const [shown, setShown] = React.useState(false);
   const switchShown = () => setShown(!shown);
-  
- const handleSingIn = () =>{ signInWithEmailAndPassword(auth, correo, clave).then( (userCredential) => {      
+
+ const handleSingIn = () =>{ signInWithEmailAndPassword(auth, correo, clave).then( (userCredential) => {
       const user = userCredential.user;
       const userUid = user.uid;
       const collectionRegUsuario = collection(firestore, "Usuarios");
-      const q = query(collectionRegUsuario, where("id", "==", userUid));      
+      const q = query(collectionRegUsuario, where("id", "==", userUid));
       const setUsuario = onSnapshot(q, querySnapshot => {
         setUsuario(querySnapshot.docs.map(doc => ({
           correo: doc.data().correo,
@@ -55,8 +56,8 @@ const InicioScreen = ({ navigation })=> {
               { text: 'Aceptar' },
             ]);
             break;
-        } 
-      });    
+        }
+      });
     })
     .catch( (error) => {
       console.log(' * ERROR: ', error)
@@ -65,59 +66,43 @@ const InicioScreen = ({ navigation })=> {
       ]);
     });
   }
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
 
-  return ( 
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
-        <View style={style.subcontainer} >
-          <ScrollView style = {styles.scrollForm} 
-            refreshControl={
-              <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/>
-            } 
+  return (
+    <Layout>
+      <KeyboardAvoidingView>
+        <Text style={style.textTitle}>
+          ACCEDER A SU CUENTA
+        </Text>
+        <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+          id="Email"
+          placeholder="Correo"
+          textContentType="emailAddress"
+          autoCapitalize='none'
+          onChangeText={(text) => setCorreo(text)}/>
+        <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+          id="Pass"
+          placeholder="Contraseña"
+          textContentType="password"
+          secureTextEntry
+          autoCapitalize='none'
+          onChangeText={(text) => setClave(text)}/>
+        <Picker
+            style={style.select}
+            selectedValue={tipo}
+            onValueChange={(itemValue) => setTipo(itemValue)}
           >
-          <Text style={style.textTitle}>
-              ACCEDER A SU CUENTA
-            </Text>
-              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-                id="Email"
-                placeholder="Correo"
-                textContentType="emailAddress"
-                autoCapitalize='none'
-                onChangeText={(text) => setCorreo(text)}/>
-              <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-                id="Pass"
-                placeholder="Contraseña"
-                textContentType="password"
-                secureTextEntry
-                autoCapitalize='none'
-                onChangeText={(text) => setClave(text)}/>              
-              <Picker
-                  style = {style.select}
-                  selectedValue={tipo}
-                  onValueChange={(itemValue) => setTipo(itemValue)}
-                >
-                  <Picker.Item label="Tipo" value="Tipo" />
-                  <Picker.Item label="Docente" value="Docente" />
-                  <Picker.Item label="Estudiante" value="Estudiante" />
-                </Picker>
-                <TouchableOpacity style={style.button} onPress={handleSingIn}>
-                  <Text style={style.textbutton}>INICIO SESIÓN</Text>
-                </TouchableOpacity>
-              <TouchableOpacity style={style.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
-                <Text style={style.textbuttonTwo}>Olvidaste tu contraseña?</Text>
-              </TouchableOpacity>
-          </ScrollView> 
-        </View>
-      </View>
-    </SafeAreaView>
+            <Picker.Item label="Tipo" value="Tipo" />
+            <Picker.Item label="Docente" value="Docente" />
+            <Picker.Item label="Estudiante" value="Estudiante" />
+          </Picker>
+          <TouchableOpacity style={style.button} onPress={handleSingIn}>
+            <Text style={style.textbutton}>INICIO SESIÓN</Text>
+          </TouchableOpacity>
+        <TouchableOpacity style={style.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
+          <Text style={style.textbuttonTwo}>Olvidaste tu contraseña?</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </Layout>
   );
 };
 export default InicioScreen;

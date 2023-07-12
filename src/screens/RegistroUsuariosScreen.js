@@ -2,11 +2,12 @@ import * as React from 'react';
 import { firebaseConfig } from '../../firebase-config';
 import { initializeApp} from "firebase/app";
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; 
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { style } from '../styles/styles';
 import { Picker } from '@react-native-picker/picker';
+import Layout from '../components/layout/Layout';
 
 const RegistroUsuariosScreen = () => {
   const navigation = useNavigation();
@@ -27,10 +28,10 @@ const RegistroUsuariosScreen = () => {
     const infoUsuario = createUserWithEmailAndPassword(auth, correo, clave).then((userCredential) => {
       const user = userCredential.user;
       const registroUsuario = doc(firestore, `Usuarios/${user.uid}`);
-      setDoc( registroUsuario, {  
-        cedula: cedula, 
-        nombres: nombres, 
-        apellidos: apellidos, 
+      setDoc( registroUsuario, {
+        cedula: cedula,
+        nombres: nombres,
+        apellidos: apellidos,
         correo: correo,
         clave: clave,
         tipo: tipo,
@@ -43,70 +44,54 @@ const RegistroUsuariosScreen = () => {
     ]);
     navigation.goBack();
   }
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-    
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={style.container} >
-        <View style={style.subcontainer} >
-          <ScrollView style = {styles.scrollForm}
-            refreshControl={ <RefreshControl refreshing ={refreshing} onRefresh={onRefresh}/> } 
-          >
-          <Text style={style.textTitle}>
-            FORMULARIO
-          </Text>
-            <TextInput
-              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-              placeholder="Cedula"
-              keyboardType="numeric"
-              onChangeText={(text) => newUsuarioCedula(text)}
-            />
-            <TextInput
-              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-              placeholder="Nombres"
-              onChangeText={(text) => newUsuarioNombres(text)}
-            />
-            <TextInput
-              placeholder="Apellidos"
-              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-              onChangeText={(text) => newUsuarioApellidos(text)}
-            />
-            <TextInput 
-              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-              placeholder="Correo"
-              onChangeText={(text) => newUsuarioCorreo(text)}
-            />
-            <TextInput 
-              style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
-              placeholder="Contraseña"
-              secureTextEntry
-              onChangeText={(text) => newUsuarioClave(text)}
-            />
-            <Picker
-              style = {style.select}
-              selectedValue={tipo}
-              onValueChange={(itemValue) => newUsuarioTipo(itemValue)}
-            >
-              <Picker.Item label="Tipo" value="Tipo" />
-              <Picker.Item label="Docente" value="Docente" />
-              <Picker.Item label="Estudiante" value="Estudiante" />
-            </Picker>
-            <TouchableOpacity
-              style={style.button}
-              onPress={onSend}>
-              <Text style={style.textbutton}>REGISTRAR</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
-      </View>
-    </SafeAreaView>
+    <Layout>
+      <Text style={style.textTitle}>
+        FORMULARIO
+      </Text>
+      <TextInput
+        style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+        placeholder="Cedula"
+        keyboardType="numeric"
+        onChangeText={(text) => newUsuarioCedula(text)}
+      />
+      <TextInput
+        style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+        placeholder="Nombres"
+        onChangeText={(text) => newUsuarioNombres(text)}
+      />
+      <TextInput
+        placeholder="Apellidos"
+        style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+        onChangeText={(text) => newUsuarioApellidos(text)}
+      />
+      <TextInput
+        style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+        placeholder="Correo"
+        onChangeText={(text) => newUsuarioCorreo(text)}
+      />
+      <TextInput
+        style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
+        placeholder="Contraseña"
+        secureTextEntry
+        onChangeText={(text) => newUsuarioClave(text)}
+      />
+      <Picker
+        style = {style.select}
+        selectedValue={tipo}
+        onValueChange={(itemValue) => newUsuarioTipo(itemValue)}
+      >
+        <Picker.Item label="Tipo" value="Tipo" />
+        <Picker.Item label="Docente" value="Docente" />
+        <Picker.Item label="Estudiante" value="Estudiante" />
+      </Picker>
+      <TouchableOpacity
+        style={style.button}
+        onPress={onSend}>
+        <Text style={style.textbutton}>REGISTRAR</Text>
+      </TouchableOpacity>
+    </Layout>
   );
 };
 export default RegistroUsuariosScreen;

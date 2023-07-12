@@ -1,33 +1,40 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { myColors } from "./colors";
 
 export const style = StyleSheet.create({
   container: {
-    padding: 16,
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
   },
   subcontainer: {
     width: '75%',
+    flex: 1,
+    height: '100%',
+  },
+  titleContainer: {
+    width: '100%',
+    textAlign: 'center',
+    padding: 10,
+    marginBottom: 16,
   },
   textTitle: {
-    fontSize: 20, 
-    textAlign: 'center', 
-    marginBottom: 16, 
+    fontSize: 20,
+    textAlign: 'center',
     color: myColors.navyblue,
   },
   textContentt: {
-    fontSize: 16, 
-    textAlign: 'center', 
+    fontSize: 16,
+    textAlign: 'center',
     color: myColors.navyblue,
   },
   textContent: {
-    fontSize: 22, 
-    textAlign: 'center', 
+    fontSize: 22,
+    textAlign: 'center',
     color: myColors.navyblue,
   },
   textFooter: {
-    marginTop: 5, 
+    marginTop: 5,
     fontSize: 15,
     textAlign: 'center',
     color: myColors.navyblue,
@@ -52,14 +59,22 @@ export const style = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
   },
-  select: { //diseño de ios
+  select: {
     borderWidth: 1,
     borderColor: myColors.skyblue,
     backgroundColor: myColors.white,
-    padding: 10, 
+    padding: 10,
     marginTop: 25,
     borderRadius:10,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        padding: 0, //ios sin padding
+        height: 120,
+        overflow: 'hidden',
+        alignContent: 'center',
+        justifyContent: 'center'
+      },
+    })
   },
   iOS_select: {
     borderWidth: 1,
@@ -96,11 +111,15 @@ export const style = StyleSheet.create({
   textbuttonThree: {
     color: myColors.navyblue,
   },
-  scrollContent: {
-    width: '90%',
-  },
   scrollForm: {
     textAlign: "center",
-    marginTop: 100,
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
+  contentScrollView: {
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
   });
