@@ -14,6 +14,7 @@ import InicioScreen from "./screens/InicioScreen";
 import RegistroUsuariosScreen from "./screens/RegistroUsuariosScreen";
 import InformacionScreen from "./screens/informacionScreen";
 import ResetClave from "./screens/ResetClaveScreen";
+import EliminarCuenta from "./screens/EliminarCuentaScreen";
 // SCREENS DE DOCENTES
 import AsignaturasDocenteScreen from "./screens/Docente/AsignaturasDocenteScreen";
 import RegistroAsignaturasDocenteScreen from "./screens/Docente/RegistroAsignaturasDocenteScreen";
@@ -45,6 +46,7 @@ function MyStack( ) {
       <Stack.Screen name="bottomTabNavigator"  component={BottomTabNavigator} options={{ headerShown: false}}/>   
       <Stack.Screen name="informacionScreen" component={InformacionScreen} options={{title:'Gestión de Tutorías',}} />
       <Stack.Screen name="resetClave" component={ResetClave} options={{title:'Restaurar mi clave',}} />
+      <Stack.Screen name="eliminarCuenta" component={EliminarCuenta} options={{title:'Eliminar cuenta',}} />
       
       <Stack.Screen name="asignaturasDocenteScreen" component={AsignaturasDocenteScreen} options={{title:'Lista asignaturas',}} />
       <Stack.Screen name="registroAsignaturasDocenteScreen" component={RegistroAsignaturasDocenteScreen} options={{title:'Agregar asignatura',}} />
