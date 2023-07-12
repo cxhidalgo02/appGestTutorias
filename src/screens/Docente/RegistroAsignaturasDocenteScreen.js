@@ -67,7 +67,8 @@ const RegistroAsignaturasDocenteScreen = () => {
           placeholder="Codigo de la asignatura"
         />
         <Picker
-          style = {style.select}
+          //style = {style.select}
+          style={[style.select, Platform.OS === 'ios' && style.iOS_select]}
           selectedValue={tipoAsig}
           onValueChange={(itemValue) => setTipoAsig(itemValue)}
         >
