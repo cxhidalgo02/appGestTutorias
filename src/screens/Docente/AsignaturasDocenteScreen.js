@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { style } from '../../styles/styles';
+import { myColors } from '../../styles/colors';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import Asignaturas from '../../components/Docente/Asignaturas';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import Layout from '../../components/layout/Layout';
 
 const AsignaturasDocenteScreen = () => {
@@ -53,7 +54,25 @@ const AsignaturasDocenteScreen = () => {
         </Text>
       </View>
       {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
+
+      <Pressable onPress={() => navigation.navigate('eliminarCuenta')}>
+        <AntDesign name="deleteuser" size={25}  style={styles.btnDelete} />
+        <Text style={styles.textDelete}>
+          Eliminar Cuenta
+        </Text>
+      </Pressable>
     </Layout>
   );
 };
 export default AsignaturasDocenteScreen;
+
+const styles = StyleSheet.create({
+  btnDelete:{
+    textAlign: "center",
+    color: myColors.navyblue
+  },
+  textDelete:{
+    textAlign: "center", 
+    color: myColors.mustard
+  },
+});
