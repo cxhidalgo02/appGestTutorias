@@ -155,7 +155,8 @@ const RegistroTutoriasDocenteScreen = () => {
         </View>
       </View>
       <Picker
-          style = {style.select}
+          //style = {style.select}
+          style={[style.select, Platform.OS === 'ios' && style.iOS_select]}
           selectedValue={semanaTuto}
           onValueChange={(itemValue) => setSemanaTuto(itemValue)}
           >
