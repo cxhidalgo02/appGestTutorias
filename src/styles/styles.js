@@ -40,13 +40,10 @@ export const style = StyleSheet.create({
     color: myColors.navyblue,
   },
   textInput:{
-    //borderWidth: 1,
-    //borderColor: myColors.skyblue,
     backgroundColor: myColors.white,
     padding:15,
     paddingStart: 20,
     marginTop:20,
-    //borderRadius: 10,
     elevation: 5,
   },
   iOS_textInput:{
@@ -66,24 +63,20 @@ export const style = StyleSheet.create({
     padding: 10,
     marginTop: 25,
     borderRadius:10,
-    ...Platform.select({
-      ios: {
-        padding: 0, //ios sin padding
-        height: 120,
-        overflow: 'hidden',
-        alignContent: 'center',
-        justifyContent: 'center'
-      },
-    })
+    elevation: 5,
   },
   iOS_select: {
     borderWidth: 1,
     borderColor: myColors.skyblue,
     backgroundColor: myColors.white,
-    //padding: 10, //ios sin padding
     marginTop: 25,
     borderRadius:10,
-    elevation: 5,
+    //Disenio caja select
+    padding: 0,
+    height: 120,
+    overflow: 'hidden',
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   button: {
     alignItems: 'center',
