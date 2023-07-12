@@ -44,7 +44,7 @@ function MyStack( ) {
         headerTitleStyle: { fontWeight: 'bold' },
       }}>
       <Stack.Screen name="bottomTabNavigator"  component={BottomTabNavigator} options={{ headerShown: false}}/>   
-      <Stack.Screen name="informacionScreen" component={InformacionScreen} options={{title:'Gestión de Tutorías',}} />
+      <Stack.Screen name="informacionScreen" component={InformacionScreen} options={{title:'Información',}} />
       <Stack.Screen name="resetClave" component={ResetClave} options={{title:'Restaurar mi clave',}} />
       <Stack.Screen name="eliminarCuenta" component={EliminarCuenta} options={{title:'Eliminar cuenta',}} />
       
