@@ -16,7 +16,7 @@ export default {
     ],
     "ios": {
       "targetName": "AppTutorias",
-      "bundleIdentifier": "com.appgtutorias.extension",
+      "bundleIdentifier": "com.apptutoriasu.utpl",
       "entitlements": {
         "com.apple.apptutorias": "entitlement value"
       },
