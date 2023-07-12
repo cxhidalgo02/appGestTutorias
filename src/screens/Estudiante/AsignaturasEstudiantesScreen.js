@@ -3,9 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
-import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, Pressable, StyleSheet} from 'react-native';
 import { style } from '../../styles/styles';
+import { myColors } from '../../styles/colors';
 import { AntDesign } from '@expo/vector-icons';
 import AsignaturasEstudiantes from '../../components/Estudiante/AsignaturasEstudiantes';
 import Layout from '../../components/layout/Layout';
@@ -62,7 +62,25 @@ const AsignaturasEstudiantesScreen = () => {
         MIS ASIGNATURAS
       </Text>
       {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
+    
+      <Pressable onPress={() => navigation.navigate('eliminarCuenta')}>
+        <AntDesign name="deleteuser" size={25}  style={styles.btnDelete} />
+        <Text style={styles.textDelete}>
+          Eliminar Cuenta
+        </Text>
+      </Pressable>
     </Layout>
   );
 };
 export default AsignaturasEstudiantesScreen;
+
+const styles = StyleSheet.create({
+  btnDelete:{
+    textAlign: "center",
+    color: myColors.navyblue
+  },
+  textDelete:{
+    textAlign: "center", 
+    color: myColors.mustard
+  },
+});
