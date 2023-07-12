@@ -71,12 +71,13 @@ const RegistroAsignaturasDocenteScreen = () => {
           selectedValue={tipoAsig}
           onValueChange={(itemValue) => setTipoAsig(itemValue)}
         >
-          <Picker.Item label="Tipo" value="Tipo" />
+          <Picker.Item label="Tipo" value="Ninguna" />
           <Picker.Item label="Troncal" value="Troncal"/>
           <Picker.Item label="Genérica" value="Genérica"/>
           <Picker.Item label="Complementaria" value="Complementaria"/>
           <Picker.Item label="Libre configuración" value="Libre configuración"/>
           <Picker.Item label="Formación Básica" value="Formación Básica"/>
+          <Picker.Item label="Gestión Productiva" value="Gestión Productiva"/>
         </Picker>
         <TouchableOpacity style={style.button} onPress={onSend} >
           <Text style={style.textbutton}>REGISTRAR</Text>
