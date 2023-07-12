@@ -15,11 +15,8 @@ export default {
       "**/*"
     ],
     "ios": {
-      "targetName": "AppTutorias",
+      "buildNumber": "1.1.0",
       "bundleIdentifier": "com.apptutoriasu.utpl",
-      "entitlements": {
-        "com.apple.apptutorias": "entitlement value"
-      },
       "supportsTablet": true,
     },
     "android": {
