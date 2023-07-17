@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Pressable,} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { style } from '../styles/styles'; 
 import { myColors } from '../styles/colors';
-import { Octicons } from '@expo/vector-icons';  
+import { Octicons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons';  
+import * as WebBrowser from 'expo-web-browser';
+
 
 const informacionScreen = ()  => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container} >
@@ -18,6 +23,7 @@ const informacionScreen = ()  => {
             La aplicación está dirigida a docentes y estudiantes, específicamente para el control y seguimiento de tutorías en 
             entornos presenciales.
           </Text>
+
         </View>
         <View style={styles.footer}>
           <Text style={styles.textMarca}>
@@ -39,13 +45,16 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title:{
-    marginTop: 120,
+    marginTop: 100,
   },
   content: {
     marginTop: 20,
   },
+  subcontent: {
+    marginTop: 40,
+  },
   footer: {
-    marginTop: 180,
+    marginTop: 140,
   },
   textTitle: {
     fontSize: 24, 
