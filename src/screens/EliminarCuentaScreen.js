@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { TouchableOpacity, StyleSheet, View, Text,Modal, TextInput, Pressable } from 'react-native';
 import { style } from '../styles/styles';
+import { myColors } from '../styles/colors';
+import { Ionicons } from '@expo/vector-icons'; 
 import { styleModal } from '../styles/styleModal';
 import Layout from '../components/layout/Layout';
 
@@ -10,7 +12,7 @@ const EliminarCuenta = ({ navigation })=> {
 
 return (
   <Layout>
-    <Text style={style.textTitle}>
+    <Text style={style.textTitleSubForm}>
       CONFIRMAR CORREO
     </Text>
     <View style={styles.subcontainerText}>
@@ -37,6 +39,7 @@ return (
             }}>
             <View style={styleModal.centeredView}>
                 <View style={styleModal.modalView}>
+                <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10}} />
                     <Text style={styleModal.modalTextTitle}>IMPORTANTE!</Text>
                     <Text style={styleModal.modalText}>
                       Pronto nos contacteremos para finalizar el proceso de eliminacion de la cuenta, 
@@ -52,8 +55,6 @@ return (
         </Modal>
       </View>
   </Layout>
-
-
 );
 };
 export default EliminarCuenta;
