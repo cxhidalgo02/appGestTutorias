@@ -3,23 +3,33 @@ import { myColors } from "./colors";
 
 export const styleComp = StyleSheet.create({
     productContainer: {
-        width: "85%",
+        width: "98%",
         padding: 10,
-        margin: 15,
-        borderRadius: 10,
+        margin: 0,
+        marginBottom: 25,
+        borderRadius: 15,
+        /*borderTopLeftRadius: 15,
+        borderTopRightRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 15,*/
         borderWidth: 1,
         borderColor: myColors.skyblue,
         backgroundColor: myColors.white,
-        elevation: 5,
+        elevation: 8,
     },
     texttitle: {
+        backgroundColor: myColors.navyblue,
+        color: myColors.white,
+        borderRadius: 10,
+        padding: 10,
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: myColors.navyblue,
     },
     textsubtitle: {
-        fontSize: 16,
+        textAlign: 'center',
+        padding: 5,
+        fontSize: 18,
         fontWeight: 'bold',
         color: myColors.mustard,
     },
@@ -29,9 +39,10 @@ export const styleComp = StyleSheet.create({
     },
     descrip: {
         fontSize: 16,
+        color: myColors.navyblue,
     },
     information: {
-        color: myColors.black,
+        color: myColors.navyblue,
         fontSize: 16,
     },
     btnsContiner:{
@@ -46,10 +57,22 @@ export const styleComp = StyleSheet.create({
         backgroundColor: 'transparent',
         alignItems: 'center',
     },
-    deleteButton: {
+    deleteAsigButton: {
         position: "absolute",
-        right: 0,
-        top: 0,
+        right: -15,
+        top: 75,
+        width: 40,
+        height: 40,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: myColors.navyblue,
+        borderRadius: 8,
+        elevation: 5,
+    },
+    deleteTutButton: {
+        position: "absolute",
+        right: -15,
+        top: 110,
         width: 40,
         height: 40,
         alignItems: "center",
@@ -60,7 +83,8 @@ export const styleComp = StyleSheet.create({
     },
     validateButton: {
         position: "absolute",
-        right: 8,
+        right: -15,
+        top: 20,
         width: 40,
         height: 40,
         alignItems: "center",
@@ -71,8 +95,8 @@ export const styleComp = StyleSheet.create({
     },
     validateAstButton: {
         position: "absolute",
-        right: -35,
-        top: -50,
+        right: -32,
+        top: -140,
         width: 40,
         height: 40,
         alignItems: "center",
