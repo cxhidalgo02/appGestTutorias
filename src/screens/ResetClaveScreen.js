@@ -2,8 +2,10 @@ import * as React from 'react';
 import { firebaseConfig } from '../../firebase-config';
 import { initializeApp} from "firebase/app";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, Alert } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, TextInput, Alert } from 'react-native';
 import { style } from '../styles/styles';
+import { myColors } from '../styles/colors';
+import { AntDesign } from '@expo/vector-icons'; 
 import Layout from '../components/layout/Layout';
 
 const resetClave = ({ navigation })=> {
@@ -36,9 +38,14 @@ const resetClave = ({ navigation })=> {
 
 return (
   <Layout>
-    <Text style={style.textTitle}>
+    <Text style={style.textTitleSubForm}>
       INGRESAR CORREO
     </Text>
+    <View style={styles.subcontainerText}>
+      <Text style={style.textContentt}>
+      Prodrá restablecer su contraseña si se encuentra registrado.
+      </Text>
+    </View>
     <TextInput
       style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
       id="Email"
@@ -46,17 +53,10 @@ return (
       textContentType="emailAddress"
       autoCapitalize='none'
       onChangeText={(text) => setEmail(text)}/>
-      <TouchableOpacity style={style.button}
-        onPress={ resetPass }>
-        <Text style={style.textbutton}>ENVIAR</Text>
+      <TouchableOpacity style={style.button} onPress={ resetPass }>
+          <Text style={style.textbutton}>ENVIAR</Text>
       </TouchableOpacity>
       <View style={styles.subcontainerText}>
-        <Text style={style.textContentt}>
-          Prodrá restablecer su contraseña si se encuentra registrado, de lo contrario
-        </Text>
-        <TouchableOpacity style={style.buttonThree} onPress={() => navigation.navigate('bottomTabNavigator')}>
-          <Text style={style.textbuttonThree}>Registrerse aquí!</Text>
-        </TouchableOpacity>
       </View>
   </Layout>
 );
@@ -64,10 +64,6 @@ return (
 export default resetClave;
 
 const styles = StyleSheet.create({
-  subcontainer: {
-    width: '75%',
-    marginTop: 175,
-  },
   subcontainerText: {
     marginTop: 40,
   },
