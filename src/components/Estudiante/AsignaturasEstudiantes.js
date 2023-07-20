@@ -4,8 +4,8 @@ import "react-native-gesture-handler";
 import { styleComp } from '../../styles/stylesComp';
 import { styleModal } from '../../styles/styleModal';
 import { database } from '../../../config/firebaseConfig';
-import { FontAwesome5 } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
 import { collection, query, where, getCountFromServer, doc, deleteDoc } from 'firebase/firestore';
@@ -91,18 +91,18 @@ export default function AsignaturasEstudiantes({
                     <RN.Pressable title='tutoriasEstudianteScreen'
                         onPress={() => navigation.navigate('tutoriasEstudianteScreen')}
                         style={styles.btnContiner}>
-                        <FontAwesome5 name="swatchbook" size={25} color="black" />
+                        <AntDesign name="profile" size={25} color="black" />
                     </RN.Pressable>
                     <RN.Pressable
                         onPress={() => setModalVisible(true)}
                         style={styles.btnContiner}>
-                        <AntDesign name="appstore1" size={25} color="black" />
+                        <AntDesign name="appstore-o" size={25} color="black" />
                     </RN.Pressable>
                 </RN.View>
             </RN.View>
             {isDeleteActive && (
-                <RN.Pressable onPress={onDelete} style={styleComp.deleteButton}>
-                <AntDesign name="delete" size={24} color="white" />
+                <RN.Pressable onPress={onDelete} style={styleComp.deleteAsigButton}>
+                    <AntDesign name="delete" size={24} color="white" />
                 </RN.Pressable>
             )}
 
@@ -117,6 +117,7 @@ export default function AsignaturasEstudiantes({
                     }}>
                     <RN.View style={styleModal.centeredView}>
                     <RN.View style={styleModal.modalView}>
+                    <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10}} />
                         <RN.Text style={styleModal.modalTextTitle}>REPORTE DE TUTORIAS</RN.Text>
                             <RN.Text style={styleModal.modalText}>
                                 Número de tutorías: { numTutorias }

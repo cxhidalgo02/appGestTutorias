@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as rn from 'react-native';
 import { styleComp } from '../../styles/stylesComp';
+import { myColors } from '../../styles/colors';
 import { database } from '../../../config/firebaseConfig';
 import { doc, updateDoc,} from 'firebase/firestore';
 import { AntDesign } from '@expo/vector-icons'; 
@@ -36,7 +37,7 @@ export default function TutoriasEstudiante({
             <rn.Text style={styleComp.texttitle}> {temaTutoEst} </rn.Text>
             <rn.Text style={styleComp.textsubtitle}> {id} </rn.Text>
             <rn.Text style={styleComp.descrip}>
-                <AntDesign name="tag" size={18} color="black" /> - {descripcionTutoEst} 
+                <AntDesign name="infocirlceo" size={18} color="black" /> - {descripcionTutoEst} 
             </rn.Text>
             <rn.Text style={styleComp.information}> 
                 <AntDesign name="right" size={16} color="black" /> Aula: {aulaTutoEst} 
@@ -49,7 +50,7 @@ export default function TutoriasEstudiante({
             </rn.Text>
             <rn.Text style={styleComp.information}>
                 <AntDesign name="right" size={16} color="black" /> Semana: {semanaTutoEst} </rn.Text>
-            <rn.Text style={styles.information}>
+            <rn.Text style={styleComp.information}>
                 <AntDesign name="right" size={16} color="black" /> Inscrito: {inscripcionTutoEst} 
             </rn.Text>
             <rn.Text style={styleComp.information}>

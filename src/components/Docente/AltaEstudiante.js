@@ -1,8 +1,8 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
 import { styleComp } from '../../styles/stylesComp';
-import { FontAwesome5 } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
 import { database } from '../../../config/firebaseConfig';
 import { doc, updateDoc, collection, query, where, getDocs, setDoc } from 'firebase/firestore';
@@ -122,10 +122,10 @@ export default function DarAltaEstudiante({
         <MaterialIcons name="fingerprint" size={18} color="black" /> - {cedula} 
       </rn.Text>
       <rn.Text> 
-        <FontAwesome5 name="id-card" size={18} color="black" /> - {nombres} {apellidos}
+        <Feather name="user" size={19} color="black" /> - {nombres} {apellidos}
       </rn.Text>
       <rn.Text> 
-        <MaterialIcons name="mail" size={18} color="black" /> - {correo} 
+        <Feather name="at-sign" size={18} color="black" /> - {correo} 
       </rn.Text>
     </rn.View>
       {isValidateActive && (

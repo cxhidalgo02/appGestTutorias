@@ -3,8 +3,9 @@ import React, {useState} from 'react';
 import { styleComp } from '../../styles/stylesComp';
 import { styleModal } from '../../styles/styleModal';
 import { database } from '../../../config/firebaseConfig';
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import { doc, deleteDoc,} from 'firebase/firestore';
 import { collection, query,  getCountFromServer } from 'firebase/firestore';
@@ -61,24 +62,23 @@ export default function Asignaturas ({
                     <RN.Pressable title='altaEstudiantesScreen'
                         onPress={() => navigation.navigate('altaEstudiantesScreen')}
                         style={styles.btnContiner}>
-                        <FontAwesome5 name="user-cog" size={25} color="black" />
+                        <Feather name="user-plus" size={26} color="black" />
                     </RN.Pressable>
                     <RN.Pressable title='tutoriasDocenteScreen'
                         onPress={() => navigation.navigate('tutoriasDocenteScreen')}
                         style={styles.btnContiner}>
-                        <FontAwesome5 name="swatchbook" size={25} color="black" />
+                        <AntDesign name="profile" size={25} color="black" />
                     </RN.Pressable>
                     <RN.Pressable
                         onPress={() => setModalVisible(true)}
                         style={styles.btnContiner}>
-                        <AntDesign name="appstore1" size={25} color="black" />
+                        <AntDesign name="appstore-o" size={25} color="black" />
                     </RN.Pressable>
-                    
                 </RN.View>
             </RN.View>
             {isDeleteActive && (
-                <RN.Pressable onPress={onDelete} style={styleComp.deleteButton}>
-                <AntDesign name="delete" size={24} color="white" />
+                <RN.Pressable onPress={onDelete} style={styleComp.deleteAsigButton}>
+                    <AntDesign name="delete" size={24} color="white" />
                 </RN.Pressable>
             )}    
             <RN.View style={styleModal.centeredView}>
@@ -91,6 +91,7 @@ export default function Asignaturas ({
                     }}>
                     <RN.View style={styleModal.centeredView}>
                         <RN.View style={styleModal.modalView}>
+                        <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10}} />
                             <RN.Text style={styleModal.modalTextTitle}>INFORMACIÓN!</RN.Text>
                             <RN.Text style={styleModal.modalText}>
                                 Número de tutorías: { numTutorias }
