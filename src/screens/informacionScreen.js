@@ -15,7 +15,7 @@ const informacionScreen = ()  => {
       <View style={styles.container} >
         <View style={styles.title} >
           <Text style={styles.textTitle}>
-            Gestión de Tutorias
+            TutorPlus
           </Text>
         </View> 
         <View style={styles.content}>
@@ -23,7 +23,15 @@ const informacionScreen = ()  => {
             La aplicación está dirigida a docentes y estudiantes, específicamente para el control y seguimiento de tutorías en 
             entornos presenciales.
           </Text>
-
+          <View style={styles.subcontent}>          
+          <Pressable
+          onPress={() => WebBrowser.openBrowserAsync('https://github.com/cxhidalgo02/appGestTutorias/blob/master/documents/Manual%20de%20usuario%20-%20TutorPlus.pdf')} >
+          <MaterialCommunityIcons name="progress-download" size={30} style={styles.icon} />
+            <Text style={styles.textSubContent}>
+              Manual de usuario
+            </Text>
+          </Pressable>
+          </View>
         </View>
         <View style={styles.footer}>
           <Text style={styles.textMarca}>
@@ -31,7 +39,7 @@ const informacionScreen = ()  => {
           </Text>
           <Octicons name="versions" size={24} style={styles.icon} />
           <Text style={style.textFooter}>
-            Versión: 1.0.0
+            Versión: 1.2.1
           </Text>
         </View>
       </View>
@@ -45,23 +53,23 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   title:{
-    marginTop: 100,
+    marginTop: 50,
   },
   content: {
-    marginTop: 20,
+    marginTop: 10,
   },
   subcontent: {
-    marginTop: 40,
+    marginTop: 20,
   },
   footer: {
-    marginTop: 140,
+    marginTop: 100,
   },
   textTitle: {
-    fontSize: 24, 
+    fontSize: 26, 
     textAlign: 'center', 
     fontWeight: 'bold',
     color: myColors.mustard,
-    padding: 20,
+    padding: 10,
     
   },
   textContent: {
@@ -69,6 +77,12 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     color: myColors.navyblue,
     padding: 30,
+  },
+  textSubContent: {
+    marginTop: 3,
+    fontSize: 15,
+    textAlign: 'center',
+    color: myColors.mustard,
   },
   textMarca: {
     fontSize: 24, 
