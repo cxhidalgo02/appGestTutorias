@@ -3,7 +3,7 @@ import { firebaseConfig } from '../../firebase-config';
 import { initializeApp} from "firebase/app";
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { TouchableOpacity, StyleSheet, View, Text, SafeAreaView, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, TextInput, Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { style } from '../styles/styles';
 import { Picker } from '@react-native-picker/picker';
