@@ -6,6 +6,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { TouchableOpacity, StyleSheet, Text, TextInput, LogBox, Alert, KeyboardAvoidingView} from 'react-native';
 import localStorage from 'react-native-expo-localstorage';
 import { style } from '../styles/styles';
+import { AntDesign } from '@expo/vector-icons'; 
 import { Picker } from '@react-native-picker/picker';
 import Layout from '../components/layout/Layout';
 
@@ -37,6 +38,11 @@ const InicioScreen = ({ navigation })=> {
           }))
         );
         switch(tipo){
+          case "Tipo":
+            Alert.alert('Error!', 'Debe seleccionar su rol', [
+              { text: 'Aceptar' },
+            ]);
+            break;
           case "Docente":
             localStorage.setItem("keyUserDoc", userUid);
             navigation.navigate('asignaturasDocenteScreen');
@@ -48,11 +54,6 @@ const InicioScreen = ({ navigation })=> {
             localStorage.setItem("keyUserEst", userUid);
             navigation.navigate('asignaturasEstudiantesScreen');
             Alert.alert('Bienvenido', '', [
-              { text: 'Aceptar' },
-            ]);
-            break;
-          case "Tipo":
-            Alert.alert('Error!', 'Debe seleccionar un tipo', [
               { text: 'Aceptar' },
             ]);
             break;
@@ -70,7 +71,7 @@ const InicioScreen = ({ navigation })=> {
   return (
     <Layout>
       <KeyboardAvoidingView>
-        <Text style={style.textTitle}>
+        <Text style={style.textTitleForm}>
           ACCEDER A SU CUENTA
         </Text>
         <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
@@ -97,34 +98,13 @@ const InicioScreen = ({ navigation })=> {
             <Picker.Item label="Estudiante" value="Estudiante" />
           </Picker>
           <TouchableOpacity style={style.button} onPress={handleSingIn}>
-            <Text style={style.textbutton}>INICIO SESIÓN</Text>
+              <Text style={style.textbutton}>INICIO SESIÓN</Text>
           </TouchableOpacity>
         <TouchableOpacity style={style.buttonTwo} onPress={() => navigation.navigate('resetClave')}>
-          <Text style={style.textbuttonTwo}>Olvidaste tu contraseña?</Text>
+          <Text style={style.textbuttonTwo}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     </Layout>
   );
 };
 export default InicioScreen;
-
-const styles = StyleSheet.create({
-  scrollForm: {
-    textAlign: "center",
-    marginTop: 60, //para ios 60 y android 120
-  },
-  containerFecha: {
-    width: '100%',
-    marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  btnCalendar: {
-    width: "20%",
-    marginTop: 20,
-  },
-  inputCalendar: {
-    width: "80%",
-  },
-});
