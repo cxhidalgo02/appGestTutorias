@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { myColors } from "./colors";
 
 export const style = StyleSheet.create({
@@ -6,6 +6,7 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    backgroundColor: myColors.light
   },
   subcontainer: {
     width: '80%',
@@ -19,6 +20,19 @@ export const style = StyleSheet.create({
     marginBottom: 16,
   },
   textTitle: {
+    marginTop: 20,
+    fontSize: 20,
+    textAlign: 'center',
+    color: myColors.navyblue,
+  },
+  textTitleForm: {
+    marginTop: 80,
+    fontSize: 20,
+    textAlign: 'center',
+    color: myColors.navyblue,
+  },
+  textTitleSubForm: {
+    marginTop: 100,
     fontSize: 20,
     textAlign: 'center',
     color: myColors.navyblue,
@@ -34,7 +48,7 @@ export const style = StyleSheet.create({
     color: myColors.navyblue,
   },
   textFooter: {
-    marginTop: 5,
+    marginTop: 3,
     fontSize: 15,
     textAlign: 'center',
     color: myColors.navyblue,
@@ -44,7 +58,7 @@ export const style = StyleSheet.create({
     padding:15,
     paddingStart: 20,
     marginTop:20,
-    elevation: 5,
+    elevation: 8,
   },
   iOS_textInput:{
     borderWidth: 1,
@@ -54,7 +68,6 @@ export const style = StyleSheet.create({
     paddingStart: 20,
     marginTop:20,
     borderRadius: 10,
-    elevation: 5,
   },
   select: {
     borderWidth: 1,
@@ -63,7 +76,7 @@ export const style = StyleSheet.create({
     padding: 10,
     marginTop: 25,
     borderRadius:10,
-    elevation: 5,
+    elevation: 8,
   },
   iOS_select: {
     borderWidth: 1,
