@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
-import { View, Text, Pressable, StyleSheet} from 'react-native';
+import { Text, StyleSheet, View} from 'react-native';
 import { style } from '../../styles/styles';
 import { myColors } from '../../styles/colors';
-import { AntDesign } from '@expo/vector-icons';
 import AsignaturasEstudiantes from '../../components/Estudiante/AsignaturasEstudiantes';
 import Layout from '../../components/layout/Layout';
+
+import { Portal, FAB, Provider } from 'react-native-paper';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const AsignaturasEstudiantesScreen = () => {
   const navigation = useNavigation();
@@ -17,17 +19,6 @@ const AsignaturasEstudiantesScreen = () => {
   const [asignaturasEstudiante, setNuevaListaAE] = React.useState([]);
   //UID del usuario estudiante que inicio sesion
   //const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-    headerRight: () =>
-      <Pressable title='registroAsignaturasEstudianteScreen'
-        onPress={() => navigation.navigate('registroAsignaturasEstudianteScreen')}
-        style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-        <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
-      </Pressable>
-  })
-  },[navigation])
 
   React.useEffect(() => {
     const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
@@ -47,29 +38,57 @@ const AsignaturasEstudiantesScreen = () => {
     return setDocAsignaturas;
   },[])
 
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+  //LAYOUT MAS BOTON FLOTANTE
+  const Stack = createStackNavigator();
+  function contentLayout() {
+    const [open, setOpen] = React.useState(false);
+    const isFocused = useIsFocused();
+  
+    function _onStateChange({ open }) {
+      setOpen(open);
+    }
+  
+    return (
+      <Layout>
+        <View style={style.titleContainer}>
+          <Text style={style.textTitle}>
+            MIS ASIGNATURAS
+          </Text>
+        </View>
+        {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
+          <Portal>
+            <FAB.Group 
+              open={isFocused && open}
+              icon={'menu'}
+              onStateChange={_onStateChange}
+              visible={isFocused}
+              style={{ position: 'absolute', right: 0, bottom: 0, }}
+              actions={[            
+                {
+                  icon: 'circle',
+                  label: 'Agregar asignatura',
+                  onPress: () => navigation.navigate('registroAsignaturasEstudianteScreen'),
+                },
+                {
+                  icon: 'circle',
+                  label: 'Eliminar cuenta',
+                  onPress: () => navigation.navigate('eliminarCuenta'),
+                },
+              ]}
+              theme={{ colors: { accent: '#293774' } }}
+            /> 
+          </Portal>
+      </Layout>
+    );
+  }
 
   return (
-    <Layout>
-      <Text style={style.textTitle}>
-        MIS ASIGNATURAS
-      </Text>
-      {asignaturasEstudiante.map(asignaturasEstudiante => <AsignaturasEstudiantes key={asignaturasEstudiante.id} {...asignaturasEstudiante}/>)}
-    
-      <Pressable onPress={() => navigation.navigate('eliminarCuenta')}>
-        <AntDesign name="deleteuser" size={25}  style={styles.btnDelete} />
-        <Text style={styles.textDelete}>
-          Eliminar Cuenta
-        </Text>
-      </Pressable>
-    </Layout>
+      <Provider>
+        <Stack.Navigator 
+          screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="." component={contentLayout} />
+        </Stack.Navigator>
+      </Provider>
   );
 };
 export default AsignaturasEstudiantesScreen;
