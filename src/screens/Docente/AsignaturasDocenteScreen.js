@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { style } from '../../styles/styles';
 import { myColors } from '../../styles/colors';
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 import Asignaturas from '../../components/Docente/Asignaturas';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Layout from '../../components/layout/Layout';
+
+import { Portal, FAB, Provider } from 'react-native-paper';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const AsignaturasDocenteScreen = () => {
   const navigation = useNavigation();
@@ -17,7 +19,6 @@ const AsignaturasDocenteScreen = () => {
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
 
   React.useEffect(() => {
-
     const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/`);
     const asignaturaEstQuery = query(collectionRef, orderBy('nombreAsig', 'desc'));
     const setDocAsignaturas = onSnapshot(asignaturaEstQuery, querySnapshot => {
@@ -35,33 +36,57 @@ const AsignaturasDocenteScreen = () => {
     return setDocAsignaturas;
   },[])
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () =>
-      <Pressable title='registroAsignaturasDocenteScreen'
-          onPress={() => navigation.navigate('registroAsignaturasDocenteScreen')}
-          style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-          <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
-        </Pressable>
-  })
-  },[navigation])
-
-  return (
-    <Layout>
+  //LAYOUT MAS BOTON FLOTANTE
+  const Stack = createStackNavigator();
+  function contentLayout() {
+    const [open, setOpen] = React.useState(false);
+    const isFocused = useIsFocused();
+  
+    function _onStateChange({ open }) {
+      setOpen(open);
+    }
+  
+    return (
+      <Layout>
       <View style={style.titleContainer}>
         <Text style={style.textTitle}>
           MIS ASIGNATURAS
         </Text>
       </View>
       {asignatura.map(asignatura => <Asignaturas key={asignatura.id} {...asignatura}/>)}
+        <Portal >
+          <FAB.Group 
+            open={isFocused && open}
+            icon={'menu'}
+            onStateChange={_onStateChange}
+            visible={isFocused}
+            style={{ position: 'absolute', right: 0, bottom: 0, }}
+            actions={[            
+              {
+                icon: 'circle',
+                label: 'Agregar asignatura',
+                onPress: () => navigation.navigate('registroAsignaturasDocenteScreen'),
+              },
+              {
+                icon: 'circle',
+                label: 'Eliminar cuenta',
+                onPress: () => navigation.navigate('eliminarCuenta'),
+              },
+            ]}
+            theme={{ colors: { accent: '#293774' } }}
+          /> 
+        </Portal>
+      </Layout>
+    );
+  }
 
-      <Pressable onPress={() => navigation.navigate('eliminarCuenta')}>
-        <AntDesign name="deleteuser" size={25}  style={styles.btnDelete} />
-        <Text style={styles.textDelete}>
-          Eliminar Cuenta
-        </Text>
-      </Pressable>
-    </Layout>
+  return (
+      <Provider>
+        <Stack.Navigator 
+          screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="." component={contentLayout} />
+        </Stack.Navigator>
+      </Provider>
   );
 };
 export default AsignaturasDocenteScreen;
