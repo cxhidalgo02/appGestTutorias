@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { style } from '../../styles/styles';
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, orderBy, query,} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
-import { View, Text, SafeAreaView, Pressable, RefreshControl } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Text, View} from 'react-native';
 import Tutorias from '../../components/Docente/Tutorias';
 import Layout from '../../components/layout/Layout';
+
+import { Portal, FAB, Provider } from 'react-native-paper';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const TutoriasDocenteScreen = () => {
   const navigation = useNavigation();
@@ -16,14 +17,7 @@ const TutoriasDocenteScreen = () => {
   const [tutoria, setNuevaTutoria] = React.useState([]);
   //boton para el escreen registro Tutorias del docente
   React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () =>
-      <Pressable title='registroTutoriasDocenteScreen'
-        onPress={() => navigation.navigate('registroTutoriasDocenteScreen')}
-        style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1, })}>
-        <AntDesign name="pluscircleo" size={28} color="#293774" style={{ marginRight: 10 }}/>
-      </Pressable>
-  })
+    navigation.setOptions({  })
   },[navigation])
 
   // Id del usuario que inicia sesion
@@ -62,13 +56,54 @@ const TutoriasDocenteScreen = () => {
     }, 2000);
   }, []);
 
+  //LAYOUT MAS BOTON FLOTANTE
+  const Stack = createStackNavigator();
+  function contentLayout() {
+    const [open, setOpen] = React.useState(false);
+    const isFocused = useIsFocused();
+
+  function _onStateChange({ open }) {
+      setOpen(open);
+  }
+
   return (
     <Layout>
-      <Text style={style.textTitle}>
-        MIS TUTORIAS
-      </Text>
+      <View style={style.titleContainer}>
+        <Text style={style.textTitle}>
+          MIS TUTORIAS
+        </Text>
+      </View>
       {tutoria.map(tutoria => <Tutorias key={tutoria.id} {...tutoria}/>)}
+      
+      <Portal>
+        <FAB.Group 
+          open={isFocused && open}
+          icon={'menu'}
+          onStateChange={_onStateChange}
+          visible={isFocused}
+          style={{ position: 'absolute', right: 0, bottom: 0, }}
+          actions={[            
+            {
+              icon: 'circle',
+              label: 'Agregar tutoria',
+              onPress: () => navigation.navigate('registroTutoriasDocenteScreen'),
+            },
+          ]}
+          theme={{ colors: { accent: '#293774' } }}
+        />
+      </Portal>
     </Layout>
   );
+}
+
+return (
+  <Provider>
+    <Stack.Navigator 
+      screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="." component={contentLayout} />
+    </Stack.Navigator>
+  </Provider>
+);
+
 };
 export default TutoriasDocenteScreen;
