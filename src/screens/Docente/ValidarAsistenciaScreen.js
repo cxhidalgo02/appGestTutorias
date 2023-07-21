@@ -2,13 +2,10 @@ import * as React from 'react';
 import { style } from '../../styles/styles';
 import { database } from '../../../config/firebaseConfig';
 import { collection, onSnapshot, query, where, } from 'firebase/firestore';
-
 import ValidarAsistencia from '../../components/Docente/ValidarAsistencia';
 import localStorage from 'react-native-expo-localstorage';
-import { View, Text, SafeAreaView, RefreshControl } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Text, View } from 'react-native';
 import Layout from '../../components/layout/Layout';
-
 
 const ValidarAsistenciaScreen = () => {
   //constructor del estudiante
@@ -46,9 +43,11 @@ const ValidarAsistenciaScreen = () => {
 
 return (
   <Layout>
-    <Text style={style.textTitle}>
-      VALIDAR ASISTENCIA
-    </Text>
+    <View style={style.titleContainer}>
+      <Text style={style.textTitle}>
+        VALIDAR ASISTENCIA
+      </Text>
+    </View>
     {estudiante.map(estudiante=> <ValidarAsistencia key={estudiante.id} {...estudiante}/>)}
   </Layout>
 );
