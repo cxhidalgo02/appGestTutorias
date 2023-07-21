@@ -4,7 +4,7 @@ import { database } from '../../../config/firebaseConfig';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Pressable, RefreshControl, Alert, Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Pressable, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -54,14 +54,7 @@ const RegistroTutoriasDocenteScreen = () => {
       ]);
     }
   }
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+
   //atributos y metodos para seleccion de la fecha
   const [selectedDate, setSelectedDate] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
