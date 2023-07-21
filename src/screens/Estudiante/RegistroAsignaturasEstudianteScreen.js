@@ -3,7 +3,7 @@ import { setDoc, doc } from 'firebase/firestore';
 import { database } from '../../../config/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Alert, Platform } from 'react-native';
 import { myColors } from '../../styles/colors';
 import { style } from '../../styles/styles';
 import Layout from '../../components/layout/Layout';
@@ -53,7 +53,7 @@ const RegistroAsignaturasEstudianteScreen = () => {
   return (
     <Layout>
       <View style={style.titleContainer}>
-        <Text style={style.textTitle}>
+        <Text style={style.textTitleSubForm}>
           FORMULARIO
         </Text>
       </View>
@@ -77,5 +77,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     color: myColors.navyblue,
+  },
+  subcontainerText: {
+    marginTop: 40,
   },
 });
