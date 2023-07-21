@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { database } from '../../../config/firebaseConfig';
 import { doc, setDoc} from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
-import { View, Text, SafeAreaView, TouchableOpacity, TextInput, ScrollView, RefreshControl, Alert, Platform } from 'react-native';
+import { Text, TouchableOpacity, TextInput, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { style } from '../../styles/styles';
 import Layout from '../../components/layout/Layout';
@@ -44,18 +44,9 @@ const RegistroAsignaturasDocenteScreen = () => {
     }
   }
 
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   return (
     <Layout>
-      <Text style={style.textTitle}>
+      <Text style={style.textTitleSubForm}>
         FORMULARIO
       </Text>
         <TextInput style={[style.textInput, Platform.OS === 'ios' && style.iOS_textInput]}
@@ -72,7 +63,7 @@ const RegistroAsignaturasDocenteScreen = () => {
           selectedValue={tipoAsig}
           onValueChange={(itemValue) => setTipoAsig(itemValue)}
         >
-          <Picker.Item label="Tipo" value="Ninguna" />
+          <Picker.Item label="Tipo" value="Ninguno" />
           <Picker.Item label="Troncal" value="Troncal"/>
           <Picker.Item label="Genérica" value="Genérica"/>
           <Picker.Item label="Complementaria" value="Complementaria"/>
