@@ -14,7 +14,7 @@ export const styleModal = StyleSheet.create({
         backgroundColor: myColors.white,
         borderRadius: 10,
         padding: 40,
-        alignItems: 'center',
+        //alignItems: 'center',
         shadowColor: myColors.black,
         shadowOffset: {
         width: 0,
@@ -37,6 +37,7 @@ export const styleModal = StyleSheet.create({
         textAlign: 'center',
     },
     modalTextTitle: {
+        fontSize: 16,
         marginBottom: 15,
         color: myColors.navyblue,
         fontWeight: 'bold',
