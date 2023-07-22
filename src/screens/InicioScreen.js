@@ -45,6 +45,7 @@ const InicioScreen = ({ navigation })=> {
             break;
           case "Docente":
             localStorage.setItem("keyUserDoc", userUid);
+            localStorage.setItem("keyCorreoDoc", correo);
             navigation.navigate('asignaturasDocenteScreen');
             Alert.alert('Bienvenido', '', [
               { text: 'Aceptar' },
@@ -52,6 +53,7 @@ const InicioScreen = ({ navigation })=> {
             break;
           case "Estudiante":
             localStorage.setItem("keyUserEst", userUid);
+            localStorage.setItem("keyCorreoEst", correo);
             navigation.navigate('asignaturasEstudiantesScreen');
             Alert.alert('Bienvenido', '', [
               { text: 'Aceptar' },
