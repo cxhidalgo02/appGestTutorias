@@ -35,9 +35,7 @@ const AltaEstudiantesScreen = () => {
           const uid_Estudiante = estudiante.id;
           const cedula_Estudiante = estudiante.cedula;
           // CONSULTA REFERENCIA ESTUDIANTES
-          const q2 = query(collection(database, `Usuarios/${uid_Estudiante}/AsignaturasEstudiante/`), 
-                      where("codigoAsig", "==", pathIdAsig)
-          );
+          const q2 = query(collection(database, `Usuarios/${uid_Estudiante}/AsignaturasEstudiante/`),where("codigoAsig", "==", pathIdAsig));
           const unsubscribe2 = onSnapshot(q2, querySnapshot => {
             const asignaturaData = querySnapshot.docs.map(doc => ({
               id: doc.id,
@@ -51,7 +49,7 @@ const AltaEstudiantesScreen = () => {
             
             if( codigo_asig === pathIdAsig && alta_asig === 'false' && nom_asig === '' ){
               console.log('Hay que dar acceso!', codigo_asig, ' ', alta_asig, ' ', nom_asig, '');
-              const q3 = query(collection(database, 'Usuarios'), where("cedula", "==", cedula_Estudiante));
+              const q3 = query(collection(database, 'Usuarios'), where('cedula', '==', cedula_Estudiante), where('tipo', '==', 'Estudiante'));
               const unsubscribe3 = onSnapshot(q3, querySnapshot => {
                 const estudiantesNewData = querySnapshot.docs.map(doc => ({
                   id: doc.id,
@@ -62,7 +60,7 @@ const AltaEstudiantesScreen = () => {
                 }));
                  // Agregar todos los estudiantes a listaAltaEst utilizando concat()
                 setListaAltaEst(prevLista => prevLista.concat(estudiantesNewData));
-                //console.log('Data estudiante > ', estudiantesNewData);
+                console.log('Data estudiante > ', estudiantesNewData);
               });
             }
           });
@@ -72,17 +70,7 @@ const AltaEstudiantesScreen = () => {
     } catch (error) {
       console.log('ERROR =>', error);
     }
-
   },[])
-
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
 
   return (
     <Layout>
