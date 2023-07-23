@@ -21,7 +21,6 @@ const AsignaturasEstudiantesScreen = () => {
   //constructor para las asignaturas del estudiante
   const [asignaturasEstudiante, setNuevaListaAE] = React.useState([]);
   //UID del usuario estudiante que inicio sesion
-  //const pathIdEst = localStorage.getItem(`keyUserEst`, pathIdEst);
   const correoEst = localStorage.getItem(`keyCorreoEst`, correoEst);
 
   React.useEffect(() => {
@@ -94,6 +93,7 @@ const AsignaturasEstudiantesScreen = () => {
             <FAB.Group 
               open={isFocused && open}
               icon={'menu'}
+              label={'Menú'}
               onStateChange={_onStateChange}
               visible={isFocused}
               style={{ position: 'absolute', right: 0, bottom: 0, }}
