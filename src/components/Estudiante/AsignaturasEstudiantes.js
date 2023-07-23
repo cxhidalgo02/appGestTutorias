@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import localStorage from 'react-native-expo-localstorage';
-import { collection, query, where, getCountFromServer, doc, deleteDoc } from 'firebase/firestore';
+import { collection, query, where, getCountFromServer, doc, deleteDoc, onSnapshot, } from 'firebase/firestore';
 
 export default function AsignaturasEstudiantes({
         id, idAsig, nombreAsig, codigoAsig, tipoAsig, fechaRegAsig, uidEstudiante, altaAsigEst,
@@ -29,40 +29,70 @@ export default function AsignaturasEstudiantes({
     //Path para consultas de estudiante
     const pathAsig = `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}`
 
-    const [numTutorias, setNumTutorias] = React.useState([]);
+    const [numTutorias, setNumTutorias] = React.useState(0);
     async function numTutoriasData() {
         try {
-            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+            /*const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
             const q = query(collectionRef);
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
-            setNumTutorias(result);
+            setNumTutorias(result);*/
+            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+            const q = query(collectionRef);
+            // Agregar el onSnapshot para escuchar los cambios en tiempo real
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+              // Obtener el número de documentos en la colección
+                const result = snapshot.size;
+                setNumTutorias(result);
+            });
+            // Devolver la función de unsubscribe para limpiar el listener cuando sea necesario
+            return unsubscribe;
         } catch (error) {
         console.log('Se produjo un error:', error);
         }
     }
 
-    const [numTutoriasInscritas, setNumTutoriasInscritas] = React.useState([]);
+    const [numTutoriasInscritas, setNumTutoriasInscritas] = React.useState(0);
     async function tutoriasInscritasData() {
         try {
-            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+           /* const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
             const q = query(collectionRef, where('inscripcionTutoEst', '==', 'true'));
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
-            setNumTutoriasInscritas(result);
+            setNumTutoriasInscritas(result);*/
+            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+            const q = query(collectionRef, where('inscripcionTutoEst', '==', 'true'));
+            // Agregar el onSnapshot para escuchar los cambios en tiempo real
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                // Obtener el número de documentos en la colección
+                const result = querySnapshot.size;
+                setNumTutoriasInscritas(result);
+            });
+            // Devolver la función de unsubscribe para limpiar el listener cuando sea necesario
+            return unsubscribe;
         } catch (error) {
         console.log('Se produjo un error:', error);
         }
     }
 
-    const [numTutoriasValidadas, setNumTutoriasValidadas] = React.useState([]);
+    const [numTutoriasValidadas, setNumTutoriasValidadas] = React.useState(0);
     async function tutoriasValidadasData() {
         try {
-            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+           /* const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
             const q = query(collectionRef, where('validadaTutoEst', '==', 'true'));
             const snapshot = await getCountFromServer(q); 
             const result = snapshot.data().count;
-            setNumTutoriasValidadas(result);
+            setNumTutoriasValidadas(result);*/
+            const collectionRef = collection(database, `Usuarios/${pathIdEst}/AsignaturasEstudiante/${codigoAsig}/TutoriasEstudiante/`);
+            const q = query(collectionRef, where('validadaTutoEst', '==', 'true'));
+            // Agregar el onSnapshot para escuchar los cambios en tiempo real
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              // Obtener el número de documentos en la colección
+                const result = querySnapshot.size;
+                setNumTutoriasValidadas(result);
+            });
+            // Devolver la función de unsubscribe para limpiar el listener cuando sea necesario
+            return unsubscribe;
         } catch (error) {
         console.log('Se produjo un error:', error);
         }
@@ -117,7 +147,7 @@ export default function AsignaturasEstudiantes({
                     }}>
                     <RN.View style={styleModal.centeredView}>
                     <RN.View style={styleModal.modalView}>
-                    <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10}} />
+                    <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10,  textAlign:'center'}} />
                         <RN.Text style={styleModal.modalTextTitle}>REPORTE DE TUTORIAS</RN.Text>
                             <RN.Text style={styleModal.modalText}>
                                 Número de tutorías: { numTutorias }
