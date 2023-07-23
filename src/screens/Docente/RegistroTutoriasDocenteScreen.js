@@ -122,7 +122,7 @@ const RegistroTutoriasDocenteScreen = () => {
               editable={true}
               onChangeText={(text) => setFechaTuto(text)}
               placeholder="Fecha">
-              {`${selectedDate ? moment(selectedDate).format("DD-MM-YYYY").toString() : "Fecha"}`}
+              {`${selectedDate ? moment(selectedDate).format("DD-MM-YYYY").toString() : "DD-MM-YYYY"}`}
             </TextInput>
         </View>
       </View>
@@ -143,7 +143,7 @@ const RegistroTutoriasDocenteScreen = () => {
               editable={true}
               onChangeText={(text) => setHoraTuto(text)}
               placeholder="Hora">
-              {`${selectedTime ? moment(selectedTime).format("HH:mm").toString() : "Hora"}`}
+              {`${selectedTime ? moment(selectedTime).format("HH:mm").toString() : "HH:mm"}`}
             </TextInput>
         </View>
       </View>
