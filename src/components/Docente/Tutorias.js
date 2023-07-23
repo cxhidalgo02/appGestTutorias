@@ -85,7 +85,7 @@ export default function Tutorias({
                     }}>
                     <rn.View style={styleModal.centeredView}>
                     <rn.View style={styleModal.modalView}>
-                    <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10}} />
+                    <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10,  textAlign:'center'}} />
                         <rn.Text style={styleModal.modalTextTitle}>INFORMACIÓN!</rn.Text>
                         <rn.Text style={styleModal.modalText}>Estudiantes inscritos: 11</rn.Text>
                         <rn.Text style={styleModal.modalText}>Tutorias validadas:9 </rn.Text>
