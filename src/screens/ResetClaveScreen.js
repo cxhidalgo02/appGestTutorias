@@ -4,8 +4,6 @@ import { initializeApp} from "firebase/app";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { TouchableOpacity, StyleSheet, View, Text, TextInput, Alert } from 'react-native';
 import { style } from '../styles/styles';
-import { myColors } from '../styles/colors';
-import { AntDesign } from '@expo/vector-icons'; 
 import Layout from '../components/layout/Layout';
 
 const resetClave = ({ navigation })=> {

@@ -38,7 +38,6 @@ const ValidarAsistenciaScreen = () => {
         estudiantesData.forEach(estudiante => {
           const uid_Estudiante = estudiante.id;
           const cedula_Estudiante = estudiante.cedula;
-          //console.log('PAT ', uid_Estudiante, pathIdAsig, pathCodTutDoc);
           // CONSULTA REFERENCIA ESTUDIANTES - MATERIA  PRUEBA 01 Y TUTORIA 2
           const q2 = query(collection(database, `/Usuarios/${uid_Estudiante}/AsignaturasEstudiante/${pathIdAsig}/TutoriasEstudiante/`),
             where("codigoTutoEst", "==", pathCodTutDoc)
@@ -55,12 +54,9 @@ const ValidarAsistenciaScreen = () => {
             const codigo_tuto = tutoriaData[0]?.codigoTutoEst;
             const inscripcion_tuto = tutoriaData[0]?.inscripcionTutoEst; //Para que salga lista debe estar en TRUE
             const validada_tuto = tutoriaData[0]?.validadaTutoEst;
-            console.log('TUTORIAS:', codigo_tuto, inscripcion_tuto, validada_tuto);
 
             if( codigo_tuto === pathCodTutDoc && inscripcion_tuto === 'true' && validada_tuto === 'false' ){
-              console.log('Hay que validar la tutoria!', codigo_tuto, ' ', inscripcion_tuto);
               const q3 = query(collection(database, 'Usuarios'), where("cedula", "==", cedula_Estudiante));
-              
               const unsubscribe3 = onSnapshot(q3, querySnapshot => {
                 const estudiantesNewData = querySnapshot.docs.map(doc => ({
                   id: doc.id,
@@ -71,7 +67,6 @@ const ValidarAsistenciaScreen = () => {
                 }));
                  // Agregar todos los estudiantes a listaAltaEst utilizando concat()
                 setListaValidarEst(prevLista => prevLista.concat(estudiantesNewData));
-                console.log('Data estudiante > ', estudiantesNewData);
               });
             }
             
@@ -97,7 +92,3 @@ return (
 );
 };
 export default ValidarAsistenciaScreen;
-
-          /*const q2 = query(collection(database, `/Usuarios/H1uFyJEU8uQon7mPHwVbWLN3wxv1/AsignaturasEstudiante/prueba01/TutoriasEstudiante/`), 
-            where("codigoTutoEst", "==", 'tutoria2')
-          );*/

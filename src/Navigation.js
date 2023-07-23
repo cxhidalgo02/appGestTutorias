@@ -1,14 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
-import { firebaseConfig } from '../firebase-config';
-import { initializeApp} from "firebase/app"; 
-import { getFirestore } from "firebase/firestore"
-import { getAuth } from 'firebase/auth'; 
 import { myColors } from "./styles/colors"; 
 //ICONOS
 import { Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons'; 
 //SCREEN DE INICIO
 import InicioScreen from "./screens/InicioScreen";
 import RegistroUsuariosScreen from "./screens/RegistroUsuariosScreen";
@@ -32,16 +29,12 @@ const Tab = createBottomTabNavigator();
 
 function MyStack( ) {
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const firestore = getFirestore(app);
-
   return(
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: myColors.mustard },
         headerTintColor: myColors.navyblue,
-        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleStyle: { fontWeight: 'bold' }, 
       }}>
       <Stack.Screen name="bottomTabNavigator"  component={BottomTabNavigator} options={{ headerShown: false}}/>   
       <Stack.Screen name="informacionScreen" component={InformacionScreen} options={{title:'Información',}} />
@@ -63,10 +56,8 @@ function MyStack( ) {
 }
 
 function BottomTabNavigator({ navigation })  {
-
-
     return (
-        <Tab.Navigator initialRouteName="Feed"
+        <Tab.Navigator initialRouteName="Feed" 
           screenOptions={{
             headerStyle: { backgroundColor: myColors.mustard },
             headerTintColor: myColors.navyblue,
@@ -77,6 +68,7 @@ function BottomTabNavigator({ navigation })  {
                 component={InicioScreen}
                 options={{
                 tabBarLabel: 'INICIO',
+                tabBarStyle: { backgroundColor: myColors.white},
                 tabBarActiveTintColor: myColors.mustard, 
                 tabBarInactiveTintColor: myColors.navyblue,
                 tabBarIcon: ({ color, size }) => (<AntDesign name="home" size={25} color="#293774" />),
@@ -96,7 +88,7 @@ function BottomTabNavigator({ navigation })  {
                 tabBarLabel: 'REGISTRO', 
                 tabBarActiveTintColor: myColors.mustard, 
                 tabBarInactiveTintColor: myColors.navyblue,
-                tabBarIcon: ({ color, size }) => (<AntDesign name="user" size={25} color="#293774" />),
+                tabBarIcon: ({ color, size }) => (<Feather name="user" size={26} color="#293774" />),
               }}
             />
         </Tab.Navigator>
@@ -106,7 +98,7 @@ function BottomTabNavigator({ navigation })  {
 export default function Navigation() {
     return (
         <NavigationContainer>
-            <MyStack />
+            <MyStack/>
         </NavigationContainer>
     )
 }

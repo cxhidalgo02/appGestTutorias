@@ -48,7 +48,6 @@ const AltaEstudiantesScreen = () => {
             const alta_asig = asignaturaData[0]?.altaAsigEst;
             
             if( codigo_asig === pathIdAsig && alta_asig === 'false' && nom_asig === '' ){
-              console.log('Hay que dar acceso!', codigo_asig, ' ', alta_asig, ' ', nom_asig, '');
               const q3 = query(collection(database, 'Usuarios'), where('cedula', '==', cedula_Estudiante), where('tipo', '==', 'Estudiante'));
               const unsubscribe3 = onSnapshot(q3, querySnapshot => {
                 const estudiantesNewData = querySnapshot.docs.map(doc => ({
@@ -60,7 +59,6 @@ const AltaEstudiantesScreen = () => {
                 }));
                  // Agregar todos los estudiantes a listaAltaEst utilizando concat()
                 setListaAltaEst(prevLista => prevLista.concat(estudiantesNewData));
-                console.log('Data estudiante > ', estudiantesNewData);
               });
             }
           });

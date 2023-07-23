@@ -1,7 +1,6 @@
 import * as React  from 'react';
 import * as rn from 'react-native';
 import { styleComp } from '../../styles/stylesComp';
-import { FontAwesome5 } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';

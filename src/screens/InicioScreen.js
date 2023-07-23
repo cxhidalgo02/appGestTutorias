@@ -3,10 +3,9 @@ import { firebaseConfig } from '../../firebase-config';
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, onSnapshot} from "firebase/firestore"
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { TouchableOpacity, StyleSheet, Text, TextInput, LogBox, Alert, KeyboardAvoidingView} from 'react-native';
+import { TouchableOpacity, Text, TextInput, LogBox, Alert, KeyboardAvoidingView} from 'react-native';
 import localStorage from 'react-native-expo-localstorage';
 import { style } from '../styles/styles';
-import { AntDesign } from '@expo/vector-icons'; 
 import { Picker } from '@react-native-picker/picker';
 import Layout from '../components/layout/Layout';
 

@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 import { TouchableOpacity, StyleSheet, View, Text,Modal, TextInput, Pressable } from 'react-native';
 import { style } from '../styles/styles';
-import { myColors } from '../styles/colors';
 import { Ionicons } from '@expo/vector-icons'; 
 import { styleModal } from '../styles/styleModal';
 import Layout from '../components/layout/Layout';
 
 const EliminarCuenta = ({ navigation })=> {
 
-  const [modalVisible, setModalVisible] = useState(false);
+const [modalVisible, setModalVisible] = useState(false);
 
 return (
   <Layout>

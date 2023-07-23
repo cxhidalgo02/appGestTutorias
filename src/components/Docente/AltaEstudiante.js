@@ -15,9 +15,9 @@ export default function DarAltaEstudiante({
     }) 
 {
   //Uid del estudiante que encuentre en la base de datos   (id) 
-  const pathIdEstData = localStorage.setItem("keyUserEstData", id); //console.log('UID del estudiante = ', id);
+  const pathIdEstData = localStorage.setItem("keyUserEstData", id);
   //Uid del docente que inicia sesion   (id) 
-  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc); //console.log('UID del docente =', pathIdDoc);
+  const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   //codigo de las asignatura de seleccione
   const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
   //path del codigo de la tutoria
@@ -108,8 +108,6 @@ async function consultaAsignaturasDocente() {
                     semanaTuto: doc.data().semanaTuto,
                     temaTuto: doc.data().temaTuto,
                   }));
-                  //console.log('Pasa > 1');
-                  //console.log('TUTORIAS PARA AGREGAR: ', tutoriasData, ' <');
 
                   if (tutoriasData.length > 0) {
                     // Se guardan los datos del primer documento en las variables de estado
@@ -129,8 +127,6 @@ async function consultaAsignaturasDocente() {
                           inscripcionTutoEst: 'false',
                           validadaTutoEst: 'false'
                         };
-                        //console.log('Pasa > 2');
-                        //console.log('REGISTRO: ', registroTutoriaEst);
                         const docRef = doc(database, pathUrlTutoria, registroTutoriaEst.codigoTutoEst );
                         setDoc(docRef, registroTutoriaEst);
                       });

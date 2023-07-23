@@ -47,15 +47,6 @@ const TutoriasDocenteScreen = () => {
     return setDocTutorias;
   },[])
 
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   //LAYOUT MAS BOTON FLOTANTE
   const Stack = createStackNavigator();
   function contentLayout() {

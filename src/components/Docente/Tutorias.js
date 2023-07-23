@@ -12,7 +12,6 @@ import localStorage from 'react-native-expo-localstorage';
 import { doc, deleteDoc} from 'firebase/firestore';
 
 export default function Tutorias({
-        //id, codigo, tema, descripcion, aula, fecha, hora, semana,
         id, codigoTuto, temaTuto, descripcionTuto, aulaTuto, fechaTuto, horaTuto, semanaTuto, fechaRegTuto
     }) 
 {
@@ -51,8 +50,7 @@ export default function Tutorias({
                 });
                 const results = await Promise.all(promises);
                 const totalEstudiantesInscritos = results.reduce((acc, curr) => acc + curr, 0);
-                setNumEstudiantesInscritos(totalEstudiantesInscritos);
-                console.log('numEstudiantesInscritosData > ', totalEstudiantesInscritos);
+                setNumEstudiantesInscritos(totalEstudiantesInscritos); 
             });
             // Devolver la función de unsubscribe para limpiar el listener cuando sea necesario
             return estudiantesUnsubscribe;
@@ -67,18 +65,17 @@ export default function Tutorias({
             const estudiantesRef = collection(database, 'Usuarios');
             const estudiantesQuery = query(estudiantesRef, where("tipo", "==", "Estudiante"));
             const estudiantesUnsubscribe = onSnapshot(estudiantesQuery, async (estudiantesSnapshot) => {
-            const promises = estudiantesSnapshot.docs.map(async (doc) => {
-                const uid_Estudiante = doc.id;
-                const tutoriaRef = collection(database, `/Usuarios/${uid_Estudiante}/AsignaturasEstudiante/${pathIdAsig}/TutoriasEstudiante/`);
-                const tutoriaQuery = query(tutoriaRef, where("codigoTutoEst", "==", pathCodTutDoc));
-                const tutoriaSnapshot = await getDocs(tutoriaQuery);
-                const tutoriaData = tutoriaSnapshot.docs.map((tutoriaDoc) => tutoriaDoc.data());
-                return tutoriaData.filter((tutoria) => tutoria.validadaTutoEst === 'true').length;
-            });
+                const promises = estudiantesSnapshot.docs.map(async (doc) => {
+                    const uid_Estudiante = doc.id;
+                    const tutoriaRef = collection(database, `/Usuarios/${uid_Estudiante}/AsignaturasEstudiante/${pathIdAsig}/TutoriasEstudiante/`);
+                    const tutoriaQuery = query(tutoriaRef, where("codigoTutoEst", "==", pathCodTutDoc));
+                    const tutoriaSnapshot = await getDocs(tutoriaQuery);
+                    const tutoriaData = tutoriaSnapshot.docs.map((tutoriaDoc) => tutoriaDoc.data());
+                    return tutoriaData.filter((tutoria) => tutoria.validadaTutoEst === 'true').length;
+                });
             const results = await Promise.all(promises);
             const totalTutoriasValidadas = results.reduce((acc, curr) => acc + curr, 0);
             setNumTutoriasValidadas(totalTutoriasValidadas);
-            console.log('numTutoriasValidas > ', totalTutoriasValidadas);
         });
             // Devolver la función de unsubscribe para limpiar el listener cuando sea necesario
             return estudiantesUnsubscribe;

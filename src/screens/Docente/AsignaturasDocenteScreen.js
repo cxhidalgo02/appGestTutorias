@@ -22,7 +22,6 @@ const AsignaturasDocenteScreen = () => {
 
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
   const correoDoc = localStorage.getItem(`keyCorreoDoc`, correoDoc);
-  console.log('Correo del Docente: ',correoDoc);
 
   React.useEffect(() => {
     const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/`);

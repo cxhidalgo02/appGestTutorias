@@ -7,8 +7,8 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
-import { doc, deleteDoc,} from 'firebase/firestore';
-import { collection, query,  getCountFromServer, onSnapshot } from 'firebase/firestore';
+import { doc, deleteDoc, } from 'firebase/firestore';
+import { collection, query, onSnapshot } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 
 export default function Asignaturas ({
@@ -17,6 +17,8 @@ export default function Asignaturas ({
 {
     // Id del usuario que inicia sesion
     const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
+    //codigo de las asignatura de seleccione
+    const pathIdAsig = localStorage.getItem(`keyCodAsigDoc`, pathIdAsig);
 
     const onDelete = () => {
         const docRef = doc(database, `Usuarios/${pathIdDoc}/Asignaturas/`, id);
@@ -100,6 +102,9 @@ export default function Asignaturas ({
                             <RN.Text style={styleModal.modalTextTitle}>INFORMACIÓN!</RN.Text>
                             <RN.Text style={styleModal.modalText}>
                                 Número de tutorías: { numTutorias }
+                            </RN.Text>
+                            <RN.Text style={styleModal.modalText}>
+                                Total de estudiantes: { numTutorias }
                             </RN.Text>
                             <RN.Pressable
                                 style={styleModal.buttonClose}

@@ -40,15 +40,6 @@ const TutoriasDocenteScreen = () => {
     return unsubscribe;
   },[])
 
-  //estados para refrezcar el screen
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   return (
     <Layout>
       <View style={style.titleContainer}>

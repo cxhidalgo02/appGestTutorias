@@ -170,8 +170,6 @@ const RegistroTutoriasDocenteScreen = () => {
           <Picker.Item label="Semana 14" value="14"/>
           <Picker.Item label="Semana 15" value="15"/>
           <Picker.Item label="Semana 16" value="16"/>
-          <Picker.Item label="Semana 17" value="17"/>
-          <Picker.Item label="Semana 18" value="18"/>
       </Picker>
       <TouchableOpacity style={style.button} onPress={onSend} >
         <Text style={style.textbutton}>REGISTRAR</Text>
