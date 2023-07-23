@@ -15,7 +15,7 @@ const informacionScreen = ()  => {
       <View style={styles.container} >
         <View style={styles.title} >
           <Text style={styles.textTitle}>
-            TutorPlus
+            TutoriaApp
           </Text>
         </View> 
         <View style={styles.content}>
