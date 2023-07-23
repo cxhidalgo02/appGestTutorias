@@ -8,8 +8,7 @@ import { Text, View } from 'react-native';
 import Layout from '../../components/layout/Layout';
 
 const ValidarAsistenciaScreen = () => {
-  //constructor del estudiante
-  const [estudiante, setNuevoEstudiante] = React.useState([]);
+  //constructor de la nueva lista de estudiantes
   const [listaValidarEst, setListaValidarEst] = React.useState([]);
   // Id del usuario que inicia sesion
   const pathIdDoc = localStorage.getItem(`keyUserDoc`, pathIdDoc);
@@ -20,13 +19,16 @@ const ValidarAsistenciaScreen = () => {
   //tutoria seleccionada
   const pathCodTutDoc = localStorage.getItem(`keyCodTutDoc`, pathCodTutDoc);
 
+  //guardo el codigo de asignatura para enviar a Dar de alta
+  const codAsigDoc = localStorage.getItem(`keyCodAsigDoc`, codAsigDoc);
+
   React.useEffect(() => {
     try {
       // CONSULTA ESTUDIANTES
       const q1 = query(collection(database, 'Usuarios'), where("tipo", "==", "Estudiante"));
       const unsubscribe = onSnapshot(q1, querySnapshot => {
         const estudiantesData = querySnapshot.docs.map(doc => ({
-          id: doc.id,
+          id: doc.id, 
           cedula: doc.data().cedula,
           nombres: doc.data().nombres,
           apellidos: doc.data().apellidos,
@@ -38,13 +40,9 @@ const ValidarAsistenciaScreen = () => {
           const cedula_Estudiante = estudiante.cedula;
           //console.log('PAT ', uid_Estudiante, pathIdAsig, pathCodTutDoc);
           // CONSULTA REFERENCIA ESTUDIANTES - MATERIA  PRUEBA 01 Y TUTORIA 2
-          const q2 = query(collection(database, `/Usuarios/H1uFyJEU8uQon7mPHwVbWLN3wxv1/AsignaturasEstudiante/prueba01/TutoriasEstudiante/`),
+          const q2 = query(collection(database, `/Usuarios/${uid_Estudiante}/AsignaturasEstudiante/${pathIdAsig}/TutoriasEstudiante/`),
             where("codigoTutoEst", "==", pathCodTutDoc)
-          );
-          /*const q2 = query(collection(database, `/Usuarios/H1uFyJEU8uQon7mPHwVbWLN3wxv1/AsignaturasEstudiante/prueba01/TutoriasEstudiante/`), 
-            where("codigoTutoEst", "==", 'tutoria2')
-          );*/
-          
+          );          
           const unsubscribe2 = onSnapshot(q2, querySnapshot => {
             const tutoriaData = querySnapshot.docs.map(doc => ({
               id: doc.id,
@@ -99,3 +97,7 @@ return (
 );
 };
 export default ValidarAsistenciaScreen;
+
+          /*const q2 = query(collection(database, `/Usuarios/H1uFyJEU8uQon7mPHwVbWLN3wxv1/AsignaturasEstudiante/prueba01/TutoriasEstudiante/`), 
+            where("codigoTutoEst", "==", 'tutoria2')
+          );*/
