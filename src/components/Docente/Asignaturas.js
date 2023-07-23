@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 import { doc, deleteDoc,} from 'firebase/firestore';
-import { collection, query,  getCountFromServer } from 'firebase/firestore';
+import { collection, query,  getCountFromServer, onSnapshot } from 'firebase/firestore';
 import localStorage from 'react-native-expo-localstorage';
 
 export default function Asignaturas ({
@@ -28,14 +28,19 @@ export default function Asignaturas ({
     //guardo el codigo de asignatura para enviar a Dar de alta
     const pathIdAsigDoc = localStorage.setItem("keyCodAsigDoc", codigoAsig);
 
-    const [numTutorias, setNumTutorias] = React.useState([]);
+    const [numTutorias, setNumTutorias] = React.useState(0);
     async function numTutoriasData() {
         try {
             const collectionRef = collection(database, `Usuarios/${pathIdDoc}/Asignaturas/${codigoAsig}/Tutorias/`);
             const q = query(collectionRef);
-            const snapshot = await getCountFromServer(q); 
-            const result = snapshot.data().count;
-            setNumTutorias(result);
+            // Agregar el onSnapshot para escuchar los cambios en tiempo real
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+              // Obtener el número de documentos en la colección
+                const result = querySnapshot.size;
+                setNumTutorias(result);
+            });
+            // Devolver la función de unsubscribe para limpiar el listener cuando sea necesario
+            return unsubscribe;
         } catch (error) {
         console.log('* ERROR: ', error);
         }
@@ -91,7 +96,7 @@ export default function Asignaturas ({
                     }}>
                     <RN.View style={styleModal.centeredView}>
                         <RN.View style={styleModal.modalView}>
-                        <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10}} />
+                        <Ionicons name="information-circle-outline" size={26} color="#293774" style={{padding:10,  textAlign:'center'}} />
                             <RN.Text style={styleModal.modalTextTitle}>INFORMACIÓN!</RN.Text>
                             <RN.Text style={styleModal.modalText}>
                                 Número de tutorías: { numTutorias }
