@@ -39,7 +39,7 @@ const informacionScreen = ()  => {
           </Text>
           <Octicons name="versions" size={24} style={styles.icon} />
           <Text style={style.textFooter}>
-            Versión: 1.2.1
+            Versión: 2.0.0
           </Text>
         </View>
       </View>
